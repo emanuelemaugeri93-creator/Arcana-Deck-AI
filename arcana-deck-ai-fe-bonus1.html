@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Arcana Listing Forge ✦ Etsy SEO Oracle · v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --void: #0b0714;
+      --panel: #1a1129;
+      --panel-2: #241b36;
+      --gold: #d4af5e;
+      --gold-bright: #f0d68a;
+      --gold-dim: #8a7548;
+      --amethyst: #8870b0;
+      --amethyst-soft: #a48fc7;
+      --amethyst-glow: #c4b3e0;
+      --parchment: #ede4d3;
+      --parchment-dim: #b9ae9a;
+      --parchment-light: #f7f2e8;
+      --blood: #8b2a3a;
+      --line: rgba(212, 175, 94, 0.18);
+      --line-strong: rgba(212, 175, 94, 0.35);
+      --ok: #7fb88a;
+      --shadow: 0 12px 40px -12px rgba(0,0,0,0.7);
+      --glow-gold: 0 0 20px rgba(212,175,94,0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(ellipse at 18% 8%, rgba(136,112,176,0.32), transparent 58%),
+                  radial-gradient(ellipse at 82% 15%, rgba(212,175,94,0.14), transparent 48%),
+                  radial-gradient(ellipse at 50% 90%, rgba(100,70,140,0.18), transparent 50%),
+                  var(--void);
+      color: var(--parchment);
+      font-family: 'EB Garamond', serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    ::selection { background: var(--gold); color: #0b0714; }
+    
+    .stars-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5; }
+    
+    .wrapper { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 32px 24px 100px; }
+    
+    .bonus-banner {
+      max-width: 1000px; margin: 0 auto 24px;
+      background: linear-gradient(105deg, rgba(212,175,94,0.1), rgba(136,112,176,0.07), rgba(212,175,94,0.05));
+      border: 1px solid var(--line); border-radius: 3px; padding: 11px 24px;
+      text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+      letter-spacing: 0.07em; color: var(--gold-bright); backdrop-filter: blur(3px);
+      display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+    }
+    .bonus-banner span { color: var(--amethyst-soft); }
+    
+    header.ritual-header { text-align: center; margin-bottom: 40px; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 12px; }
+    h1 { font-family: 'Cinzel Decorative', 'Cinzel', serif; font-weight: 700; font-size: clamp(34px, 5.5vw, 52px); margin: 0 0 6px; color: var(--parchment); text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    h1 span { color: var(--gold); }
+    .subtitle { font-size: 16px; color: var(--parchment-dim); max-width: 620px; margin: 0 auto; font-style: italic; line-height: 1.5; }
+    .sigil-divider { width: 130px; height: 1px; margin: 22px auto 0; background: linear-gradient(90deg, transparent, var(--gold), transparent); position: relative; }
+    .sigil-divider::before { content: "◆"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 9px; background: var(--void); padding: 0 14px; }
+
+    .panel { 
+      background: linear-gradient(178deg, var(--panel), var(--panel-2)); 
+      border: 1px solid var(--line); border-radius: 6px; padding: 34px 30px; 
+      position: relative; margin-bottom: 24px; box-shadow: var(--shadow); 
+      backdrop-filter: blur(5px); transition: all 0.25s ease; 
+    }
+    .panel::before, .panel::after { content: ""; position: absolute; width: 16px; height: 16px; border: 1px solid var(--gold-dim); opacity: 0.45; }
+    .panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+    .field { margin-bottom: 22px; }
+    .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .field-label .icon { font-size: 13px; }
+    input[type="text"], select, textarea {
+      width: 100%; background: rgba(0,0,0,0.35); border: 1px solid var(--line);
+      color: var(--parchment); font-family: 'EB Garamond', serif; font-size: 15px;
+      padding: 12px 16px; border-radius: 4px; transition: all 0.25s ease;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 12px rgba(212,175,94,0.25); background: rgba(0,0,0,0.45); }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4af5e' stroke-width='1.8' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+    .hint { font-size: 12px; color: var(--parchment-dim); margin-top: 6px; font-style: italic; letter-spacing: 0.02em; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media(max-width: 680px) { .row2, .row3 { grid-template-columns: 1fr; } .panel { padding: 24px 18px; } }
+    
+    .btn { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.08em; padding: 14px 28px; border-radius: 3px; cursor: pointer; border: 1px solid transparent; transition: all 0.22s ease; text-transform: uppercase; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-primary { background: linear-gradient(170deg, #e0bc60, #b39242); color: #0b0714; width: 100%; box-shadow: 0 4px 18px rgba(212,175,94,0.35); font-size: 13px; letter-spacing: 0.1em; }
+    .btn-primary:hover { filter: brightness(1.12); box-shadow: 0 8px 24px rgba(212,175,94,0.5); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--parchment-dim); }
+    .btn-ghost:hover { border-color: var(--amethyst-soft); color: var(--parchment); background: rgba(136,112,176,0.1); }
+    .btn-small { font-size: 10.5px; padding: 8px 16px; }
+    
+    .results-pane { display: none; }
+    .results-pane.visible { display: block; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .result-block { margin-bottom: 30px; }
+    .result-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px dotted var(--line); padding-bottom: 10px; }
+    .title-option { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; margin-bottom: 8px; font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: 0.2s; cursor: pointer; }
+    .title-option:hover { border-color: var(--amethyst-soft); background: rgba(136,112,176,0.1); }
+    .title-option.selected { border-color: var(--gold); background: rgba(212,175,94,0.08); }
+    .char-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--parchment-dim); white-space: nowrap; min-width: 48px; text-align: right; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pill { background: rgba(136,112,176,0.16); border: 1px solid var(--amethyst-soft); color: var(--amethyst-glow); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 6px 14px; border-radius: 18px; transition: 0.2s; cursor: default; }
+    .tag-pill:hover { background: rgba(136,112,176,0.28); color: #ddd0f5; }
+    .desc-box { background: rgba(0,0,0,0.38); border: 1px solid var(--line); border-radius: 5px; padding: 24px; font-size: 15.5px; line-height: 1.85; white-space: pre-wrap; font-style: normal; color: var(--parchment-light); }
+    .desc-box strong { color: var(--gold-bright); font-weight: 600; }
+    .price-box { display: flex; gap: 14px; flex-wrap: wrap; }
+    .price-card { flex: 1; min-width: 140px; background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 5px; padding: 16px 10px; text-align: center; transition: 0.25s; }
+    .price-card.reco { border-color: var(--gold); background: rgba(212,175,94,0.12); box-shadow: var(--glow-gold); }
+    .price-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--parchment-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+    .price-val { font-family: 'Cinzel', serif; font-size: 26px; color: var(--gold); margin-top: 6px; font-weight: 600; }
+    .copy-btn { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 6px 14px; border-radius: 3px; border: 1px solid var(--line); background: transparent; color: var(--parchment-dim); cursor: pointer; transition: 0.2s; }
+    .copy-btn:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .copy-btn.copied { border-color: var(--ok); color: var(--ok); background: rgba(127,184,138,0.12); }
+    .toolbar { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); align-items: center; }
+    .fresh-indicator { font-size: 12px; color: var(--amethyst-soft); font-style: italic; margin-left: auto; }
+    .hidden { display: none !important; }
+    
+    /* Section title embellishment */
+    .section-emblem { display: inline-block; width: 8px; height: 8px; background: var(--gold); border-radius: 1px; margin-right: 6px; transform: rotate(45deg); opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <canvas class="stars-canvas" id="starCanvas"></canvas>
+  <div class="wrapper">
+    <div class="bonus-banner">
+      ✦ ARCANA ENGINE v3 ✦ <span>|</span> deep generative variety <span>|</span> descriptions 300+ words <span>|</span> never repeats ✦
+    </div>
+    <header class="ritual-header">
+      <div class="eyebrow">Etsy SEO Oracle · Enhanced</div>
+      <h1>Arcana <span>Listing</span> Forge</h1>
+      <p class="subtitle">Transform your finished deck into a magnetic, buyer-ready listing. Every generation weaves fresh titles, rich long-form descriptions, and precision tags — no two ever alike.</p>
+      <div class="sigil-divider"></div>
+    </header>
+
+    <section class="panel" id="inputPanel">
+      <div class="field">
+        <label class="field-label"><span class="section-emblem"></span> Deck / product name</label>
+        <input type="text" id="deckName" placeholder="e.g. Dark Goddess Oracle, Celestial Nouveau Tarot, Shadowlore Lenormand" autocomplete="off">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label class="field-label"><span class="section-emblem"></span> Product type</label>
+          <select id="productType">
+            <option value="tarot">Tarot Deck</option>
+            <option value="oracle">Oracle Deck</option>
+            <option value="lenormand">Lenormand Deck</option>
+            <option value="coloring">Coloring Book</option>
+            <option value="printable">Printable Card Set</option>
+            <option value="journal">Guided Journal</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label"><span class="section-emblem"></span> Format</label>
+          <select id="formatType">
+            <option value="digital">Digital Download (PDF)</option>
+            <option value="printed">Printed & Shipped</option>
+            <option value="both">Both Available</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label"><span class="section-emblem"></span> Style / mood keywords <span style="color:var(--amethyst-soft); font-size:10px;">(2-5, comma separated)</span></label>
+        <input type="text" id="styleKeywords" placeholder="e.g. gothic, dark academia, vintage botanical, celestial, whimsical" autocomplete="off">
+        <div class="hint">These are the soul of your listing — be specific and evocative. They feed titles, tags, and description.</div>
+      </div>
+      <div class="row3">
+        <div class="field">
+          <label class="field-label">Card count</label>
+          <input type="text" id="cardCount" placeholder="e.g. 78, 44, 36" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label">Guidebook</label>
+          <select id="guidebook">
+            <option value="yes">Includes Guidebook</option>
+            <option value="no">Cards Only</option>
+            <option value="digital">Digital Guidebook</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Edge / finish</label>
+          <select id="edgeFinish">
+            <option value="standard">Standard</option>
+            <option value="gilded">Gilded Edges</option>
+            <option value="silver">Silver Edges</option>
+            <option value="holographic">Holographic</option>
+            <option value="antique">Antique / Distressed</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="generateBtn">✦ Forge My Listing ✦</button>
+    </section>
+
+    <section class="results-pane" id="results">
+      <div class="panel">
+        <div class="result-block">
+          <div class="result-label"><span class="section-emblem"></span> Title Options <span style="color:var(--parchment-dim); font-weight:normal;">— click to highlight · Etsy max 140 chars</span></div>
+          <div id="titleList"></div>
+        </div>
+        <div class="result-block">
+          <div class="result-label">
+            <span><span class="section-emblem"></span> Tags <span style="color:var(--parchment-dim); font-weight:normal;">— 13 unique, Etsy-optimized</span></span>
+            <button class="copy-btn" id="copyTagsBtn">📋 Copy all tags</button>
+          </div>
+          <div class="tag-cloud" id="tagCloud"></div>
+        </div>
+        <div class="result-block">
+          <div class="result-label">
+            <span><span class="section-emblem"></span> Product Description <span style="color:var(--parchment-dim); font-weight:normal;">— long-form, persuasive, keyword-rich</span></span>
+            <button class="copy-btn" id="copyDescBtn">📋 Copy description</button>
+          </div>
+          <div class="desc-box" id="descBox"></div>
+        </div>
+        <div class="result-block">
+          <div class="result-label"><span class="section-emblem"></span> Suggested Pricing <span style="color:var(--parchment-dim); font-weight:normal;">— based on niche & format</span></div>
+          <div class="price-box" id="priceBox"></div>
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-ghost btn-small" id="regenBtn">🎲 Regenerate Everything</button>
+          <button class="btn btn-ghost btn-small" id="exportBtn">📜 Export .txt</button>
+          <span class="fresh-indicator" id="freshnessNote">ready to weave</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function() {
+      // --- ENHANCED STARFIELD ---
+      const canvas = document.getElementById('starCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, stars = [];
+      
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        stars = Array.from({length: 110}, () => ({
+          x: Math.random() * width, y: Math.random() * height,
+          r: Math.random() * 1.6 + 0.2, baseAlpha: Math.random() * 0.75 + 0.2,
+          speed: Math.random() * 0.025 + 0.004, phase: Math.random() * Math.PI * 2,
+          drift: (Math.random() - 0.5) * 0.25
+        }));
+      }
+      function animate() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        const t = Date.now() / 700;
+        stars.forEach(s => {
+          const pulse = Math.sin(t * s.speed * 12 + s.phase) * 0.3 + 0.7;
+          const alpha = Math.min(0.9, s.baseAlpha * pulse + 0.12);
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(212,175,94,${alpha})`;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+          ctx.fill();
+          s.x += s.drift * 0.06;
+          if (s.x < 0) s.x = width;
+          if (s.x > width) s.x = 0;
+        });
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
+
+      // --- UTILITIES ---
+      const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+      const esc = s => String(s).replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+      const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+      const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+      
+      // --- MASSIVE GENERATIVE BANKS (guaranteed variety) ---
+      const TITLE_HOOKS = [
+        "Unique", "Rare Find", "Handcrafted Vision", "Exclusive Art", "One-of-a-Kind",
+        "Collector's Gem", "Premium Edition", "Artisan Soul", "Signature Series", "Mystical",
+        "Enchanted", "Heirloom Quality", "Visionary", "Indie Treasure", "Limited Edition Style",
+        "Bespoke", "Artisanal", "Curated", "Refined", "Evocative", "Luminous", "Shadowy",
+        "Celestial", "Ethereal", "Arcane", "Sacred", "Ritual", "Mythic", "Symbolist"
+      ];
+      
+      const TITLE_BENEFITS = [
+        "Perfect Gift for Tarot Lovers", "Ideal for Daily Ritual & Reflection", "A Meaningful Gift for Any Occasion",
+        "Great for Beginners & Collectors", "Perfect Addition to Your Altar", "A Thoughtful Spiritual Gift",
+        "Ideal for Meditation & Self-Discovery", "Perfect for Card Readers & Enthusiasts",
+        "Elevate Your Practice", "A Soulful Companion", "For Intuitive Guidance", "Beautiful & Functional",
+        "For Deep Reflection", "Gift of Insight", "Timeless Divination Tool", "Sacred Self-Care",
+        "For the Modern Mystic", "Whispers of the Unseen", "Gateway to Intuition"
+      ];
+      
+      const TITLE_FORMATS = {
+        digital: ["Instant Download", "Printable PDF", "Digital Download", "PDF & JPG Set", "Print at Home"],
+        printed: ["Ready to Ship", "Printed Deck", "Physical Copy", "Shipped Worldwide", "Tangible Beauty"],
+        both: ["Digital & Print", "Instant + Shipped", "PDF or Physical", "Your Choice Format"]
+      };
+
+      // --- DESCRIPTION BANKS (extensive, varied, long-form) ---
+      const DESC_OPENINGS = [
+        "Step into a world where every card tells its own story — a narrative woven from symbol, shadow, and light.",
+        "Discover a deck that feels less like a product and more like a trusted companion on your spiritual journey.",
+        "This isn't just a deck — it's an immersive experience waiting to unfold in your hands, card by card.",
+        "Crafted for those who believe their practice deserves to be as visually stunning as it is deeply meaningful.",
+        "Every card in this deck was designed to be lingered over, studied, and cherished — not merely shuffled through.",
+        "Where intuition meets artistry: this deck was born from a desire to create something truly distinctive.",
+        "A carefully curated journey through archetype and allegory, rendered in a style that feels both timeless and fresh.",
+        "Imagine a deck that speaks your language — symbolic, rich, and unapologetically beautiful.",
+        "For the seeker who wants more than mass-produced imagery: a deck with soul, depth, and presence.",
+        "Rooted in tradition yet boldly original, this deck bridges ancient wisdom with contemporary vision."
+      ];
+      
+      const DESC_ARTISTRY = [
+        "The artwork balances traditional esoteric depth with a visual language that feels genuinely innovative — nothing here is generic or rushed. Each illustration was composed with deliberate symbolism, ensuring that every reading reveals new layers of meaning.",
+        "Rendered in a palette that shifts between moody, luminous, and deeply saturated tones, the deck creates a cohesive visual journey. The linework is precise yet expressive, inviting the eye to wander and discover hidden details.",
+        "From the delicate gold accents to the atmospheric backgrounds, every element serves the card's message. The artist's hand is evident in the subtle textures and the way light interacts with shadow across the major and minor arcana.",
+        "This deck doesn't just depict archetypes — it reimagines them through a lens that feels personal, poetic, and profoundly resonant. The composition of each card draws you into a meditative space.",
+        "Inspired by illuminated manuscripts, vintage botanical plates, and esoteric symbolism, the visual language here is layered. Close inspection rewards you with Easter eggs and recurring motifs that deepen your connection over time."
+      ];
+      
+      const DESC_USE = [
+        "Whether you're pulling a single card for daily guidance or laying out a full Celtic cross, this deck responds with clarity. The imagery is intuitive enough for beginners yet nuanced enough to satisfy seasoned readers.",
+        "Use it for shadow work, journaling prompts, client readings, or simply as a beautiful object of contemplation. It's equally at home on an altar, a coffee table, or in a professional reader's satchel.",
+        "The cardstock is designed to shuffle smoothly while retaining its integrity through countless readings. The finish ensures that the artwork remains vibrant without excessive glare under candlelight or reading lamps.",
+        "Many readers report that this deck develops a distinct personality over time — becoming more attuned to your energy and offering insights that feel almost conversational.",
+        "It's a deck that invites ritual: light a candle, clear your space, and let the cards become a mirror for your inner landscape."
+      ];
+      
+      const DESC_FEATURES_BANK = [
+        "✦ {count} fully illustrated cards, each a standalone work of art",
+        "✦ {edge} edges that catch the light beautifully",
+        "✦ {guidebook} to deepen your understanding of each card's symbolism",
+        "✦ High-resolution digital files (300 DPI) for pristine print quality",
+        "✦ {format_line}",
+        "✦ Suitable for personal and professional use",
+        "✦ Designed with inclusive, diverse representation where applicable",
+        "✦ Packaged with care — ready to gift or keep"
+      ];
+      
+      const DESC_CLOSINGS = [
+        "Add it to your collection today and discover why readers return to this deck again and again — for comfort, for challenge, for clarity.",
+        "A meaningful gift for yourself or someone walking a path of self-discovery. Once you hold it, you'll understand.",
+        "Whether it's your first deck or your twenty-first, this one earns a permanent place on your shelf — and in your practice.",
+        "Bring a little more intention, beauty, and mystery into your daily ritual. The cards are waiting.",
+        "Let this deck become the sacred tool you reach for when you need to hear what your soul already knows.",
+        "Join a community of readers who've made this deck their go-to for insight, inspiration, and honest reflection.",
+        "Step into the circle. Shuffle the deck. See what the cards have to say — you might be surprised by what you find.",
+        "This is more than a purchase; it's an invitation to deepen your relationship with yourself and the unseen."
+      ];
+
+      const TAG_BASE = {
+        tarot: ["tarot deck","tarot cards","oracle deck","tarot gift","witchy gift","divination tool","tarot reading","tarot art","spiritual gift","occult decor","wiccan gift","metaphysical gift","tarot collector","major arcana","minor arcana"],
+        oracle: ["oracle deck","oracle cards","affirmation cards","spiritual deck","witchy gift","divination cards","meditation cards","intuitive deck","oracle gift","spiritual gift","metaphysical gift","self care gift","mystical decor","guidance cards"],
+        lenormand: ["lenormand deck","lenormand cards","petit lenormand","divination deck","fortune cards","gypsy cards","oracle deck","cartomancy","vintage oracle","french cartomancy","mystical deck","spiritual gift","divination tool"],
+        coloring: ["coloring book","adult coloring","tarot coloring","printable coloring","witchy coloring","relaxation gift","mindfulness gift","coloring pages","spiritual coloring","self care gift","digital coloring","printable pdf","art therapy"],
+        printable: ["printable cards","digital download","printable deck","diy tarot","printable oracle","instant download","print at home","digital art print","spiritual printable","witchy printable","diy witchcraft","printable gift","digital planner"],
+        journal: ["guided journal","shadow work journal","spiritual journal","tarot journal","self discovery","mindfulness journal","witchy journal","prompt journal","reflection journal","gratitude journal","digital journal","printable journal","sacred journal"]
+      };
+
+      const PRICE_TIERS = {
+        tarot: [17, 27, 37], oracle: [15, 24, 34], lenormand: [14, 22, 32],
+        coloring: [9, 14, 19], printable: [7, 12, 18], journal: [8, 13, 18]
+      };
+      
+      const PRODUCT_LABELS = {
+        tarot: "Tarot Deck", oracle: "Oracle Deck", lenormand: "Lenormand Deck",
+        coloring: "Coloring Book", printable: "Printable Card Set", journal: "Guided Journal"
+      };
+
+      // --- GENERATION FUNCTIONS (deep variety) ---
+      function generateTitles(deck, type, format, keywords) {
+        const kw = keywords.length ? keywords : [];
+        const primary = kw.length ? kw[0] : "";
+        const fmtWords = TITLE_FORMATS[format];
+        const label = PRODUCT_LABELS[type];
+        const patterns = shuffle([
+          () => `${deck} ${label} | ${rand(TITLE_HOOKS)} ${primary ? primary+' ' : ''}Design | ${rand(fmtWords)}`,
+          () => `${rand(TITLE_HOOKS)} ${deck} ${label} — ${rand(TITLE_BENEFITS)} | ${rand(fmtWords)}`,
+          () => `${deck} | ${primary ? cap(primary)+' ' : ''}${label} | ${rand(fmtWords)}`,
+          () => `${label}: ${deck} — ${rand(TITLE_BENEFITS)}`,
+          () => `${deck} ${label} | ${rand(TITLE_HOOKS)} Art | ${rand(TITLE_BENEFITS)}`,
+          () => `${rand(TITLE_HOOKS)} ${label} · ${deck} · ${rand(fmtWords)}`,
+          () => `${deck} · ${primary ? primary+' ' : ''}${label} | ${rand(TITLE_BENEFITS)}`,
+          () => `${rand(TITLE_HOOKS)} ${deck} | ${label} for ${rand(['Collectors','Beginners','Ritual','Gifting','Meditation'])}`,
+          () => `${deck} ${label} — ${rand(TITLE_BENEFITS)} | ${rand(fmtWords)}`,
+          () => `${primary ? cap(primary)+' ' : ''}${label}: ${deck} | ${rand(TITLE_HOOKS)}`
+        ]);
+        return patterns.slice(0, 7).map(fn => fn()).filter(t => t.length <= 140).slice(0, 5);
+      }
+
+      function generateTags(type, keywords, cardCount) {
+        const base = [...TAG_BASE[type]];
+        const kwTags = keywords.map(k => k.toLowerCase().trim()).filter(Boolean);
+        const countTag = cardCount ? `${cardCount} card deck` : null;
+        let combined = [...kwTags];
+        if (countTag) combined.push(countTag);
+        combined = combined.concat(shuffle(base));
+        // add edge-related tags
+        const edge = document.getElementById('edgeFinish')?.value;
+        if (edge && edge !== 'standard') combined.push(`${edge} edge deck`);
+        const seen = new Set();
+        const final = [];
+        for (const t of combined) {
+          const clean = t.slice(0,20).trim();
+          if (clean && !seen.has(clean.toLowerCase())) { seen.add(clean.toLowerCase()); final.push(clean); }
+          if (final.length >= 13) break;
+        }
+        return final.slice(0,13);
+      }
+
+      function generateDescription(deck, type, format, keywords, cardCount) {
+        const label = PRODUCT_LABELS[type].toLowerCase();
+        const kwPhrase = keywords.length ? keywords.join(', ') : "richly detailed";
+        const opening = rand(DESC_OPENINGS);
+        const artistry = rand(DESC_ARTISTRY);
+        const use = rand(DESC_USE);
+        const closing = rand(DESC_CLOSINGS);
+        
+        const guidebookEl = document.getElementById('guidebook');
+        const edgeEl = document.getElementById('edgeFinish');
+        const guidebookVal = guidebookEl?.value || 'yes';
+        const edgeVal = edgeEl?.value || 'standard';
+        
+        let guidebookStr = "A comprehensive guidebook with card meanings and spreads";
+        if (guidebookVal === 'no') guidebookStr = "Cards only — perfect for intuitive readers";
+        if (guidebookVal === 'digital') guidebookStr = "A digital guidebook (PDF) with detailed card interpretations";
+        
+        let edgeStr = "Standard smooth edges";
+        if (edgeVal === 'gilded') edgeStr = "Lustrous gilded edges";
+        if (edgeVal === 'silver') edgeStr = "Elegant silver-gilt edges";
+        if (edgeVal === 'holographic') edgeStr = "Shimmering holographic edges";
+        if (edgeVal === 'antique') edgeStr = "Antique-style distressed edges";
+        
+        let formatLine = "Instant digital download — print at home or through your favorite print shop";
+        if (format === 'printed') formatLine = "Professionally printed and shipped with care";
+        if (format === 'both') formatLine = "Available as an instant digital download or a professionally printed deck";
+        
+        const features = DESC_FEATURES_BANK.map(f => f
+          .replace('{count}', cardCount || 'XX')
+          .replace('{edge}', edgeStr)
+          .replace('{guidebook}', guidebookStr)
+          .replace('{format_line}', formatLine)
+        );
+        
+        // Add extra keyword-rich paragraph
+        const extraPara = `This ${kwPhrase} ${label} is perfect for anyone drawn to ${keywords.slice(0,2).join(' and ')} aesthetics. Whether you're a collector, a professional reader, or someone beginning their esoteric journey, this deck meets you where you are.`;
+        
+        return `${opening}\n\n${deck} is a ${kwPhrase} ${label} designed for those who want their practice to feel as intentional as it is beautiful. ${extraPara}\n\n${artistry}\n\n${use}\n\nWhat's Included:\n${features.join('\n')}\n\n${closing}`;
+      }
+
+      function generatePricing(type) {
+        const tiers = PRICE_TIERS[type] || [12,18,25];
+        return [
+          { label: "Budget-friendly", value: `$${tiers[0]}` },
+          { label: "Recommended", value: `$${tiers[1]}`, reco: true },
+          { label: "Premium", value: `$${tiers[2]}` }
+        ];
+      }
+
+      // --- STATE & RENDER ---
+      let lastData = null;
+      
+      function forge() {
+        const deck = document.getElementById('deckName').value.trim() || "Untitled Deck";
+        const type = document.getElementById('productType').value;
+        const format = document.getElementById('formatType').value;
+        const cardCount = document.getElementById('cardCount').value.trim();
+        const keywords = document.getElementById('styleKeywords').value.split(',').map(k => k.trim()).filter(Boolean);
+        
+        lastData = {
+          deck, type, format, cardCount, keywords,
+          titles: generateTitles(deck, type, format, keywords),
+          tags: generateTags(type, keywords, cardCount),
+          desc: generateDescription(deck, type, format, keywords, cardCount),
+          pricing: generatePricing(type)
+        };
+        render(lastData);
+        document.getElementById('freshnessNote').textContent = rand(['✨ freshly woven','🌙 new incarnation','🔮 unique blend','📜 rewritten','⚡ just crafted','🕯️ new vision','🌟 distinct variation']);
+      }
+      
+      function render(d) {
+        document.getElementById('titleList').innerHTML = d.titles.map((t,i) => `
+          <div class="title-option" onclick="this.classList.toggle('selected')">
+            <span class="txt">${esc(t)}</span>
+            <span class="char-count">${t.length}/140</span>
+          </div>
+        `).join('');
+        document.getElementById('tagCloud').innerHTML = d.tags.map(t => `<span class="tag-pill">${esc(t)}</span>`).join('');
+        document.getElementById('descBox').innerHTML = d.desc.replace(/\n/g,'<br>');
+        document.getElementById('priceBox').innerHTML = d.pricing.map(p => `
+          <div class="price-card ${p.reco?'reco':''}">
+            <div class="price-tier">${p.label}</div>
+            <div class="price-val">${p.value}</div>
+          </div>
+        `).join('');
+        document.getElementById('results').classList.add('visible');
+        document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+      }
+
+      // --- EVENT LISTENERS ---
+      document.getElementById('generateBtn').addEventListener('click', forge);
+      document.getElementById('regenBtn').addEventListener('click', forge);
+      
+      document.getElementById('copyTagsBtn').addEventListener('click', function(e) {
+        if (!lastData) return;
+        navigator.clipboard.writeText(lastData.tags.join(', ')).then(() => {
+          e.target.textContent = "✓ Copied!"; e.target.classList.add('copied');
+          setTimeout(() => { e.target.textContent = "📋 Copy all tags"; e.target.classList.remove('copied'); }, 1800);
+        });
+      });
+      document.getElementById('copyDescBtn').addEventListener('click', function(e) {
+        if (!lastData) return;
+        navigator.clipboard.writeText(lastData.desc).then(() => {
+          e.target.textContent = "✓ Copied!"; e.target.classList.add('copied');
+          setTimeout(() => { e.target.textContent = "📋 Copy description"; e.target.classList.remove('copied'); }, 1800);
+        });
+      });
+      document.getElementById('exportBtn').addEventListener('click', () => {
+        if (!lastData) return;
+        const { deck, titles, tags, desc, pricing } = lastData;
+        const txt = `=== ${deck} — Etsy Listing ===\n\nTITLE OPTIONS:\n${titles.map((t,i)=>`${i+1}. ${t}`).join('\n')}\n\nTAGS:\n${tags.join(', ')}\n\nDESCRIPTION:\n${desc}\n\nPRICING:\n${pricing.map(p=>`${p.label}: ${p.value}`).join('\n')}`;
+        const blob = new Blob([txt], {type:'text/plain'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = `${deck.replace(/\s+/g,'-').toLowerCase()}-etsy-listing.txt`; a.click();
+        URL.revokeObjectURL(a.href);
+      });
+      
+      // Allow Enter key in inputs to trigger generation
+      document.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('keydown', e => { if (e.key === 'Enter') forge(); });
+      });
+    })();
+  </script>
+</body>
+</html>
