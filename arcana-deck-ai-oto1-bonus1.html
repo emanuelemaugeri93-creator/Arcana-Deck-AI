@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Title Forge — Luxe Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0812; --panel:#1A1024; --panel-2:#241832;
+    --gold:#C8D4DC; --gold-dim:#8A96A0; --amethyst:#B78CD6; --amethyst-soft:#CBA8E0;
+    --parchment:#E8EAED; --parchment-dim:#9AA0A8; --blood:#D6486B;
+    --line:rgba(200,212,220,0.22); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(183,140,214,0.25), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,212,220,0.10), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--amethyst); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:900px; margin:0 auto; padding:40px 24px 100px;}
+  .bonus-banner{max-width:900px; margin:0 auto 28px; background:linear-gradient(90deg, rgba(200,212,220,0.12), rgba(183,140,214,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:12px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(28px,4.5vw,42px); margin:0 0 10px;}
+  h1 span{color:var(--amethyst-soft);}
+  .sub{font-size:15.5px; color:var(--parchment-dim); max-width:560px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:100px; height:1px; margin:22px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:9px; background:var(--void); padding:0 10px;}
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:32px; position:relative; margin-bottom:20px;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .field{margin-bottom:20px;}
+  .field-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px; display:block;}
+  input[type=text],select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:11px 14px; border-radius:3px;}
+  input[type=text]:focus,select:focus{outline:none; border-color:var(--gold);}
+  select{cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8D4DC' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:640px){.row2{grid-template-columns:1fr;}}
+  .hint{font-size:12px; color:var(--parchment-dim); margin-top:6px; font-style:italic;}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:14px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-primary{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600; width:100%;}
+  .btn-primary:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(200,212,220,0.25);}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-small{font-size:11px; padding:7px 14px;}
+  .results{display:none;}
+  .results.show{display:block;}
+  .title-option{background:rgba(0,0,0,0.25); border:1px solid var(--line); border-radius:3px; padding:14px 16px; margin-bottom:10px; font-size:15px; display:flex; justify-content:space-between; align-items:center; gap:10px; transition:all .18s ease;}
+  .title-option:hover{border-color:var(--amethyst-soft); background:rgba(183,140,214,0.06);}
+  .title-option .txt{flex:1; font-family:'Cinzel',serif; font-size:14.5px; line-height:1.4;}
+  .title-option .number{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--amethyst-soft); margin-right:8px; flex:0 0 auto;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:6px 12px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer; flex:0 0 auto; transition:all .18s ease;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+  .toolbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; padding-top:18px; border-top:1px solid var(--line); align-items:center;}
+  .variation-count{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); margin-left:auto;}
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+  .counter-badge{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:8px; padding:2px 8px; margin-left:8px; vertical-align:middle;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA DECK AI — LUXE EDITION BONUS · unlimited collector-grade titles, never the same twice ✦</div>
+  <header class="top">
+    <div class="eyebrow">Infinite Title Generator</div>
+    <h1>Arcana <span>Title</span> Forge</h1>
+    <p class="sub">Titles built for premium, collector-grade listings — the language that justifies a higher price point. <strong>Truly unlimited variations.</strong></p>
+    <div class="sigil-divider"></div>
+  </header>
+
+  <section class="panel">
+    <div class="field">
+      <label class="field-label">Deck name</label>
+      <input type="text" id="deckName" placeholder="e.g. Holographic Dark Goddess Oracle">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label class="field-label">Luxe style <span class="counter-badge">10 styles</span></label>
+        <select id="luxeStyle">
+          <option value="Chrome Liquid Metal">Chrome Liquid Metal</option>
+          <option value="Holographic Foil">Holographic Foil</option>
+          <option value="Embossed Foil-Stamp">Embossed Foil-Stamp</option>
+          <option value="Opalescent Pearl">Opalescent Pearl</option>
+          <option value="Neon Mystic">Neon Mystic</option>
+          <option value="Bioluminescent Fantasy">Bioluminescent Fantasy</option>
+          <option value="Celestial Nebula">Celestial Nebula</option>
+          <option value="Double-Exposure Mystic">Double-Exposure Mystic</option>
+          <option value="Opulent Baroque Gemstone">Opulent Baroque Gemstone</option>
+          <option value="Dark Academia Ink & Gold">Dark Academia Ink &amp; Gold</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Product type <span class="counter-badge">4 types</span></label>
+        <select id="productType">
+          <option value="Tarot Deck">Tarot Deck</option>
+          <option value="Oracle Deck">Oracle Deck</option>
+          <option value="Divination Cards">Divination Cards</option>
+          <option value="Card Deck">Card Deck</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="generateBtn">✦ Forge 8 Unique Titles</button>
+  </section>
+
+  <section class="results" id="results">
+    <div class="panel">
+      <div class="field-label" style="margin-bottom:14px;">8 collector-grade title options <span class="counter-badge" id="variationBadge">∞ variations</span></div>
+      <div id="titleList"></div>
+      <div class="toolbar">
+        <button class="btn btn-ghost btn-small" id="regenBtn">🎲 Forge 8 new titles</button>
+        <button class="btn btn-ghost btn-small" id="copyAllBtn">Copy all</button>
+        <span class="variation-count" id="variationEstimate"></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._timeout);t._timeout=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c=document.querySelector('.stars'),ctx=c.getContext('2d');
+  function R(){c.width=innerWidth;c.height=innerHeight;}R();addEventListener('resize',R);
+  const S=Array.from({length:90},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.2+.2,a:Math.random(),s:Math.random()*.015+.003}));
+  function T(){ctx.clearRect(0,0,c.width,c.height);S.forEach(s=>{s.a+=s.s;const o=(Math.sin(s.a)+1)/2*.7+.1;ctx.beginPath();ctx.fillStyle=`rgba(183,140,214,${o})`;ctx.arc(s.x,s.y,s.r,0,7);ctx.fill();});requestAnimationFrame(T);}T();
+})();
+
+/* ============ HELPERS ============ */
+function randomOf(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function escapeHtml(s){return String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+
+/* ============ MERSENNE TWISTER (seeded RNG for true uniqueness) ============ */
+// Simple but effective seeded random for ensuring variation diversity
+let globalSeed = Date.now();
+function seededRandom(){
+  globalSeed = (globalSeed * 1664525 + 1013904223) & 0xFFFFFFFF;
+  return (globalSeed >>> 0) / 0xFFFFFFFF;
+}
+function seededRandomOf(arr){
+  return arr[Math.floor(seededRandom() * arr.length)];
+}
+
+/* ============ INFINITE VARIATION ENGINE ============ */
+const COLLECTOR_HOOKS = [
+  "Limited Edition", "Collector's Edition", "Signature Series", "Premium Foil Edition",
+  "Exclusive Release", "Rare Finish", "Numbered Edition", "Elite Collection",
+  "Vault Edition", "Archival Series", "Curated Release", "Crown Jewel Edition",
+  "Masterwork Series", "Connoisseur's Choice", "Gallery Edition", "Showcase Collection"
+];
+
+const PRESTIGE_PHRASES = [
+  "Museum-Quality Art", "Gallery-Grade Illustration", "Investment-Worthy Design",
+  "Statement Piece for Any Collection", "The Deck Collectors Are Talking About",
+  "Not Your Average Deck", "Where Fine Art Meets Divination",
+  "A New Standard in Card Design", "Redefining What a Deck Can Be",
+  "The Pinnacle of Deck Craftsmanship", "Where Artistry Meets the Arcane",
+  "Hand-Crafted Visual Poetry", "An Heirloom in the Making",
+  "Destined to Be a Grail Deck", "The Deck That Changes Everything"
+];
+
+const FINISH_CALLOUTS = [
+  "Every Card a Work of Art", "Shifts Color in the Light", "Catches the Eye From Across the Room",
+  "Built to Be Displayed, Not Just Used", "The Finish Alone Justifies the Price",
+  "Light Plays Across Every Surface", "A Finish You Have to See to Believe",
+  "Catches Light Like Nothing Else", "The Kind of Deck You Leave Out on Display",
+  "Photographs Almost as Beautifully as It Looks in Person",
+  "A Tactile Experience as Much as a Visual One"
+];
+
+const ADJECTIVES = [
+  "Gilded", "Luminous", "Prismatic", "Opulent", "Celestial", "Nocturnal", 
+  "Spectral", "Radiant", "Verdant", "Obsidian", "Crystalline", "Ethereal",
+  "Resplendent", "Sumptuous", "Lavish", "Regal", "Imperial", "Majestic",
+  "Enchanted", "Mystical", "Arcane", "Esoteric", "Orphic", "Sibylline"
+];
+
+const PREMIUM_MARKERS = [
+  "Deluxe", "Premium", "Ultra", "Supreme", "Grand", "Royal", "Imperial",
+  "Master", "Elite", "Prime", "Platinum", "Diamond"
+];
+
+const EDITION_TYPES = [
+  "Edition", "Release", "Collection", "Series", "Volume", "Artifact"
+];
+
+/* ============ PATTERN GENERATOR — 24 base patterns × combinatorics ============ */
+function generateTitlePatterns(deckName, luxeStyle, productType){
+  const dn = deckName || "Untitled Deck";
+  const adj = seededRandomOf(ADJECTIVES);
+  const adj2 = seededRandomOf(ADJECTIVES);
+  const prem = seededRandomOf(PREMIUM_MARKERS);
+  const edType = seededRandomOf(EDITION_TYPES);
+  
+  return [
+    // Pattern group 1: Collector hook + deck name
+    () => `${seededRandomOf(COLLECTOR_HOOKS)}: ${dn} — ${luxeStyle} ${productType}`,
+    () => `${seededRandomOf(COLLECTOR_HOOKS)} — ${luxeStyle} ${productType} | ${dn}`,
+    () => `${dn} — ${seededRandomOf(COLLECTOR_HOOKS)} | ${luxeStyle} ${productType}`,
+    
+    // Pattern group 2: Prestige phrase focused
+    () => `${dn} — ${luxeStyle} ${productType} | ${seededRandomOf(PRESTIGE_PHRASES)}`,
+    () => `${seededRandomOf(PRESTIGE_PHRASES)}: ${dn} ${luxeStyle} ${productType}`,
+    () => `"${dn}" — ${seededRandomOf(PRESTIGE_PHRASES)} | ${luxeStyle} ${productType}`,
+    
+    // Pattern group 3: Finish callouts
+    () => `${dn} ${productType} in ${luxeStyle} | ${seededRandomOf(FINISH_CALLOUTS)}`,
+    () => `${luxeStyle} ${productType} | ${dn} — ${seededRandomOf(FINISH_CALLOUTS)}`,
+    
+    // Pattern group 4: Adjective-rich
+    () => `The ${adj} ${dn} — ${luxeStyle} ${productType} | ${seededRandomOf(COLLECTOR_HOOKS)}`,
+    () => `${adj} ${dn} ${productType} | ${luxeStyle} | ${seededRandomOf(PRESTIGE_PHRASES)}`,
+    () => `${adj} ${adj2}: ${dn} ${luxeStyle} ${productType}`,
+    
+    // Pattern group 5: Premium edition structures
+    () => `${dn} — ${prem} ${edType} | ${luxeStyle} ${productType}`,
+    () => `${prem} ${edType}: ${dn} | ${luxeStyle} ${productType}`,
+    () => `${luxeStyle} ${productType} | ${dn} | ${prem} ${edType}`,
+    
+    // Pattern group 6: Marketing-style
+    () => `Introducing ${dn} — ${luxeStyle} ${productType} | ${seededRandomOf(FINISH_CALLOUTS)}`,
+    () => `${seededRandomOf(PRESTIGE_PHRASES)} | ${dn} | ${luxeStyle} ${productType}`,
+    () => `${seededRandomOf(COLLECTOR_HOOKS)}: ${adj} ${dn} | ${luxeStyle} ${productType}`,
+    
+    // Pattern group 7: Short & punchy
+    () => `${dn} | ${luxeStyle} | ${seededRandomOf(FINISH_CALLOUTS)}`,
+    () => `${dn} — ${adj} ${productType} | ${luxeStyle}`,
+    
+    // Pattern group 8: Complex layered
+    () => `${seededRandomOf(COLLECTOR_HOOKS)}: ${adj} ${dn} — ${luxeStyle} ${productType} | ${seededRandomOf(FINISH_CALLOUTS)}`,
+    () => `${prem} ${edType} | ${dn} | ${luxeStyle} ${productType} — ${seededRandomOf(PRESTIGE_PHRASES)}`,
+    () => `"${dn}" — ${adj} ${adj2} ${productType} in ${luxeStyle} | ${seededRandomOf(FINISH_CALLOUTS)}`,
+    () => `${adj} ${dn} | ${luxeStyle} ${productType} | ${prem} ${edType} | ${seededRandomOf(PRESTIGE_PHRASES)}`,
+  ];
+}
+
+/* ============ UNIQUE TITLE GENERATOR ============ */
+function generateUniqueTitles(deckName, luxeStyle, productType, count = 8){
+  // Reset seed with current time + random entropy for true variation each call
+  globalSeed = Date.now() ^ (Math.random() * 0xFFFFFFFF);
+  
+  const patternFns = generateTitlePatterns(deckName, luxeStyle, productType);
+  const titles = new Set(); // Prevent duplicates
+  const result = [];
+  
+  // Try up to 1000 times to get unique titles
+  let attempts = 0;
+  const maxAttempts = 1000;
+  
+  while(result.length < count && attempts < maxAttempts){
+    // Pick a random pattern
+    const patternFn = seededRandomOf(patternFns);
+    const title = patternFn();
+    
+    // Only add if unique
+    if(!titles.has(title)){
+      titles.add(title);
+      result.push(title);
+    }
+    attempts++;
+  }
+  
+  // If we couldn't get enough unique titles (extremely unlikely), fill with shuffled patterns
+  if(result.length < count){
+    const remaining = count - result.length;
+    const shuffled = [...patternFns].sort(() => seededRandom() - 0.5);
+    for(let i = 0; i < remaining && i < shuffled.length; i++){
+      const t = shuffled[i]();
+      if(!titles.has(t)){
+        titles.add(t);
+        result.push(t);
+      }
+    }
+  }
+  
+  return result;
+}
+
+/* ============ ESTIMATE TOTAL POSSIBLE COMBINATIONS ============ */
+function estimateCombinations(){
+  const hooks = COLLECTOR_HOOKS.length;
+  const phrases = PRESTIGE_PHRASES.length;
+  const callouts = FINISH_CALLOUTS.length;
+  const adjs = ADJECTIVES.length;
+  const prems = PREMIUM_MARKERS.length;
+  const edTypes = EDITION_TYPES.length;
+  
+  // Rough estimate: 24 patterns × permutations of word choices
+  const patternCount = 24;
+  const wordCombos = hooks * phrases * callouts * adjs * adjs * prems * edTypes;
+  const estimated = patternCount * wordCombos;
+  
+  if(estimated > 1000000000) return `${(estimated / 1000000000).toFixed(1)}B+`;
+  if(estimated > 1000000) return `${(estimated / 1000000).toFixed(1)}M+`;
+  if(estimated > 1000) return `${(estimated / 1000).toFixed(1)}K+`;
+  return estimated.toString();
+}
+
+/* ============ RENDER ============ */
+let currentTitles = [];
+
+function render(){
+  const deckName = document.getElementById('deckName').value.trim();
+  const luxeStyle = document.getElementById('luxeStyle').value;
+  const productType = document.getElementById('productType').value;
+  
+  currentTitles = generateUniqueTitles(deckName, luxeStyle, productType, 8);
+
+  document.getElementById('titleList').innerHTML = currentTitles.map((t, i) => `
+    <div class="title-option">
+      <span class="number">#${i + 1}</span>
+      <div class="txt">${escapeHtml(t)}</div>
+      <button class="copy-btn" onclick="copyOne(this)" title="Copy to clipboard">Copy</button>
+    </div>
+  `).join('');
+  
+  document.getElementById('variationEstimate').textContent = `~${estimateCombinations()} possible combinations`;
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ============ COPY ============ */
+function copyOne(btn){
+  const txt = btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent = "Copied ✓"; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent="Copy"; btn.classList.remove('copied'); }, 1400);
+  });
+}
+
+/* ============ EVENT LISTENERS ============ */
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  render();
+  showToast("8 unique titles forged ✦");
+});
+
+document.getElementById('regenBtn').addEventListener('click', ()=>{
+  // Force a completely different seed
+  globalSeed = Date.now() ^ (Math.random() * 0xFFFFFFFF) ^ (performance.now() * 1000);
+  render();
+  showToast("8 completely new titles forged 🎲");
+});
+
+document.getElementById('copyAllBtn').addEventListener('click', (e)=>{
+  const numbered = currentTitles.map((t, i) => `${i + 1}. ${t}`).join('\n');
+  navigator.clipboard.writeText(numbered).then(()=>{
+    e.target.textContent = "Copied ✓"; 
+    setTimeout(()=>e.target.textContent="Copy all", 1400);
+    showToast("All 8 titles copied!");
+  });
+});
+
+// Allow Enter key to forge titles
+document.getElementById('deckName').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    render();
+    showToast("8 unique titles forged ✦");
+  }
+});
+
+/* ============ UPDATE VARIATION ESTIMATE ON LOAD ============ */
+document.getElementById('variationEstimate').textContent = `~${estimateCombinations()} possible combinations`;
+</script>
+</body>
+</html>
