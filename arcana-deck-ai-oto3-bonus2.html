@@ -1,0 +1,617 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Complexity Pairing Oracle — OTO3 Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0D0D10; --panel:#18181C; --panel-2:#212126;
+    --gold:#E8E4D8; --gold-dim:#B5B0A0;
+    --amethyst:#8B3A3A; --amethyst-soft:#B85C5C;
+    --parchment:#F2EFE6; --parchment-dim:#9C9890;
+    --blood:#5A2626;
+    --line:rgba(232,228,216,0.18); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(139,58,58,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(232,228,216,0.06), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:980px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(232,228,216,0.10), rgba(139,58,58,0.07)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:660px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+
+
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative; margin-bottom:28px;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .step-head{margin-bottom:22px; text-align:center;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:640px; margin:0 auto;}
+
+
+
+
+  .draw-zone{text-align:center; padding:10px 0 6px;}
+  .btn-draw{font-family:'Cinzel',serif; font-size:15px; letter-spacing:0.08em; padding:18px 48px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-draw:hover{filter:brightness(1.08); box-shadow:0 4px 26px rgba(232,228,216,0.22);}
+  .draw-hint{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.06em; color:var(--parchment-dim); margin-top:14px; line-height:1.8;}
+  .draw-hint b{color:var(--gold); font-weight:500;}
+
+
+
+
+  .chips-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:30px 0 14px;}
+  .chip{min-width:150px; text-align:center; border:1px solid var(--line); border-radius:4px; padding:16px 22px; background:rgba(0,0,0,0.18); cursor:pointer; transition:all .18s ease; user-select:none;}
+  .chip:hover{border-color:var(--gold-dim);}
+  .chip .chip-lbl{font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px;}
+  .chip .chip-val{font-family:'Cinzel',serif; font-size:15px; color:var(--parchment); line-height:1.4;}
+  .chip-complexity{border-color:var(--amethyst-soft); background:rgba(139,58,58,0.09); box-shadow:0 0 0 2px rgba(139,58,58,0.16);}
+  .chip-complexity .chip-lbl{color:var(--amethyst-soft);}
+  .chip.locked{border-color:var(--gold); background:rgba(232,228,216,0.07); box-shadow:0 0 0 2px rgba(232,228,216,0.18);}
+  .chip.locked .chip-lbl::before{content:"🔒 ";}
+
+
+
+
+  .lock-hint{text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--parchment-dim); margin-bottom:24px;}
+  .lock-hint b{color:var(--gold); font-weight:500;}
+
+
+
+
+  .extras-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin:26px 0 12px; flex-wrap:wrap;}
+  .extras-head .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim);}
+  .extras-head .block-note{font-size:12px; color:var(--parchment-dim); font-style:italic;}
+  .extras-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  .chip-sm{min-width:120px; text-align:center; border:1px solid var(--line); border-radius:4px; padding:12px 16px; background:rgba(0,0,0,0.15);}
+  .chip-sm .chip-lbl{font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--parchment-dim); margin-bottom:6px;}
+  .chip-sm .chip-val{font-family:'EB Garamond',serif; font-size:14px; color:var(--parchment); line-height:1.4;}
+
+
+
+
+  .reason-box{padding:18px 22px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:2px; margin:24px 0 26px;}
+  .reason-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px;}
+  .reason-text{font-family:'EB Garamond',serif; font-size:16.5px; font-style:italic; color:var(--parchment); line-height:1.65;}
+  .reason-text b{color:var(--gold); font-style:italic; font-weight:500;}
+
+
+
+
+  .btn-row{display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap;}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:14px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft);}
+  .btn-dice:hover{background:rgba(139,58,58,0.12); color:var(--parchment);}
+  .btn-small{font-size:11px; padding:8px 16px;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer; flex:0 0 auto;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+
+
+
+
+  .batch-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px;}
+  @media (max-width:720px){ .batch-grid{grid-template-columns:1fr;} }
+  .batch-item{border:1px solid var(--line); border-radius:4px; padding:16px; background:rgba(0,0,0,0.15); display:flex; flex-direction:column; gap:8px;}
+  .batch-item .b-label{font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--amethyst-soft);}
+  .batch-item .b-val{font-family:'Cinzel',serif; font-size:13.5px; color:var(--parchment); line-height:1.4;}
+  .batch-item .b-val.light{font-family:'EB Garamond',serif; font-size:13px; color:var(--parchment-dim); font-style:italic; line-height:1.5;}
+  .batch-item .b-reason{font-size:13px; font-style:italic; color:var(--parchment-dim); line-height:1.55; flex:1;}
+  .batch-item .copy-btn{align-self:flex-start;}
+
+
+
+
+  .history-box{margin-top:8px;}
+  .history-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;}
+  .history-head .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim);}
+  .history-item{display:flex; align-items:center; gap:12px; border:1px solid var(--line); border-radius:3px; padding:10px 14px; margin-bottom:8px; background:rgba(0,0,0,0.12); flex-wrap:wrap;}
+  .history-item .h-num{flex:0 0 auto; width:22px; height:22px; border-radius:50%; border:1px solid var(--gold-dim); display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:10px; color:var(--gold); background:rgba(232,228,216,0.05);}
+  .history-item .h-chips{flex:1; min-width:200px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--parchment-dim); line-height:1.7;}
+  .history-item .h-chips b{color:var(--parchment); font-weight:500;}
+  .history-item .h-chips i{color:var(--amethyst-soft); font-style:normal;}
+
+
+
+
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:48px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+
+
+
+
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA COLORING BOOK AI BONUS · unlimited theme + style + complexity pairing suggestions ✦</div>
+  <header class="top">
+    <div class="eyebrow">OTO3 Bonus — Coloring Engine Pairing Suggestions</div>
+    <h1>Arcana <span>Complexity</span> Pairing Oracle</h1>
+    <p class="sub">One click draws a complete blueprint for a coloring set — theme, line style, complexity level, subject focus, border treatment, and print format — with reasoning tuned to the level of detail drawn.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+
+
+
+  <div class="panel">
+    <div class="step-head">
+      <div class="step-kicker">The Draw</div>
+      <div class="step-title">Find your next combination</div>
+      <div class="step-desc">Every element of the coloring engine is independent — so the oracle draws them together, explains the reasoning, and builds a session history you can copy or export.</div>
+    </div>
+    <div class="draw-zone">
+      <button class="btn-draw" id="drawBtn">✦ Draw a Pairing</button>
+      <div class="draw-hint" id="sessionStats"></div>
+    </div>
+  </div>
+
+
+
+
+  <section class="panel hidden" id="result">
+    <div class="chips-row">
+      <div class="chip chip-theme" id="chipWrapTheme" onclick="toggleLock('theme')">
+        <div class="chip-lbl">Theme</div>
+        <div class="chip-val" id="chipTheme">—</div>
+      </div>
+      <div class="chip chip-style" id="chipWrapStyle" onclick="toggleLock('style')">
+        <div class="chip-lbl">Line Style</div>
+        <div class="chip-val" id="chipStyle">—</div>
+      </div>
+      <div class="chip chip-complexity" id="chipWrapComplexity" onclick="toggleLock('complexity')">
+        <div class="chip-lbl">Complexity</div>
+        <div class="chip-val" id="chipComplexity">—</div>
+      </div>
+    </div>
+    <div class="lock-hint">click any chip to <b>lock it</b> — locked elements stay fixed on the next draw, the rest re-roll</div>
+
+
+
+
+    <div class="extras-head">
+      <div class="lbl">Set blueprint extras</div>
+      <span class="block-note">drawn fresh every time — a complete starting point, not a partial one</span>
+    </div>
+    <div class="extras-row">
+      <div class="chip-sm">
+        <div class="chip-lbl">Subject Focus</div>
+        <div class="chip-val" id="chipSubject">—</div>
+      </div>
+      <div class="chip-sm">
+        <div class="chip-lbl">Border Treatment</div>
+        <div class="chip-val" id="chipBorder">—</div>
+      </div>
+      <div class="chip-sm">
+        <div class="chip-lbl">Print Format</div>
+        <div class="chip-val" id="chipFormat">—</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="reason-box">
+      <div class="lbl">Why this combination works</div>
+      <div class="reason-text" id="reasonText"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-dice" id="drawAgainBtn">🎲 Draw another pairing</button>
+      <button class="btn btn-dice" id="batchBtn">🎲 Draw 3 — bundle plan</button>
+      <button class="btn btn-ghost btn-small" id="copyPairingBtn">📋 Copy pairing</button>
+    </div>
+
+
+
+
+    <div class="batch-grid hidden" id="batchGrid"></div>
+
+
+
+
+    <div class="history-box">
+      <div class="history-head">
+        <div class="lbl">Session draws</div>
+        <button class="btn btn-ghost btn-small" id="exportSessionBtn">Export session .txt</button>
+      </div>
+      <div id="historyList"></div>
+      <div class="lock-hint" id="historyEmpty" style="margin-top:4px;">nothing drawn yet — your session history lands here</div>
+    </div>
+  </section>
+  <footer class="note">ARCANA COMPLEXITY PAIRING ORACLE — OTO3 BONUS · 11 themes · 8 line styles · 3 complexity levels · 264 core combinations · session history &amp; bundle planning</footer>
+</div>
+
+
+
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+
+
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(232,228,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+
+
+
+/* ============ HELPERS ============ */
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+
+
+
+/* ============ COLORING ENGINE DATA (pulled from Arcana Coloring Book AI) ============ */
+const THEMES = [
+  "Dark Goddess Oracle", "Crystal Witch Deck", "Gothic Shadow Tarot", "Botanical Grimoire Oracle",
+  "Deep Current Oracle", "Bone & Bloom Tarot", "Storm Witch Tarot", "Wildwood Folk Oracle",
+  "Celestial Cartography Oracle", "Insect Alchemy Oracle", "Antique Anatomy Tarot"
+];
+const LINE_STYLES = [
+  "Fine Detail Mandala", "Bold Simple Outline", "Intricate Zentangle Fill", "Botanical Line Engraving",
+  "Sacred Geometry Line Art", "Whimsical Doodle Line Art", "Art Nouveau Line Art", "Gothic Ink Linework"
+];
+const COMPLEXITY_LEVELS = ["Beginner / Kids", "Moderate Detail", "Advanced / Intricate"];
+
+
+
+
+const SUBJECT_FOCUSES = ["Human Figure", "Animal Totem", "Mythical Creature", "Symbolic Object", "Landscape / Scene"];
+const BORDER_TREATMENTS = [
+  "Single Clean Border", "Corner Flourish Border", "No Border — Free Floating", "Thin Double Border",
+  "Motif-Centered Border", "Open Caption Band", "Rounded Corner Border", "Dashed Accent Border"
+];
+const PRINT_FORMATS = ["Tarot Card (2.75 × 4.75in)", "Poker Card (2.5 × 3.5in)", "Single Sheet (Full Page)"];
+
+
+
+
+/* ============ REASONING BANKS ============ */
+const REASON_OPENERS = [
+  "This combination works because",
+  "This pairing lands well since",
+  "These three elements reinforce each other because",
+  "This is a strong starting point because"
+];
+const REASON_MIDDLES_BY_COMPLEXITY = {
+  "Beginner / Kids": [
+    "the simpler linework keeps this theme approachable for a younger or first-time coloring audience",
+    "bold, clear shapes make this theme's imagery easy to color quickly without frustration",
+    "this combination works well for a gift-shop or classroom-style listing aimed at beginners"
+  ],
+  "Moderate Detail": [
+    "the balanced detail level suits this theme without overwhelming a casual colorist",
+    "this pairing hits the sweet spot most adult coloring buyers are actually looking for",
+    "the moderate complexity keeps sessions relaxing rather than tedious for this theme's audience"
+  ],
+  "Advanced / Intricate": [
+    "the dense detail rewards the kind of long, focused session this theme's mood already invites",
+    "collectors in the intricate-coloring niche specifically search for combinations like this one",
+    "the intricate linework matches the depth and richness already implied by this theme"
+  ]
+};
+const REASON_CLOSERS = [
+  "— worth testing as a standalone listing.",
+  "— a strong candidate for a themed bundle.",
+  "— likely to stand out in this specific niche's search results.",
+  "— a combination with genuine repeat-buyer potential."
+];
+const THEME_INSIGHTS = {
+  "Dark Goddess Oracle": "its veiled goddesses and lunar shrines translate cleanly into line art, keeping the mood while staying simple to ink",
+  "Crystal Witch Deck": "raw crystals and altar objects give the eye clear, bounded shapes to settle on",
+  "Gothic Shadow Tarot": "wrought iron and candlelit silhouettes are naturally high-contrast, so they read well in black and white",
+  "Botanical Grimoire Oracle": "herbal specimens and labeled jars are a natural fit for ink illustration",
+  "Deep Current Oracle": "coral and jellyfish forms invite curving, flowing lines that feel at home in the deep-sea dark",
+  "Bone & Bloom Tarot": "the contrast of hard bone with soft blossoms gives every page two distinct textures to play with",
+  "Storm Witch Tarot": "wind-torn cloaks and storm glass give the linework natural drama without needing any color",
+  "Wildwood Folk Oracle": "moss, stone, and antlers read instantly in silhouette, making the imagery forgiving to render",
+  "Celestial Cartography Oracle": "star charts and astrolabes are linework at their core — this theme was made for ink",
+  "Insect Alchemy Oracle": "wings, pins, and specimen labels give the eye many small, well-defined areas to enjoy",
+  "Antique Anatomy Tarot": "engraved medical plates are historically ink drawings — the theme is already a line-art tradition"
+};
+
+
+
+
+/* ============ STATE ============ */
+const state = {
+  current: null,
+  locked: { theme: false, style: false, complexity: false },
+  history: [],
+  uniqueTriples: new Set(),
+  recentReasons: []
+};
+
+
+
+
+/* ============ DRAW ENGINE ============ */
+function drawTriple(avoidTriple){
+  for(let attempt = 0; attempt < 12; attempt++){
+    const triple = {
+      theme: pick(THEMES),
+      lineStyle: pick(LINE_STYLES),
+      complexity: pick(COMPLEXITY_LEVELS)
+    };
+    const key = triple.theme + '|' + triple.lineStyle + '|' + triple.complexity;
+    if(!avoidTriple || !state.uniqueTriples.has(key)) return triple;
+  }
+  return { theme: pick(THEMES), lineStyle: pick(LINE_STYLES), complexity: pick(COMPLEXITY_LEVELS) };
+}
+
+
+
+
+function buildReasoning(theme, lineStyle, complexity){
+  const opener = pick(REASON_OPENERS);
+  const middle = pick(REASON_MIDDLES_BY_COMPLEXITY[complexity]);
+  const insight = THEME_INSIGHTS[theme];
+  const closer = pick(REASON_CLOSERS);
+  const insightLine = insight ? ` ${insight}.` : '';
+  return `${opener} ${middle}${insightLine} ${closer}`;
+}
+
+
+
+
+function drawPairing(forcedComplexity){
+  const allLocked = state.locked.theme && state.locked.style && state.locked.complexity;
+  const triple = drawTriple(!allLocked);
+  const complexity = forcedComplexity || triple.complexity;
+  const theme = state.locked.theme && state.current ? state.current.theme : triple.theme;
+  const lineStyle = state.locked.style && state.current ? state.current.lineStyle : triple.lineStyle;
+  const resolvedComplexity = state.locked.complexity && state.current && !forcedComplexity ? state.current.complexity : complexity;
+  let reasoning = buildReasoning(theme, lineStyle, resolvedComplexity);
+  let guard = 0;
+  while(state.recentReasons.includes(reasoning) && guard < 12){
+    reasoning = buildReasoning(theme, lineStyle, resolvedComplexity);
+    guard++;
+  }
+  state.recentReasons.push(reasoning);
+  if(state.recentReasons.length > 24) state.recentReasons.shift();
+  return {
+    theme: theme,
+    lineStyle: lineStyle,
+    complexity: resolvedComplexity,
+    subject: pick(SUBJECT_FOCUSES),
+    border: pick(BORDER_TREATMENTS),
+    format: pick(PRINT_FORMATS),
+    reasoning: reasoning
+  };
+}
+
+
+
+
+/* ============ RENDER ============ */
+function renderPairing(pairing, pushHistory){
+  state.current = pairing;
+  document.getElementById('chipTheme').textContent = pairing.theme;
+  document.getElementById('chipStyle').textContent = pairing.lineStyle;
+  document.getElementById('chipComplexity').textContent = pairing.complexity;
+  document.getElementById('chipSubject').textContent = pairing.subject;
+  document.getElementById('chipBorder').textContent = pairing.border;
+  document.getElementById('chipFormat').textContent = pairing.format;
+  document.getElementById('reasonText').innerHTML = pairing.reasoning.replace(/\. —/g, '.</span><span style="color:var(--gold);"> —</span>');
+
+
+
+
+  renderLockStates();
+  if(pushHistory) pushToHistory(pairing);
+  renderSessionStats();
+
+
+
+
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+
+
+
+
+function renderLockStates(){
+  ['theme','style','complexity'].forEach(axis=>{
+    const wrap = document.getElementById('chipWrap' + axis.charAt(0).toUpperCase() + axis.slice(1));
+    wrap.classList.toggle('locked', !!state.locked[axis]);
+  });
+}
+
+
+
+
+/* ============ SESSION STATS ============ */
+function renderSessionStats(){
+  document.getElementById('sessionStats').innerHTML =
+    `<b>${state.uniqueTriples.size}</b> unique combinations drawn this session · <b>264</b> possible core combinations in total`;
+}
+
+
+
+
+/* ============ HISTORY ============ */
+function pushToHistory(pairing){
+  state.history.unshift(pairing);
+  if(state.history.length > 8) state.history.pop();
+  const key = pairing.theme + '|' + pairing.lineStyle + '|' + pairing.complexity;
+  state.uniqueTriples.add(key);
+  renderHistory();
+}
+
+
+
+
+function renderHistory(){
+  document.getElementById('historyEmpty').classList.add('hidden');
+  document.getElementById('historyList').innerHTML = state.history.map((p, i)=>
+    `<div class="history-item">
+      <span class="h-num">${i + 1}</span>
+      <span class="h-chips"><b>${escapeHtml(p.theme)}</b> · <b>${escapeHtml(p.lineStyle)}</b> · <i>${escapeHtml(p.complexity)}</i></span>
+      <button class="copy-btn" onclick="copyPairingText(${i})">Copy</button>
+    </div>`
+  ).join('');
+}
+
+
+
+
+function copyPairingText(i){
+  navigator.clipboard.writeText(pairingToText(state.history[i])).then(()=>showToast("Pairing copied to clipboard"));
+}
+
+
+
+
+function pairingToText(p){
+  const lines = [];
+  lines.push('ARCANA COMPLEXITY PAIRING ORACLE — draw');
+  lines.push('Theme: ' + p.theme);
+  lines.push('Line style: ' + p.lineStyle);
+  lines.push('Complexity: ' + p.complexity);
+  lines.push('Subject focus: ' + p.subject + ' · Border: ' + p.border + ' · Print format: ' + p.format);
+  lines.push('Why it works: ' + p.reasoning);
+  return lines.join('\n');
+}
+
+
+
+
+/* ============ LOCK MECHANIC ============ */
+function toggleLock(axis){
+  state.locked[axis] = !state.locked[axis];
+  renderLockStates();
+  showToast(axis.charAt(0).toUpperCase() + axis.slice(1) + (state.locked[axis] ? ' locked — stays fixed on the next draw' : ' unlocked — will re-roll again'));
+}
+
+
+
+
+/* ============ DRAW ACTIONS ============ */
+document.getElementById('drawBtn').addEventListener('click', ()=>{
+  renderPairing(drawPairing(null), true);
+  showToast("A fresh pairing drawn");
+});
+
+
+
+
+document.getElementById('drawAgainBtn').addEventListener('click', ()=>{
+  renderPairing(drawPairing(null), true);
+  showToast("Another pairing drawn");
+});
+
+
+
+
+/* ============ BATCH DRAW (bundle plan) ============ */
+let lastBatch = null;
+document.getElementById('batchBtn').addEventListener('click', ()=>{
+  const levels = [...COMPLEXITY_LEVELS];
+  for(let i = levels.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [levels[i], levels[j]] = [levels[j], levels[i]]; }
+  const pairings = levels.map(level => drawPairing(level));
+  lastBatch = pairings;
+  document.getElementById('batchGrid').innerHTML = pairings.map((p, i)=>
+    `<div class="batch-item">
+      <div class="b-label">Set ${String.fromCharCode(65 + i)} — ${escapeHtml(p.complexity)}</div>
+      <div class="b-val">${escapeHtml(p.theme)}</div>
+      <div class="b-val light">${escapeHtml(p.lineStyle)} · ${escapeHtml(p.subject)} · ${escapeHtml(p.format)}</div>
+      <div class="b-reason">${escapeHtml(p.reasoning)}</div>
+      <button class="copy-btn" onclick="copyBatchText(${i})">Copy</button>
+    </div>`
+  ).join('');
+  document.getElementById('batchGrid').classList.remove('hidden');
+  pairings.forEach(p=>pushToHistory(p));
+  renderSessionStats();
+  showToast("Bundle plan drawn — one set per complexity level");
+});
+
+
+
+
+function copyBatchText(i){
+  if(!lastBatch) return;
+  navigator.clipboard.writeText(pairingToText(lastBatch[i])).then(()=>showToast("Set " + String.fromCharCode(65 + i) + " copied to clipboard"));
+}
+
+
+
+
+/* ============ COPY CURRENT PAIRING ============ */
+document.getElementById('copyPairingBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  navigator.clipboard.writeText(pairingToText(state.current)).then(()=>{
+    const btn = document.getElementById('copyPairingBtn');
+    btn.textContent = "Copied ✓";
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = "📋 Copy pairing"; btn.classList.remove('copied'); }, 1600);
+  });
+});
+
+
+
+
+/* ============ EXPORT SESSION ============ */
+function download(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+document.getElementById('exportSessionBtn').addEventListener('click', ()=>{
+  if(state.history.length === 0) return;
+  const lines = [];
+  lines.push('ARCANA COMPLEXITY PAIRING ORACLE — SESSION EXPORT');
+  lines.push('Unique combinations drawn: ' + state.uniqueTriples.size + ' / 264');
+  lines.push('');
+  [...state.history].reverse().forEach((p, i)=>{
+    lines.push('DRAW ' + (i + 1));
+    lines.push(pairingToText(p));
+    lines.push('');
+  });
+  download('arcana-pairing-session.txt', lines.join('\n'), 'text/plain');
+});
+</script>
+</body>
+</html>
