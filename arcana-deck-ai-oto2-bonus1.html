@@ -1,0 +1,597 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Spread Generator — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#12140F; --panel:#1C2018; --panel-2:#262B1E;
+    --gold:#B8874A; --gold-dim:#8A6636;
+    --amethyst:#3F7A6E; --amethyst-soft:#5FA394;
+    --parchment:#E8E0C8; --parchment-dim:#A89B7C;
+    --blood:#7A3B2A;
+    --line:rgba(184,135,74,0.22); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(63,122,110,0.25), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(184,135,74,0.10), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:980px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(184,135,74,0.12), rgba(63,122,110,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:620px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+
+
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative; margin-bottom:28px;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .step-head{margin-bottom:24px;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:640px;}
+
+
+
+
+  .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;}
+  .choice-card{border:1px solid var(--line); border-radius:3px; padding:16px 14px; background:rgba(0,0,0,0.15); cursor:pointer; transition:all .18s ease; text-align:left; position:relative;}
+  .choice-card:hover{border-color:var(--amethyst-soft); background:rgba(63,122,110,0.08);}
+  .choice-card.selected{border-color:var(--gold); background:rgba(184,135,74,0.09);}
+  .choice-card.selected::after{content:"✓"; position:absolute; top:9px; right:10px; color:var(--gold); font-size:12px;}
+  .choice-icon{font-size:20px; margin-bottom:8px; display:block;}
+  .choice-name{font-family:'Cinzel',serif; font-size:13.5px; color:var(--parchment); margin-bottom:4px; line-height:1.3;}
+  .choice-meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); line-height:1.5;}
+
+
+
+
+  .btn-row{display:flex; gap:14px; margin-top:30px; align-items:center; flex-wrap:wrap;}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:14px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-primary{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-primary:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(184,135,74,0.25);}
+  .btn-primary:disabled{opacity:0.35; cursor:not-allowed; filter:none; box-shadow:none;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-small{font-size:11px; padding:8px 16px;}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft);}
+  .btn-dice:hover{background:rgba(63,122,110,0.12); color:var(--parchment);}
+
+
+
+
+  .results-toolbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .spread-meta{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--parchment-dim); line-height:1.7;}
+  .spread-meta b{color:var(--gold);}
+  .fe-tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:10px; padding:2px 9px; margin-left:8px; vertical-align:middle;}
+
+
+
+
+  .caption-box{margin-bottom:22px; padding:16px 18px; background:rgba(184,135,74,0.06); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:2px;}
+  .caption-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px;}
+  .caption-text{font-family:'EB Garamond',serif; font-size:16px; font-style:italic; color:var(--parchment); margin-bottom:12px; line-height:1.5;}
+  .caption-actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+
+
+
+
+  .card-list{display:flex; flex-direction:column; gap:12px;}
+  .card-item{border:1px solid var(--line); border-radius:4px; background:rgba(0,0,0,0.18); overflow:hidden;}
+  .card-item-head{display:flex; justify-content:space-between; align-items:center; padding:13px 18px; cursor:pointer; gap:12px;}
+  .card-item-head:hover{background:rgba(184,135,74,0.05);}
+  .card-title-block{display:flex; align-items:center; gap:12px; min-width:0;}
+  .card-badge{flex:0 0 auto; width:30px; height:42px; border:1px solid var(--gold-dim); border-radius:2px; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:11px; color:var(--gold); background:rgba(184,135,74,0.06); text-align:center;}
+  .card-name{font-family:'Cinzel',serif; font-size:14.5px; color:var(--parchment);}
+  .card-subtitle{font-family:'EB Garamond',serif; font-size:12.5px; color:var(--amethyst-soft); font-style:italic; margin-top:2px;}
+  .chev{color:var(--parchment-dim); font-size:12px; transition:transform .2s ease; flex:0 0 auto;}
+  .card-item.open .chev{transform:rotate(90deg);}
+  .card-item-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .card-item.open .card-item-body{max-height:400px;}
+  .meaning-box{margin:0 18px 10px; padding:10px 16px; background:rgba(63,122,110,0.07); border:1px solid var(--line); border-left:3px solid var(--amethyst-soft); border-radius:2px; font-size:14px; line-height:1.55;}
+  .meaning-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:3px;}
+  .note-box{margin:0 18px 14px; padding:12px 16px; background:rgba(0,0,0,0.35); border:1px solid var(--line); border-radius:3px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; color:var(--parchment-dim);}
+  .note-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amethyst-soft); margin-bottom:4px;}
+
+
+
+
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:48px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+
+
+
+
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA DECK AI — MASTER EDITION BONUS · unlimited spread layouts, tuned for the full 78-card deck ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Spread Layout Engine</div>
+    <h1>Arcana <span>Spread</span> Generator</h1>
+    <p class="sub">Eight reading layouts for the full 78-card Tarot — pick a spread, get the positions, meanings, and layout notes, ready to post.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+
+
+
+  <div class="panel">
+    <div class="step-head">
+      <div class="step-kicker">Position I — Choose a Spread</div>
+      <div class="step-title">Select your reading layout</div>
+      <div class="step-desc">Each spread defines where cards are laid and what every position means. Built for the 78-card structure unlocked in the Master Edition.</div>
+    </div>
+    <div class="grid-cards" id="spreadChoices"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="generateBtn" disabled>✦ Generate This Spread</button>
+    </div>
+  </div>
+
+
+
+
+  <section class="panel hidden" id="results">
+    <div class="results-toolbar">
+      <div class="spread-meta" id="spreadMeta"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-dice btn-small" id="regenNotesBtn">🎲 Regenerate drawing notes</button>
+        <button class="btn btn-ghost btn-small" id="copyFullBtn">Copy full spread</button>
+        <button class="btn btn-ghost btn-small" id="exportTxtBtn">Export .txt</button>
+      </div>
+    </div>
+    <div class="caption-box" id="captionBox">
+      <div class="lbl">Ready-to-post caption</div>
+      <div class="caption-text" id="captionText"></div>
+      <div class="caption-actions">
+        <button class="copy-btn" id="newCaptionBtn">🎲 New caption</button>
+        <button class="copy-btn" id="copyCaptionBtn">Copy caption</button>
+      </div>
+    </div>
+    <div class="card-list" id="positionList"></div>
+  </section>
+  <footer class="note">ARCANA SPREAD GENERATOR — MASTER EDITION BONUS · 8 spreads · infinite layouts · tuned for the full 78-card deck</footer>
+</div>
+
+
+
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+
+
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(184,135,74,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+
+
+
+/* ============ HELPERS ============ */
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+
+
+
+/* ============ SPREADS DATA ============ */
+const SPREADS = {
+  "three-card": {
+    label: "Past, Present, Future",
+    cardCount: 3,
+    bestFor: "Quick daily pulls, social media posts",
+    positions: [
+      { name: "Past", meaning: "the root or origin of the situation" },
+      { name: "Present", meaning: "where things stand right now" },
+      { name: "Future", meaning: "where this is heading if nothing changes" }
+    ]
+  },
+  "celtic-cross": {
+    label: "Celtic Cross",
+    cardCount: 10,
+    bestFor: "Deep, comprehensive readings",
+    positions: [
+      { name: "The Heart of the Matter", meaning: "the core of the situation" },
+      { name: "The Challenge", meaning: "what's crossing or complicating it" },
+      { name: "The Foundation", meaning: "the deep root cause, often unconscious" },
+      { name: "The Recent Past", meaning: "what's just passed or is fading" },
+      { name: "The Best Outcome", meaning: "the highest potential if things go well" },
+      { name: "The Near Future", meaning: "what's coming next" },
+      { name: "Your Position", meaning: "how the querent sees themselves in this" },
+      { name: "External Influences", meaning: "outside people or forces at play" },
+      { name: "Hopes & Fears", meaning: "what's secretly wished for or dreaded" },
+      { name: "The Outcome", meaning: "where this is ultimately headed" }
+    ]
+  },
+  "relationship": {
+    label: "Relationship Spread",
+    cardCount: 5,
+    bestFor: "Romantic or close-relationship questions",
+    positions: [
+      { name: "You", meaning: "your energy in this connection" },
+      { name: "Them", meaning: "their energy in this connection" },
+      { name: "The Connection", meaning: "what binds you together right now" },
+      { name: "The Challenge", meaning: "what's straining the relationship" },
+      { name: "The Potential", meaning: "where this could go" }
+    ]
+  },
+  "decision": {
+    label: "Decision-Making Spread",
+    cardCount: 4,
+    bestFor: "Choosing between two paths",
+    positions: [
+      { name: "The Situation", meaning: "the decision itself, stripped of noise" },
+      { name: "Option A", meaning: "the likely outcome of the first path" },
+      { name: "Option B", meaning: "the likely outcome of the second path" },
+      { name: "What You Need to Know", meaning: "the missing piece that clarifies the choice" }
+    ]
+  },
+  "single-card": {
+    label: "Single Card Pull",
+    cardCount: 1,
+    bestFor: "Daily draw, quick reflection",
+    positions: [
+      { name: "Today's Card", meaning: "the theme or lesson for the day" }
+    ]
+  },
+  "year-ahead": {
+    label: "Year Ahead Spread",
+    cardCount: 12,
+    bestFor: "New Year readings, annual overviews",
+    positions: [
+      { name: "January", meaning: "the energy opening the year" },
+      { name: "February", meaning: "the energy shaping this month" },
+      { name: "March", meaning: "the energy shaping this month" },
+      { name: "April", meaning: "the energy shaping this month" },
+      { name: "May", meaning: "the energy shaping this month" },
+      { name: "June", meaning: "the energy shaping this month" },
+      { name: "July", meaning: "the energy shaping this month" },
+      { name: "August", meaning: "the energy shaping this month" },
+      { name: "September", meaning: "the energy shaping this month" },
+      { name: "October", meaning: "the energy shaping this month" },
+      { name: "November", meaning: "the energy shaping this month" },
+      { name: "December", meaning: "the energy closing the year" }
+    ]
+  },
+  "shadow-work": {
+    label: "Shadow Work Spread",
+    cardCount: 5,
+    bestFor: "Inner work, self-reflection content",
+    positions: [
+      { name: "The Mask", meaning: "what you show the world" },
+      { name: "The Shadow", meaning: "what's hidden or denied" },
+      { name: "The Trigger", meaning: "what brings the shadow to the surface" },
+      { name: "The Gift", meaning: "what the shadow is trying to teach you" },
+      { name: "Integration", meaning: "how to move toward wholeness" }
+    ]
+  },
+  "career": {
+    label: "Career Path Spread",
+    cardCount: 5,
+    bestFor: "Work and career-focused content",
+    positions: [
+      { name: "Current Position", meaning: "where you stand professionally right now" },
+      { name: "Obstacles", meaning: "what's in the way of progress" },
+      { name: "Strengths", meaning: "what's working in your favor" },
+      { name: "Advice", meaning: "guidance for the next move" },
+      { name: "Potential Outcome", meaning: "where this path leads" }
+    ]
+  }
+};
+
+
+
+
+/* ============ DRAWING NOTE ENGINE ============ */
+const NOTE_BANKS = {
+  verbs: ["Lay", "Place", "Position", "Set", "Put"],
+  immediacy: ["directly", "immediately", "neatly", "right", "carefully"]
+};
+
+
+
+
+function buildDrawingNotes(spreadKey, spread){
+  const positions = spread.positions;
+  const n = positions.length;
+  const notes = [];
+  for(let i = 0; i < n; i++){
+    notes.push(buildNoteFor(spreadKey, spread, i));
+  }
+  return notes;
+}
+
+
+
+
+function buildNoteFor(spreadKey, spread, i){
+  const v = pick(NOTE_BANKS.verbs);
+  const adv = pick(NOTE_BANKS.immediacy);
+  const n = spread.positions.length;
+
+
+
+
+  if(spreadKey === 'celtic-cross'){
+    const crossNotes = [
+      `${v} this card face-down in the exact center of the reading space — it anchors the entire spread`,
+      `${v} this card horizontally across the Heart of the Matter, slightly overlapping — it crosses it, forming the classic cross`,
+      `${v} this card ${adv} below the center card, beneath the crossing card`,
+      `${v} this card to the left of the center card, extending the arm of the cross`,
+      `${v} this card ${adv} above the center card, completing the vertical line`,
+      `${v} this card to the right of the center card — the cross is complete, and the staff begins here`,
+      `${v} this card to the right of the cross, at the bottom of the staff — the first of four stacked cards`,
+      `${v} this card above the previous one — the second card in the staff column`,
+      `${v} this card above the previous one — third in the staff column`,
+      `${v} this card at the top of the staff, ending the column — read the staff from bottom to top`
+    ];
+    return crossNotes[i];
+  }
+
+
+
+
+  if(spreadKey === 'single-card'){
+    return `${v} this single card in the center of your reading space — one card, one focus`;
+  }
+
+
+
+
+  if(spreadKey === 'year-ahead'){
+    const rowAdj = ["top row", "second row", "third row"][Math.floor(i / 4)];
+    const colPos = ["first column", "second column", "third column", "fourth column"][i % 4];
+    return `${v} this card in the ${rowAdj} of a 3-row grid, ${colPos} from the left — the year reads top-left to bottom-right`;
+  }
+
+
+
+
+  // Generic sequential spreads: left-to-right row
+  if(i === 0){
+    return `${v} this card first — it opens the spread, reading left to right`;
+  }
+  if(i === n - 1){
+    return `${v} this card last — it closes the spread`;
+  }
+  return `${v} this card to the right of the previous one, ${adv} aligned with the row`;
+}
+
+
+
+
+/* ============ SOCIAL CAPTIONS ============ */
+const SOCIAL_CAPTIONS = [
+  "Pulled a {spread} today and here's what came up ✨",
+  "Sat down with the cards for a {spread} — swipe to see the full reading",
+  "Today's {spread}, no filter, just the cards",
+  "A {spread} for anyone who needs this today",
+  "Slow morning, deep cards — here's my {spread}"
+];
+
+
+
+
+function makeCaption(spreadLabel){
+  return pick(SOCIAL_CAPTIONS).replace('{spread}', spreadLabel);
+}
+
+
+
+
+/* ============ STATE ============ */
+const state = {
+  selectedSpread: null,
+  current: null, // { key, data, notes, caption }
+};
+
+
+
+
+/* ============ RENDER SPREAD CHOICES ============ */
+function renderSpreadChoices(){
+  document.getElementById('spreadChoices').innerHTML = Object.entries(SPREADS).map(([key, s])=>
+    `<div class="choice-card ${state.selectedSpread===key?'selected':''}" data-spread="${key}"><div class="choice-name">${s.label}</div><div class="choice-meta">${s.cardCount} cards<br>${s.bestFor}</div></div>`
+  ).join('');
+  document.querySelectorAll('#spreadChoices .choice-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      document.querySelectorAll('#spreadChoices .choice-card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected');
+      state.selectedSpread = card.dataset.spread;
+      document.getElementById('generateBtn').disabled = false;
+    });
+  });
+}
+renderSpreadChoices();
+
+
+
+
+/* ============ GENERATE ============ */
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  const key = state.selectedSpread;
+  if(!key) return;
+  const data = SPREADS[key];
+  state.current = {
+    key: key,
+    data: data,
+    notes: buildDrawingNotes(key, data),
+    caption: makeCaption(data.label)
+  };
+  renderResults();
+  showToast("Spread generated — " + data.label);
+});
+
+
+
+
+/* ============ RENDER RESULTS ============ */
+function renderResults(){
+  const cur = state.current;
+  if(!cur) return;
+  const list = document.getElementById('positionList');
+  list.innerHTML = cur.data.positions.map((pos, i)=>{
+    return `
+    <div class="card-item" id="pos-${i}">
+      <div class="card-item-head" onclick="togglePos(${i})">
+        <div class="card-title-block">
+          <div class="card-badge">${i + 1}</div>
+          <div>
+            <div class="card-name">${escapeHtml(pos.name)}</div>
+            <div class="card-subtitle">${escapeHtml(pos.meaning)}</div>
+          </div>
+        </div>
+        <div class="chev">▶</div>
+      </div>
+      <div class="card-item-body">
+        <div class="note-box">
+          <div class="lbl">Drawing note</div>
+          ${escapeHtml(cur.notes[i])}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+
+
+
+  document.getElementById('captionText').textContent = cur.caption;
+  document.getElementById('spreadMeta').innerHTML =
+    `<b>${escapeHtml(cur.data.label)}</b> · <b>${cur.data.positions.length}</b> cards · <b>${escapeHtml(cur.data.bestFor)}</b><span class="fe-tag">BONUS</span>`;
+
+
+
+
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+
+
+
+function togglePos(i){
+  document.getElementById('pos-'+i).classList.toggle('open');
+}
+
+
+
+
+/* ============ CAPTION ACTIONS ============ */
+document.getElementById('newCaptionBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  state.current.caption = makeCaption(state.current.data.label);
+  document.getElementById('captionText').textContent = state.current.caption;
+  showToast("Fresh caption pulled");
+});
+
+
+
+
+document.getElementById('copyCaptionBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  navigator.clipboard.writeText(state.current.caption).then(()=>{
+    const btn = document.getElementById('copyCaptionBtn');
+    btn.textContent = "Copied ✓";
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = "Copy caption"; btn.classList.remove('copied'); }, 1600);
+  });
+});
+
+
+
+
+/* ============ REGENERATE DRAWING NOTES ============ */
+document.getElementById('regenNotesBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  state.current.notes = buildDrawingNotes(state.current.key, state.current.data);
+  renderResults();
+  showToast("Drawing notes regenerated");
+});
+
+
+
+
+/* ============ COPY FULL SPREAD ============ */
+document.getElementById('copyFullBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  const text = buildPlainText();
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copyFullBtn');
+    btn.textContent = "Copied ✓";
+    setTimeout(()=>btn.textContent="Copy full spread", 1600);
+  });
+});
+
+
+
+
+function buildPlainText(){
+  const cur = state.current;
+  const lines = [];
+  lines.push(cur.data.label.toUpperCase() + ' — ' + cur.data.positions.length + ' cards');
+  lines.push('Best for: ' + cur.data.bestFor);
+  lines.push('');
+  cur.data.positions.forEach((pos, i)=>{
+    lines.push((i+1) + '. ' + pos.name + ' — ' + pos.meaning);
+    lines.push('   Draw: ' + cur.notes[i]);
+  });
+  lines.push('');
+  lines.push('Caption: ' + cur.caption);
+  return lines.join('\n');
+}
+
+
+
+
+/* ============ EXPORT ============ */
+function download(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  download('arcana-spread-' + state.current.key + '.txt', buildPlainText(), 'text/plain');
+});
+</script>
+</body>
+</html>
