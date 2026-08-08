@@ -1,0 +1,658 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Coloring Listing Forge — OTO3 Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0D0D10; --panel:#18181C; --panel-2:#212126;
+    --gold:#E8E4D8; --gold-dim:#B5B0A0;
+    --amethyst:#8B3A3A; --amethyst-soft:#B85C5C;
+    --parchment:#F2EFE6; --parchment-dim:#9C9890;
+    --blood:#5A2626;
+    --line:rgba(232,228,216,0.18); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(139,58,58,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(232,228,216,0.06), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:980px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(232,228,216,0.10), rgba(139,58,58,0.07)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:640px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+
+
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative; margin-bottom:28px;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .step-head{margin-bottom:26px;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:640px;}
+
+
+
+
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 22px;}
+  @media (max-width:720px){ .form-grid{grid-template-columns:1fr;} }
+  .field{margin-bottom:20px;}
+  .field.full{grid-column:1 / -1;}
+  .field-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:9px; display:block;}
+  input[type=text],select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:12px 14px; border-radius:3px;}
+  input[type=text]:focus,select:focus{outline:none; border-color:var(--gold);}
+  select{appearance:none; -webkit-appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold-dim) 50%),linear-gradient(135deg, var(--gold-dim) 50%, transparent 50%); background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer;}
+  select option{background:var(--panel-2); color:var(--parchment);}
+  .hint{font-size:12.5px; color:var(--parchment-dim); margin-top:7px; font-style:italic;}
+
+
+
+
+  .btn-row{display:flex; gap:14px; margin-top:24px; align-items:center; flex-wrap:wrap;}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:14px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-primary{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-primary:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(232,228,216,0.20);}
+  .btn-primary:disabled{opacity:0.35; cursor:not-allowed; filter:none; box-shadow:none;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-small{font-size:11px; padding:8px 16px;}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft);}
+  .btn-dice:hover{background:rgba(139,58,58,0.12); color:var(--parchment);}
+
+
+
+
+  .results-toolbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:22px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .listing-meta{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--parchment-dim); line-height:1.7;}
+  .listing-meta b{color:var(--gold);}
+  .fe-tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:10px; padding:2px 9px; margin-left:8px; vertical-align:middle;}
+
+
+
+
+  .block{margin-bottom:26px;}
+  .block-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;}
+  .block-head .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim);}
+  .block-note{font-size:12px; color:var(--parchment-dim); font-style:italic;}
+
+
+
+
+  .title-option{display:flex; align-items:center; gap:12px; border:1px solid var(--line); border-radius:3px; padding:12px 16px; margin-bottom:10px; background:rgba(0,0,0,0.15);}
+  .title-num{flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:1px solid var(--gold-dim); display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:12px; color:var(--gold); background:rgba(232,228,216,0.05);}
+  .title-text{flex:1; font-size:15px; line-height:1.45; color:var(--parchment); min-width:0;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer; flex:0 0 auto;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+
+
+
+
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag-chip{font-family:'JetBrains Mono',monospace; font-size:11px; padding:6px 12px; border:1px solid var(--line); border-radius:14px; color:var(--parchment-dim); background:rgba(0,0,0,0.15);}
+  .tag-chip b{color:var(--gold); font-weight:500;}
+
+
+
+
+  .desc-box{padding:16px 18px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:3px; font-size:15px; line-height:1.75; color:var(--parchment-dim); white-space:pre-wrap;}
+
+
+
+
+  .price-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  @media (max-width:720px){ .price-row{grid-template-columns:1fr;} }
+  .price-tier{border:1px solid var(--line); border-radius:4px; padding:18px 16px; text-align:center; background:rgba(0,0,0,0.15); position:relative;}
+  .price-tier.recommended{border-color:var(--gold); background:rgba(232,228,216,0.06); box-shadow:0 0 0 3px rgba(232,228,216,0.08);}
+  .price-lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--parchment-dim); margin-bottom:8px;}
+  .price-num{font-family:'Cinzel',serif; font-size:34px; color:var(--gold); margin-bottom:4px;}
+  .price-num small{font-size:16px; color:var(--gold-dim);}
+  .price-desc{font-size:12.5px; color:var(--parchment-dim); line-height:1.55; font-style:italic;}
+  .rec-tag{position:absolute; top:-9px; left:50%; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:var(--void); background:var(--gold); border-radius:8px; padding:2px 10px; text-transform:uppercase; font-weight:500;}
+
+
+
+
+  .bundle-note{margin-top:18px; padding:14px 18px; background:rgba(139,58,58,0.06); border:1px solid var(--line); border-left:3px solid var(--amethyst-soft); border-radius:2px; display:flex; align-items:flex-start; gap:14px;}
+  .bundle-note .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amethyst-soft); flex:0 0 auto; padding-top:3px;}
+  .bundle-note .bundle-text{flex:1; font-size:14px; line-height:1.6; color:var(--parchment-dim);}
+
+
+
+
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:48px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+
+
+
+
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA COLORING BOOK AI BONUS · unlimited coloring-niche listings, never the same twice ✦</div>
+  <header class="top">
+    <div class="eyebrow">OTO3 Bonus — Etsy &amp; Marketplace Listing Engine</div>
+    <h1>Arcana <span>Coloring</span> Listing Forge</h1>
+    <p class="sub">Etsy-ready titles, 13 niche tags, a full listing description, and pricing tiers — tuned for the stress-relief, mindfulness, and self-care coloring buyer, not the divination buyer.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+
+
+
+  <div class="panel">
+    <div class="step-head">
+      <div class="step-kicker">Listing Input</div>
+      <div class="step-title">Describe your coloring product</div>
+      <div class="step-desc">Feed in the basics — the forge returns four title options, 13 deduplicated tags, a complete description, and pricing tiers benchmarked to the coloring niche.</div>
+    </div>
+    <div class="form-grid">
+      <div class="field full">
+        <label class="field-label">Deck / product name</label>
+        <input type="text" id="prodName" placeholder="e.g. Moonlit Garden Tarot Coloring Set">
+      </div>
+      <div class="field">
+        <label class="field-label">Product type</label>
+        <select id="prodType">
+          <option>Tarot Coloring Set</option>
+          <option>Oracle Coloring Set</option>
+          <option>Adult Coloring Card Pack</option>
+          <option>Mindfulness Coloring Cards</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Complexity level</label>
+        <select id="complexity">
+          <option>Beginner / Kids</option>
+          <option>Moderate Detail</option>
+          <option>Advanced / Intricate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Format</label>
+        <select id="format">
+          <option>Digital Download (PDF)</option>
+          <option>Printed &amp; Shipped</option>
+          <option>Both Available</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Style / mood keywords</label>
+        <input type="text" id="styleKeywords" placeholder="e.g. gothic, celestial, cozy">
+      </div>
+      <div class="field">
+        <label class="field-label">Card count</label>
+        <input type="text" id="cardCount" placeholder="e.g. 22">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="generateBtn">✦ Generate Listing</button>
+    </div>
+  </div>
+
+
+
+
+  <section class="panel hidden" id="results">
+    <div class="results-toolbar">
+      <div class="listing-meta" id="listingMeta"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-dice btn-small" id="regenBtn">🎲 Regenerate</button>
+        <button class="btn btn-ghost btn-small" id="copyAllBtn">Copy all</button>
+        <button class="btn btn-ghost btn-small" id="exportTxtBtn">Export .txt</button>
+      </div>
+    </div>
+
+
+
+
+    <div class="block">
+      <div class="block-head">
+        <div class="lbl">Title options</div>
+        <span class="block-note">pick one — copy, edit, paste into your listing</span>
+      </div>
+      <div id="titleOptions"></div>
+    </div>
+
+
+
+
+    <div class="block">
+      <div class="block-head">
+        <div class="lbl">Tags (13)</div>
+        <button class="copy-btn" id="copyTagsBtn">Copy tags</button>
+      </div>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+
+
+
+
+    <div class="block">
+      <div class="block-head">
+        <div class="lbl">Description</div>
+        <button class="copy-btn" id="copyDescBtn">Copy description</button>
+      </div>
+      <div class="desc-box" id="descBox"></div>
+    </div>
+
+
+
+
+    <div class="block">
+      <div class="block-head">
+        <div class="lbl">Pricing tiers</div>
+        <span class="block-note">coloring-niche benchmarks — this market sells well in bundles</span>
+      </div>
+      <div class="price-row" id="priceTiers"></div>
+      <div class="bundle-note">
+        <div class="lbl">Bundle suggestion</div>
+        <div class="bundle-text" id="bundleNote"></div>
+        <button class="copy-btn" id="newBundleBtn">🎲</button>
+      </div>
+    </div>
+  </section>
+  <footer class="note">ARCANA COLORING LISTING FORGE — OTO3 BONUS · wellness-niche tuned · 4 title options · 13 tags · pricing tiers · bundle suggestions</footer>
+</div>
+
+
+
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+
+
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(232,228,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+
+
+
+/* ============ HELPERS ============ */
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ for(let i = arr.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+
+
+
+/* ============ TITLE BANKS ============ */
+const TITLE_HOOKS = [
+  "Printable", "Instant Download", "Digital", "Relaxing", "Therapeutic",
+  "Mindful", "Stress-Relief", "Hand-Illustrated Style", "Detailed", "Beginner-Friendly"
+];
+const TITLE_BENEFITS = [
+  "Perfect for Stress Relief & Relaxation", "Great Mindfulness Activity", "Ideal for Self-Care Time",
+  "Perfect Gift for Coloring Enthusiasts", "A Calming Creative Outlet", "Great for Anxiety Relief",
+  "Perfect for Meditation & Focus", "Wonderful Screen-Free Activity", "Ideal for Adults & Teens Alike"
+];
+
+
+
+
+/* ============ TAG BANKS ============ */
+const TAG_BASE_SETS = {
+  "Tarot Coloring Set": ["tarot coloring", "adult coloring", "printable coloring", "coloring pages", "stress relief", "mindfulness gift", "relaxation gift", "coloring book", "digital coloring", "instant download", "coloring cards", "art therapy", "self care gift"],
+  "Oracle Coloring Set": ["oracle coloring", "adult coloring", "printable coloring", "coloring pages", "spiritual coloring", "mindfulness gift", "relaxation gift", "coloring book", "digital coloring", "instant download", "coloring cards", "art therapy", "self care gift"],
+  "Adult Coloring Card Pack": ["adult coloring", "printable coloring", "coloring cards", "coloring pages", "stress relief", "relaxation gift", "detailed coloring", "digital coloring", "instant download", "art therapy", "mindfulness gift", "self care gift", "coloring set"],
+  "Mindfulness Coloring Cards": ["mindfulness coloring", "adult coloring", "printable coloring", "meditation cards", "anxiety relief", "relaxation gift", "coloring pages", "digital coloring", "instant download", "art therapy", "self care gift", "coloring cards", "calming activity"]
+};
+
+
+
+
+/* ============ DESCRIPTION BANKS ============ */
+const DESC_OPENERS = [
+  "Slow down, breathe, and let your hands do the thinking for a while.",
+  "Sometimes the best way to quiet a busy mind is a pencil and a blank line.",
+  "This set was made for the quiet, screen-free moments your day is missing.",
+  "Coloring isn't just for kids — it's one of the simplest ways to actually relax.",
+  "A little creative stillness, whenever you need it."
+];
+const DESC_MIDS = [
+  "Each page is designed with clean, satisfying linework — detailed enough to hold your focus, open enough to stay relaxing rather than stressful.",
+  "Whether you reach for colored pencils, markers, or gel pens, these pages are built to hold up to your favorite medium.",
+  "Perfect for a quiet evening, a study break, or anywhere you want a screen-free way to unwind.",
+  "Print as many times as you like — this is a digital set, so a mistake or a page you love twice is never a problem.",
+  "Designed to be genuinely relaxing to color, not just pretty to look at."
+];
+const DESC_CLOSERS = [
+  "Grab your favorite coloring tools and give yourself a few minutes of quiet today.",
+  "A small, easy way to build a little calm into your week.",
+  "The perfect gift for anyone who could use a reason to slow down.",
+  "However you use it — solo, with friends, before bed — we hope it brings you some quiet.",
+  "Ready whenever you are. No pressure, no deadline, just color."
+];
+const FORMAT_TEXT = {
+  "Digital Download (PDF)": "Instant download — a PDF arrives right after purchase, ready to print at home on whatever paper you prefer, as many times as you like.",
+  "Printed & Shipped": "Printed on quality paper and shipped to your door — a finished set, ready to color the moment it arrives.",
+  "Both Available": "Available as both an instant digital download and a printed, shipped set — choose whichever fits the way you like to color."
+};
+const COMPLEXITY_TEXT = {
+  "Beginner / Kids": "beginner-friendly, with large clear shapes that new and young colorists can finish easily",
+  "Moderate Detail": "moderately detailed, with a satisfying balance of fine detail and open space",
+  "Advanced / Intricate": "intricate and detailed, for experienced colorists who want a long, focused session"
+};
+
+
+
+
+/* ============ PRICING & BUNDLES ============ */
+const PRICE_TIERS = {
+  "Tarot Coloring Set": [7, 12, 18],
+  "Oracle Coloring Set": [6, 11, 16],
+  "Adult Coloring Card Pack": [5, 9, 14],
+  "Mindfulness Coloring Cards": [5, 9, 14]
+};
+const TIER_LABELS = [
+  { pos: "Budget-friendly", desc: "entry price — easy impulse buy, great for first-time buyers" },
+  { pos: "Recommended", desc: "the sweet spot — best balance of value and margin" },
+  { pos: "Premium", desc: "premium positioning for the highest perceived value" }
+];
+const BUNDLE_NOTES = [
+  "Consider bundling this into a 10-card starter pack — this niche converts well on small bundles rather than single pages.",
+  "This niche's buyers often purchase multiple sets at once — consider a 'collect all themes' discount for repeat buyers.",
+  "A 20+ page bundle typically outperforms single-card listings in this category — consider combining several generated sets.",
+  "Seasonal bundles (a themed set released around a holiday) tend to outperform evergreen listings in this specific niche."
+];
+const DEFAULT_COUNTS = {
+  "Tarot Coloring Set": 22,
+  "Oracle Coloring Set": 12,
+  "Adult Coloring Card Pack": 10,
+  "Mindfulness Coloring Cards": 10
+};
+
+
+
+
+/* ============ GENERATION ENGINE ============ */
+function makeTitles(name, count){
+  const hooks = shuffle([...TITLE_HOOKS]);
+  const benefits = shuffle([...TITLE_BENEFITS]);
+  const typeLabel = document.getElementById('prodType').value;
+  return [
+    `${hooks[0]} ${name} — ${benefits[0]}`,
+    `${name} | ${hooks[1]} | ${benefits[1]}`,
+    `${count} ${hooks[2].toLowerCase()} ${typeLabel.toLowerCase()} pages — ${benefits[2]}`,
+    `${benefits[3]} · ${name} · ${hooks[3]}`
+  ];
+}
+
+
+
+
+function makeTags(type, name, keywords){
+  const base = [...TAG_BASE_SETS[type]];
+  const derived = [];
+  keywords.forEach(k => derived.push(k));
+  name.split(/\s+/).forEach(w => {
+    const t = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(t.length > 2) derived.push(t);
+  });
+  const rot = Math.floor(Math.random()*base.length);
+  const rotated = base.slice(rot).concat(base.slice(0, rot));
+  const merged = [];
+  const seen = new Set();
+  rotated.concat(derived).forEach(t => {
+    if(t && !seen.has(t)){ seen.add(t); merged.push(t); }
+  });
+  return merged.slice(0, 13);
+}
+
+
+
+
+function makeDescription(name, count, type, complexity, format, keywords){
+  const opener = pick(DESC_OPENERS);
+  const mid = pick(DESC_MIDS);
+  const closer = pick(DESC_CLOSERS);
+  const kwLine = keywords.length ? ', styled around: ' + keywords.join(', ') : '';
+  const body = `${opener} ${mid}\n\nThis listing is for ${count} ${type.toLowerCase()} pages — ${COMPLEXITY_TEXT[complexity]}${kwLine}.\n\n${FORMAT_TEXT[format]} ${closer}`;
+  return body;
+}
+
+
+
+
+/* ============ STATE ============ */
+const state = {
+  current: null // { name, type, complexity, format, keywords, count, titles, tags, desc, prices, bundleNote }
+};
+
+
+
+
+/* ============ GENERATE ============ */
+document.getElementById('generateBtn').addEventListener('click', generate);
+document.getElementById('regenBtn').addEventListener('click', generate);
+
+
+
+
+function generate(){
+  const type = document.getElementById('prodType').value;
+  const complexity = document.getElementById('complexity').value;
+  const format = document.getElementById('format').value;
+  const rawName = document.getElementById('prodName').value.trim();
+  const name = rawName || type;
+  const rawCount = document.getElementById('cardCount').value.trim();
+  const count = rawCount || DEFAULT_COUNTS[type];
+  const keywords = document.getElementById('styleKeywords').value.split(',').map(k=>k.trim()).filter(Boolean);
+
+
+
+
+  state.current = {
+    name: name,
+    type: type,
+    complexity: complexity,
+    format: format,
+    keywords: keywords,
+    count: count,
+    titles: makeTitles(name, count),
+    tags: makeTags(type, name, keywords),
+    desc: makeDescription(name, count, type, complexity, format, keywords),
+    prices: PRICE_TIERS[type],
+    bundleNote: pick(BUNDLE_NOTES)
+  };
+  renderResults();
+  showToast("Listing forged — " + name);
+}
+
+
+
+
+/* ============ RENDER RESULTS ============ */
+function renderResults(){
+  const cur = state.current;
+  if(!cur) return;
+
+
+
+
+  document.getElementById('listingMeta').innerHTML =
+    `<b>${escapeHtml(cur.name)}</b> · <b>${escapeHtml(cur.type)}</b> · <b>${escapeHtml(cur.complexity)}</b> · <b>${escapeHtml(cur.format)}</b> · <b>${cur.count} pages</b><span class="fe-tag">BONUS</span><br>commercial license included · wellness-niche vocabulary · every regeneration is completely unique`;
+
+
+
+
+  document.getElementById('titleOptions').innerHTML = cur.titles.map((t, i)=>
+    `<div class="title-option">
+      <span class="title-num">${i + 1}</span>
+      <span class="title-text">${escapeHtml(t)}</span>
+      <button class="copy-btn" onclick="copyTitle(${i}, this)">Copy</button>
+    </div>`
+  ).join('');
+
+
+
+
+  document.getElementById('tagCloud').innerHTML = cur.tags.map(t=>
+    `<span class="tag-chip"><b>#</b>${escapeHtml(t)}</span>`
+  ).join('');
+
+
+
+
+  document.getElementById('descBox').textContent = cur.desc;
+
+
+
+
+  document.getElementById('priceTiers').innerHTML = cur.prices.map((price, i)=>{
+    const label = TIER_LABELS[i];
+    const rec = i === 1;
+    return `<div class="price-tier ${rec?'recommended':''}">
+      ${rec ? '<div class="rec-tag">Recommended</div>' : ''}
+      <div class="price-lbl">${label.pos}</div>
+      <div class="price-num"><small>$</small>${price}</div>
+      <div class="price-desc">${label.desc}</div>
+    </div>`;
+  }).join('');
+
+
+
+
+  document.getElementById('bundleNote').textContent = cur.bundleNote;
+
+
+
+
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+
+
+
+/* ============ COPY ACTIONS ============ */
+function flashCopy(btn, text){
+  btn.textContent = "Copied ✓";
+  btn.classList.add('copied');
+  setTimeout(()=>{ btn.textContent = text; btn.classList.remove('copied'); }, 1600);
+}
+
+
+
+
+function copyTitle(i, btn){
+  if(!state.current) return;
+  navigator.clipboard.writeText(state.current.titles[i]).then(()=>flashCopy(btn, "Copy"));
+}
+
+
+
+
+document.getElementById('copyTagsBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  navigator.clipboard.writeText(state.current.tags.join(', ')).then(()=>flashCopy(document.getElementById('copyTagsBtn'), "Copy tags"));
+});
+
+
+
+
+document.getElementById('copyDescBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  navigator.clipboard.writeText(state.current.desc).then(()=>flashCopy(document.getElementById('copyDescBtn'), "Copy description"));
+});
+
+
+
+
+/* ============ COPY ALL ============ */
+document.getElementById('copyAllBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  navigator.clipboard.writeText(buildPlainText()).then(()=>flashCopy(document.getElementById('copyAllBtn'), "Copy all"));
+});
+
+
+
+
+function buildPlainText(){
+  const cur = state.current;
+  const lines = [];
+  lines.push(cur.name.toUpperCase() + ' — ' + cur.type + ' (' + cur.count + ' pages)');
+  lines.push('Complexity: ' + cur.complexity + ' · Format: ' + cur.format);
+  lines.push('');
+  lines.push('TITLE OPTIONS');
+  cur.titles.forEach((t, i)=> lines.push((i+1) + '. ' + t));
+  lines.push('');
+  lines.push('TAGS (' + cur.tags.length + ')');
+  lines.push(cur.tags.join(', '));
+  lines.push('');
+  lines.push('DESCRIPTION');
+  lines.push(cur.desc);
+  lines.push('');
+  lines.push('PRICING TIERS');
+  cur.prices.forEach((p, i)=> lines.push(TIER_LABELS[i].pos + ': $' + p + (i===1 ? ' (recommended)' : '')));
+  lines.push('');
+  lines.push('BUNDLE SUGGESTION');
+  lines.push(cur.bundleNote);
+  return lines.join('\n');
+}
+
+
+
+
+/* ============ BUNDLE NOTE ============ */
+document.getElementById('newBundleBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  state.current.bundleNote = pick(BUNDLE_NOTES);
+  document.getElementById('bundleNote').textContent = state.current.bundleNote;
+  showToast("Fresh bundle suggestion");
+});
+
+
+
+
+/* ============ EXPORT ============ */
+function download(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  const slug = state.current.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'listing';
+  download('arcana-coloring-listing-' + slug + '.txt', buildPlainText(), 'text/plain');
+});
+</script>
+</body>
+</html>
