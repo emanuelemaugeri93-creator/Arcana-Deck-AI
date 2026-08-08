@@ -1,0 +1,594 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Court & Suit Codex — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#12140F; --panel:#1C2018; --panel-2:#262B1E;
+    --gold:#B8874A; --gold-dim:#8A6636;
+    --amethyst:#3F7A6E; --amethyst-soft:#5FA394;
+    --parchment:#E8E0C8; --parchment-dim:#A89B7C;
+    --blood:#7A3B2A;
+    --line:rgba(184,135,74,0.22); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(63,122,110,0.25), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(184,135,74,0.10), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:980px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(184,135,74,0.12), rgba(63,122,110,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:640px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+
+
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative; margin-bottom:28px;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .step-head{margin-bottom:24px;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:640px;}
+
+
+
+
+  .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;}
+  .choice-card{border:1px solid var(--line); border-radius:3px; padding:16px 14px; background:rgba(0,0,0,0.15); cursor:pointer; transition:all .18s ease; text-align:left; position:relative;}
+  .choice-card:hover{border-color:var(--amethyst-soft); background:rgba(63,122,110,0.08);}
+  .choice-card.selected{border-color:var(--gold); background:rgba(184,135,74,0.09);}
+  .choice-card.selected::after{content:"✓"; position:absolute; top:9px; right:10px; color:var(--gold); font-size:12px;}
+  .choice-name{font-family:'Cinzel',serif; font-size:13.5px; color:var(--parchment); margin-bottom:4px; line-height:1.3;}
+  .choice-meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); line-height:1.5;}
+
+
+
+
+  .howto-box{margin-top:26px; padding:16px 18px; background:rgba(63,122,110,0.07); border:1px solid var(--line); border-left:3px solid var(--amethyst-soft); border-radius:2px;}
+  .howto-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px;}
+  .howto-box p{font-size:14px; color:var(--parchment-dim); line-height:1.6; margin:0 0 8px; font-style:italic;}
+  .howto-box p:last-child{margin-bottom:0;}
+
+
+
+
+  .btn-row{display:flex; gap:14px; margin-top:30px; align-items:center; flex-wrap:wrap;}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:14px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-primary{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-primary:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(184,135,74,0.25);}
+  .btn-primary:disabled{opacity:0.35; cursor:not-allowed; filter:none; box-shadow:none;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-small{font-size:11px; padding:8px 16px;}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft);}
+  .btn-dice:hover{background:rgba(63,122,110,0.12); color:var(--parchment);}
+
+
+
+
+  .results-toolbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .codex-meta{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--parchment-dim); line-height:1.7;}
+  .codex-meta b{color:var(--gold);}
+  .fe-tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:10px; padding:2px 9px; margin-left:8px; vertical-align:middle;}
+
+
+
+
+  .section-head{margin:0 0 14px;}
+  .section-head .kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .section-head h2{font-family:'Cinzel',serif; font-size:19px; margin:4px 0 0; color:var(--parchment);}
+  .codex-section{margin-bottom:34px;}
+
+
+
+
+  .card-list{display:flex; flex-direction:column; gap:12px;}
+  .card-item{border:1px solid var(--line); border-radius:4px; background:rgba(0,0,0,0.18); overflow:hidden;}
+  .card-item-head{display:flex; justify-content:space-between; align-items:center; padding:13px 18px; cursor:pointer; gap:12px;}
+  .card-item-head:hover{background:rgba(184,135,74,0.05);}
+  .card-title-block{display:flex; align-items:center; gap:12px; min-width:0;}
+  .card-badge{flex:0 0 auto; width:30px; height:42px; border:1px solid var(--gold-dim); border-radius:2px; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:11px; color:var(--gold); background:rgba(184,135,74,0.06); text-align:center;}
+  .card-name{font-family:'Cinzel',serif; font-size:14.5px; color:var(--parchment);}
+  .card-subtitle{font-family:'EB Garamond',serif; font-size:12.5px; color:var(--amethyst-soft); font-style:italic; margin-top:2px;}
+  .chev{color:var(--parchment-dim); font-size:12px; transition:transform .2s ease; flex:0 0 auto;}
+  .card-item.open .chev{transform:rotate(90deg);}
+  .card-item-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .card-item.open .card-item-body{max-height:400px;}
+  .meaning-box{margin:0 18px 12px; padding:14px 16px; background:rgba(0,0,0,0.35); border:1px solid var(--line); border-radius:3px; font-family:'EB Garamond',serif; font-size:15px; line-height:1.7; color:var(--parchment);}
+  .card-actions{display:flex; gap:8px; padding:0 18px 16px; flex-wrap:wrap;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+  .btn-regen-card{font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 14px; border-radius:2px; border:1px solid var(--amethyst-soft); background:transparent; color:var(--amethyst-soft); cursor:pointer;}
+  .btn-regen-card:hover{background:rgba(63,122,110,0.12); color:var(--parchment);}
+
+
+
+
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:48px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+
+
+
+
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA DECK AI — MASTER EDITION BONUS · unlimited Minor Arcana meanings, for the 56 cards most decks leave unexplained ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Minor Arcana Meaning Engine</div>
+    <h1>Arcana <span>Court & Suit</span> Codex</h1>
+    <p class="sub">Four suits, fourteen ranks, eighteen entries — everything you need to explain the 56 Minor Arcana cards your buyers don't understand.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+
+
+
+  <div class="panel">
+    <div class="step-head">
+      <div class="step-kicker">Choose Your Tone</div>
+      <div class="step-title">How should the codex speak?</div>
+      <div class="step-desc">Each tone rewrites every entry with a different voice. Generate, regenerate, and copy the phrasing that fits your audience.</div>
+    </div>
+    <div class="grid-cards" id="toneChoices">
+      <div class="choice-card" data-tone="mystic"><div class="choice-name">Mystic &amp; Poetic</div><div class="choice-meta">atmospheric, veiled, evocative</div></div>
+      <div class="choice-card" data-tone="grounded"><div class="choice-name">Grounded &amp; Direct</div><div class="choice-meta">plain, practical, no fluff</div></div>
+      <div class="choice-card" data-tone="gentle"><div class="choice-name">Gentle &amp; Nurturing</div><div class="choice-meta">soft, kind, reassuring</div></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="generateBtn">✦ Generate Court &amp; Suit Codex</button>
+    </div>
+    <div class="howto-box">
+      <div class="lbl">How to use this codex</div>
+      <p>This engine writes the two entries every Minor Arcana card is built from: one for its suit, one for its rank.</p>
+      <p>To understand any Minor Arcana card — for example, the Seven of Cups — read the Cups suit entry, then the Seven rank entry, together. Combined, these two short entries explain all 56 cards without needing 56 separate write-ups.</p>
+    </div>
+  </div>
+
+
+
+
+  <section class="panel hidden" id="results">
+    <div class="results-toolbar">
+      <div class="codex-meta" id="codexMeta"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-dice btn-small" id="regenAllBtn">🎲 Regenerate all</button>
+        <button class="btn btn-ghost btn-small" id="copyAllBtn">Copy all</button>
+        <button class="btn btn-ghost btn-small" id="exportBtn">Export .txt booklet</button>
+      </div>
+    </div>
+    <div class="codex-section">
+      <div class="section-head">
+        <div class="kicker">Part I</div>
+        <h2>The Four Suits</h2>
+      </div>
+      <div class="card-list" id="suitList"></div>
+    </div>
+    <div class="codex-section">
+      <div class="section-head">
+        <div class="kicker">Part II</div>
+        <h2>The Fourteen Ranks</h2>
+      </div>
+      <div class="card-list" id="rankList"></div>
+    </div>
+  </section>
+  <footer class="note">ARCANA COURT &amp; SUIT CODEX — MASTER EDITION BONUS · 4 suits + 14 ranks = all 56 Minor Arcana explained</footer>
+</div>
+
+
+
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+
+
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(184,135,74,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+
+
+
+/* ============ HELPERS ============ */
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+
+
+
+/* ============ SUIT DATA ============ */
+const SUITS = {
+  wands:   { name:"Wands",     element:"Fire",  theme:"passion, ambition, creative drive" },
+  cups:    { name:"Cups",      element:"Water", theme:"emotion, love, intuition, relationship" },
+  swords:  { name:"Swords",    element:"Air",   theme:"intellect, conflict, truth, communication" },
+  pentacles:{ name:"Pentacles",element:"Earth", theme:"the material world, wealth, craft, the body" }
+};
+
+
+
+
+/* ============ RANK DATA ============ */
+const RANK_CORE_THEMES = {
+  "Ace": "raw untested potential, a first spark",
+  "Two": "balance, partnership, a choice at a threshold",
+  "Three": "early collaboration, first visible results",
+  "Four": "stability, a pause for consolidation",
+  "Five": "disorder or contest, disruption and adaptation",
+  "Six": "harmony restored through cooperation or generosity",
+  "Seven": "quiet strain or assessment before the next move",
+  "Eight": "swift motion or tight, disciplined focus",
+  "Nine": "resilience near the end of the road",
+  "Ten": "full culmination, an ending that closes one cycle",
+  "Page": "a curious, unguarded student of the suit",
+  "Knight": "pursuit and momentum, the suit's energy in motion",
+  "Queen": "inward, nurturing mastery of the suit's nature",
+  "King": "outward, authoritative mastery of the suit's nature"
+};
+
+
+
+
+/* ============ TONE BANKS ============ */
+const TONE_BANKS = {
+  mystic: {
+    openers: ["This card speaks of", "Here, the veil thins around", "Beneath its surface, this card carries", "Woven into this card is", "This card holds the quiet truth of"],
+    courtStems: ["When this figure appears, it asks you to embody", "This presence in a reading points toward", "Its arrival signals a moment to draw on"],
+    suitStems: ["Every card in this suit circles back to", "The element of {element} runs through every card here, always returning to"]
+  },
+  grounded: {
+    openers: ["This card is about", "In practical terms, this card points to", "This card is a direct signal for", "Simply put, this card represents"],
+    courtStems: ["This figure represents someone (or a part of yourself) who", "When this card shows up, look for", "Practically speaking, this is about"],
+    suitStems: ["Cards in this suit deal directly with", "This suit's throughline, card after card, is"]
+  },
+  gentle: {
+    openers: ["This card gently reminds you of", "Take a breath — this card is about", "With kindness, this card points toward", "This card offers you"],
+    courtStems: ["This figure invites you to be gentle with", "When this card appears, be kind to yourself about", "There's permission here to"],
+    suitStems: ["This suit, at its heart, is asking you to be gentle around", "Every card here circles back to caring for"]
+  }
+};
+
+
+
+
+const TONE_LABELS = {
+  mystic: "Mystic & Poetic",
+  grounded: "Grounded & Direct",
+  gentle: "Gentle & Nurturing"
+};
+
+
+
+
+/* ============ ELEMENT CLOSERS (guarantee element appears in every suit entry) ============ */
+const ELEMENT_CLOSERS = {
+  mystic: {
+    Fire: [
+      "Fire is the element of ignition — carried here is the warmth of first beginnings, the spark that refuses to be dampened.",
+      "Fire is the element that burns through hesitation — this suit's cards carry its heat."
+    ],
+    Water: [
+      "Water is the element of feeling — deep, patient, and impossible to fully hold.",
+      "Water is the element of the tides — these cards move with emotion's own rhythm."
+    ],
+    Air: [
+      "Air is the element of the mind — sharp winds that clarify, cut, and carry truth on their breath.",
+      "Air is the element of the word — every card here is a thought finding its voice."
+    ],
+    Earth: [
+      "Earth is the element of form — slow, solid, and quietly abundant.",
+      "Earth is the element of the hand — every card here asks to be made real and crafted."
+    ]
+  },
+  grounded: {
+    Fire: [
+      "The Fire energy here is action, drive, and momentum.",
+      "Expect Fire's signature: quick, bold, and hard to stop."
+    ],
+    Water: [
+      "The Water energy here is emotion, intuition, and connection.",
+      "Expect Water's signature: deep feelings, instinct, and bonds."
+    ],
+    Air: [
+      "The Air energy here is thinking, talking, and truth-telling.",
+      "Expect Air's signature: ideas, debate, and the straight word."
+    ],
+    Earth: [
+      "The Earth energy here is money, craft, and the physical world.",
+      "Expect Earth's signature: slow growth, real results, and the body."
+    ]
+  },
+  gentle: {
+    Fire: [
+      "Hold this Fire energy gently — let it warm, never burn.",
+      "Tend this Fire like a hearth — warmth without scorching."
+    ],
+    Water: [
+      "Hold this Water energy gently — let it flow, never flood.",
+      "Move through this Water slowly — one honest feeling at a time."
+    ],
+    Air: [
+      "Hold this Air energy gently — let it clear, never cut.",
+      "Speak this Air softly — gentle words, honest ones."
+    ],
+    Earth: [
+      "Hold this Earth energy gently — let it steady, never harden.",
+      "Touch this Earth with patience — like a garden in spring."
+    ]
+  }
+};
+
+
+
+
+/* ============ ENTRY BUILDER ============ */
+function buildSuitEntry(toneKey, suitKey){
+  const suit = SUITS[suitKey];
+  const bank = TONE_BANKS[toneKey];
+  const stem = pick(bank.suitStems);
+  const main = stem.includes('{element}')
+    ? stem.replace('{element}', suit.element) + ' ' + suit.theme + '.'
+    : stem + ' ' + suit.theme + '.';
+  const closer = pick(ELEMENT_CLOSERS[toneKey][suit.element]);
+  return main + ' ' + closer;
+}
+
+
+
+
+const COURT_RANKS = ["Page", "Knight", "Queen", "King"];
+const RANK_ORDER = Object.keys(RANK_CORE_THEMES);
+
+
+
+
+function buildRankEntry(toneKey, rank){
+  const bank = TONE_BANKS[toneKey];
+  const core = RANK_CORE_THEMES[rank];
+  const isCourt = COURT_RANKS.includes(rank);
+  const stem = isCourt ? pick(bank.courtStems) : pick(bank.openers);
+  return stem + ' ' + core + '.';
+}
+
+
+
+
+/* ============ STATE ============ */
+const state = {
+  tone: 'mystic',
+  entries: []
+};
+
+
+
+
+/* ============ TONE SELECTOR ============ */
+document.querySelectorAll('#toneChoices .choice-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    document.querySelectorAll('#toneChoices .choice-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.tone = card.dataset.tone;
+    showToast("Tone set to " + TONE_LABELS[state.tone]);
+  });
+});
+document.querySelector('#toneChoices .choice-card[data-tone="mystic"]').classList.add('selected');
+
+
+
+
+/* ============ GENERATE ============ */
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  state.entries = buildEntries(state.tone);
+  renderResults();
+  showToast("Codex generated in " + TONE_LABELS[state.tone] + " tone");
+});
+
+
+
+
+function buildEntries(toneKey){
+  const entries = [];
+  Object.keys(SUITS).forEach((suitKey)=>{
+    entries.push({
+      id: 'suit-' + suitKey,
+      section: 'suit',
+      badge: SUITS[suitKey].element.charAt(0),
+      title: SUITS[suitKey].name + ' — Suit Overview',
+      subtitle: SUITS[suitKey].element + ' element · ' + SUITS[suitKey].theme,
+      text: buildSuitEntry(toneKey, suitKey)
+    });
+  });
+  RANK_ORDER.forEach((rank, i)=>{
+    entries.push({
+      id: 'rank-' + rank,
+      section: 'rank',
+      badge: rank,
+      title: rank + ' — Rank Meaning',
+      subtitle: COURT_RANKS.includes(rank) ? 'court figure · applies across all four suits' : 'numbered rank · applies across all four suits',
+      text: buildRankEntry(toneKey, rank)
+    });
+  });
+  return entries;
+}
+
+
+
+
+/* ============ RENDER RESULTS ============ */
+function renderResults(){
+  const suits = state.entries.filter(e=>e.section==='suit');
+  const ranks = state.entries.filter(e=>e.section==='rank');
+  document.getElementById('suitList').innerHTML = suits.map(renderEntryHTML).join('');
+  document.getElementById('rankList').innerHTML = ranks.map(renderEntryHTML).join('');
+  document.getElementById('codexMeta').innerHTML =
+    `<b>${suits.length}</b> suit entries · <b>${ranks.length}</b> rank entries = <b>${suits.length + ranks.length}</b> total · tone: <b>${TONE_LABELS[state.tone]}</b><span class="fe-tag">BONUS</span><br>covers all 56 Minor Arcana cards · regenerate any entry independently`;
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+
+
+
+function renderEntryHTML(e, idx){
+  return `
+  <div class="card-item" id="entry-${e.id}">
+    <div class="card-item-head" onclick="toggleEntry('${e.id}')">
+      <div class="card-title-block">
+        <div class="card-badge">${escapeHtml(e.badge)}</div>
+        <div>
+          <div class="card-name">${escapeHtml(e.title)}</div>
+          <div class="card-subtitle">${escapeHtml(e.subtitle)}</div>
+        </div>
+      </div>
+      <div class="chev">▶</div>
+    </div>
+    <div class="card-item-body">
+      <div class="meaning-box">${escapeHtml(e.text)}</div>
+      <div class="card-actions">
+        <button class="btn-regen-card" onclick="regenEntry('${e.id}')">🎲 Regenerate</button>
+        <button class="copy-btn" onclick="copyEntry('${e.id}', this)">Copy this entry</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+
+
+
+function toggleEntry(id){
+  document.getElementById('entry-'+id).classList.toggle('open');
+}
+
+
+
+
+/* ============ PER-ENTRY REGEN ============ */
+function regenEntry(id){
+  const e = state.entries.find(x=>x.id===id);
+  if(!e) return;
+  const wasOpen = document.getElementById('entry-'+id).classList.contains('open');
+  if(e.section === 'suit'){
+    e.text = buildSuitEntry(state.tone, id.replace('suit-',''));
+  } else {
+    e.text = buildRankEntry(state.tone, id.replace('rank-',''));
+  }
+  renderResults();
+  if(wasOpen) document.getElementById('entry-'+id).classList.add('open');
+  showToast("Entry regenerated");
+}
+
+
+
+
+/* ============ REGENERATE ALL ============ */
+document.getElementById('regenAllBtn').addEventListener('click', ()=>{
+  state.entries = buildEntries(state.tone);
+  renderResults();
+  showToast("All entries regenerated in " + TONE_LABELS[state.tone] + " tone");
+});
+
+
+
+
+/* ============ COPY ============ */
+function copyEntry(id, btn){
+  const e = state.entries.find(x=>x.id===id);
+  if(!e) return;
+  navigator.clipboard.writeText(e.title + '\n' + e.subtitle + '\n\n' + e.text).then(()=>{
+    btn.textContent = "Copied ✓";
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = "Copy this entry"; btn.classList.remove('copied'); }, 1600);
+  });
+}
+
+
+
+
+document.getElementById('copyAllBtn').addEventListener('click', ()=>{
+  navigator.clipboard.writeText(buildBookletText()).then(()=>{
+    const btn = document.getElementById('copyAllBtn');
+    btn.textContent = "Copied ✓";
+    setTimeout(()=>btn.textContent="Copy all", 1600);
+  });
+});
+
+
+
+
+/* ============ BOOKLET TEXT ============ */
+function buildBookletText(){
+  const lines = [];
+  lines.push('ARCANA COURT & SUIT CODEX — MASTER EDITION BONUS');
+  lines.push('Tone: ' + TONE_LABELS[state.tone]);
+  lines.push('');
+  lines.push('THE FOUR SUITS');
+  lines.push('');
+  state.entries.filter(e=>e.section==='suit').forEach((e, i)=>{
+    lines.push((i+1) + '. ' + e.title);
+    lines.push('   ' + e.subtitle);
+    lines.push('   ' + e.text);
+    lines.push('');
+  });
+  lines.push('THE FOURTEEN RANKS');
+  lines.push('');
+  state.entries.filter(e=>e.section==='rank').forEach((e, i)=>{
+    lines.push((i+1) + '. ' + e.title);
+    lines.push('   ' + e.text);
+    lines.push('');
+  });
+  lines.push('How to read any Minor Arcana card: read its suit entry, then its rank entry, together.');
+  return lines.join('\n');
+}
+
+
+
+
+/* ============ EXPORT ============ */
+function download(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  download('arcana-court-suit-codex.txt', buildBookletText(), 'text/plain');
+});
+</script>
+</body>
+</html>
