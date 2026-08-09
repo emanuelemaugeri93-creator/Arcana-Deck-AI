@@ -1,0 +1,482 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Mockup Forge — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0B0714;
+    --panel:#1A0F2E;
+    --panel-2:#241640;
+    --gold:#B565D8;
+    --gold-dim:#7A4499;
+    --amethyst:#C8D0E0;
+    --amethyst-soft:#9FA8C4;
+    --parchment:#EDEAF2;
+    --parchment-dim:#9B94AC;
+    --blood:#8B1E4A;
+    --line:rgba(181,101,216,0.22);
+    --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(181,101,216,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,208,224,0.07), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:1240px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(181,101,216,0.12), rgba(200,208,224,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:780px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:30px; position:relative;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .app-layout{display:grid; grid-template-columns:360px 1fr; gap:26px; align-items:start;}
+  @media (max-width:960px){ .app-layout{grid-template-columns:1fr;} }
+  .sidebar{position:sticky; top:24px;}
+  @media (max-width:960px){ .sidebar{position:static;} }
+  .step-head{margin-bottom:22px; text-align:center;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:21px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14px; max-width:600px; margin:0 auto; line-height:1.55;}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:7px;}
+  .field input[type="text"],.field select,.field textarea{width:100%; background:var(--void); border:1px solid var(--line); border-radius:3px; color:var(--parchment); font-family:'EB Garamond',serif; font-size:14.5px; padding:11px 13px; transition:border-color .18s ease;}
+  .field select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer; padding-right:34px;}
+  .field select:hover{border-color:var(--gold-dim);}
+  .field input:focus,.field select:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.18);}
+  .field .has-error{border-color:var(--blood); box-shadow:0 0 0 2px rgba(139,30,74,0.35);}
+  .inline-hint{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--gold); margin-top:6px; line-height:1.6;}
+
+  .btn-draw{font-family:'Cinzel',serif; font-size:14px; letter-spacing:0.06em; padding:16px 26px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600; width:100%; margin-top:4px;}
+  .btn-draw:hover{filter:brightness(1.08); box-shadow:0 4px 26px rgba(181,101,216,0.22);}
+  .counter-line{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--parchment-dim); text-align:center; margin-top:14px;}
+  .counter-line b{color:var(--gold); font-weight:500;}
+
+  .output-panel{display:flex; flex-direction:column;}
+  .output-head{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+  .output-meta{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--parchment-dim); line-height:1.7;}
+  .output-meta b{color:var(--gold); font-weight:500;}
+  .btn{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; white-space:nowrap;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft); font-size:12px; font-family:'Cinzel',serif; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; text-transform:uppercase; transition:all .18s ease;}
+  .btn-dice:hover{background:rgba(200,208,224,0.10); color:var(--parchment);}
+  .btn-gold{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-gold:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(181,101,216,0.25);}
+  .btn-gold.copied{filter:none; box-shadow:none;}
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+  .output-empty{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed var(--line); border-radius:4px; padding:70px 30px; text-align:center; color:var(--parchment-dim); font-style:italic; font-size:15px; line-height:1.8;}
+  .output-empty b{color:var(--gold-dim); font-style:normal; font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
+
+  .prompt-card{background:var(--void); border:1px solid var(--line); border-radius:4px; padding:22px 24px; margin-bottom:18px; position:relative;}
+  .prompt-card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:linear-gradient(180deg, var(--gold), transparent);}
+  .prompt-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px;}
+  .prompt-kicker{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; color:var(--gold); text-transform:uppercase;}
+  .prompt-kicker b{color:var(--amethyst); font-weight:500;}
+  .scene-line{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--amethyst-soft); letter-spacing:0.03em; margin-bottom:12px; line-height:1.6;}
+  .prompt-text{font-family:'EB Garamond',serif; font-size:15px; line-height:1.75; white-space:pre-wrap; word-wrap:break-word; background:linear-gradient(180deg, #F4F1FA, var(--parchment)); color:var(--void); border:1px solid var(--gold-dim); border-radius:3px; padding:18px 20px; box-shadow:inset 0 0 40px rgba(181,101,216,0.08);}
+  .copy-sm{padding:8px 14px; font-size:11px;}
+  .chip{font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.08em; color:var(--void); background:linear-gradient(180deg,var(--gold),var(--gold-dim)); padding:3px 9px; border-radius:2px; text-transform:uppercase; white-space:nowrap;}
+  .prompt-meta{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--amethyst-soft); letter-spacing:0.03em; margin-bottom:12px; line-height:1.7;}
+  .prompt-meta b{color:var(--gold); font-weight:500;}
+
+  .toast{position:fixed; left:50%; bottom:34px; transform:translateX(-50%) translateY(10px); background:var(--panel-2); border:1px solid var(--gold-dim); color:var(--parchment); font-family:'JetBrains Mono',monospace; font-size:12px; padding:11px 18px; border-radius:3px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:20; box-shadow:0 10px 30px rgba(0,0,0,0.45);}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:44px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA STORYBOOK AI BONUS · unlimited book mockup prompts for marketing images ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Marketing Imagery</div>
+    <h1>Arcana Mockup <span>Forge</span></h1>
+    <p class="sub">Physical-object marketing shots — the book on a table, held in hands, standing on a shelf — for Amazon thumbnails, store pages and promos. The generative engine composes each prompt from 12 core marketing scenes plus random lighting, camera, atmosphere, texture and prop layers — so no two prompts are ever the same. Forge 1, 3 or 5 prompts per click: every card carries your real title on the cover, the exact cover style, the chosen color mood, output ratio, trim size and a negative prompt, for ultra-detailed photorealistic renders that match the cover your main app generated.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="panel sidebar">
+      <div class="step-head">
+        <div class="step-kicker">The Controls</div>
+        <div class="step-title">Describe your cover</div>
+      </div>
+
+      <div class="field">
+        <label for="titleInput">Book Title</label>
+        <input type="text" id="titleInput" placeholder="e.g. The Moonlit Kingdom">
+        <div class="inline-hint hidden" id="titleHint">The title is required — it renders on the mockup cover.</div>
+      </div>
+
+      <div class="field">
+        <label for="styleSel">Cover Visual Style</label>
+        <select id="styleSel"></select>
+        <div class="inline-hint hidden" id="customHint">Describe your custom world — it shapes the cover descriptor.</div>
+        <input type="text" id="customWorldInput" class="hidden" placeholder="e.g. moonlit kingdom of talking foxes" style="margin-top:8px;">
+      </div>
+
+      <div class="field">
+        <label for="colorInput">Primary Cover Color / Mood <span style="color:var(--parchment-dim); text-transform:none; letter-spacing:0.05em;">(comma-separated)</span></label>
+        <input type="text" id="colorInput" placeholder="e.g. deep violet, gold accents, moody">
+        <div class="inline-hint">Leave empty to use the palette matched to the selected style</div>
+      </div>
+
+      <div class="field">
+        <label for="variationsSel">Prompts per Forge</label>
+        <select id="variationsSel">
+          <option value="1">1 — single prompt</option>
+          <option value="3" selected>3 — three prompts</option>
+          <option value="5">5 — five prompts</option>
+        </select>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">More prompts = more scenes, lighting &amp; camera combos to A/B test</div>
+      </div>
+
+      <div class="field">
+        <label for="ratioSel">Output Ratio / Use</label>
+        <select id="ratioSel"></select>
+      </div>
+
+      <div class="field">
+        <label for="lightingSel">Lighting Scheme</label>
+        <select id="lightingSel"></select>
+      </div>
+
+      <div class="field">
+        <label for="cameraSel">Camera / Angle</label>
+        <select id="cameraSel"></select>
+      </div>
+
+      <div class="field">
+        <label for="trimSel">Book Trim / Format</label>
+        <select id="trimSel"></select>
+      </div>
+
+      <button class="btn-draw" id="generateBtn">⚡ Forge Mockup Prompts</button>
+      <div class="counter-line" id="counter">📸 Mockup prompt sets forged: <b>0</b></div>
+    </aside>
+
+    <section class="panel output-panel" id="outputPanel">
+      <div class="output-head">
+        <div class="output-meta" id="sheetMeta">No mockup prompts forged yet</div>
+        <div class="btn-row">
+          <button class="btn btn-dice" id="regenBtn">🎲 Generate 3 new mockups</button>
+          <button class="btn btn-gold" id="copyAllBtn">⧉ Copy All</button>
+          <button class="btn btn-ghost" id="exportBtn">💾 Export .txt</button>
+        </div>
+      </div>
+      <div class="output-empty" id="outputEmpty"><b>Your mockup prompts will appear here</b>Each click forges 1, 3 or 5 distinct prompts — every one a different scene with its own lighting, camera, atmosphere, texture and prop composition, all describing the same physical book with your real title on the cover. Copy them one by one, copy all, or export a .txt for your image tool of choice.</div>
+      <div id="cards" class="hidden"></div>
+    </section>
+  </div>
+
+  <footer class="note">ARCANA MOCKUP FORGE — MASTER EDITION BONUS · generative scene engine: 12 marketing scenes × lighting × camera × atmosphere × texture × prop layers · 1/3/5 prompts per click · real title on the rendered cover · style-matched descriptors · ratio &amp; trim aware · negative prompts · per-card copy, copy-all &amp; .txt export · every forge a fresh combination</footer>
+</div>
+
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(181,101,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function nextSeed(){ return Math.random().toString(36).slice(2,6).toUpperCase(); }
+const STOPWORDS = new Set(['a','an','the','and','or','of','for','with','in','on','at','to','is','it','its','their','them','they','where','that','this','every','be','was','been','into','inside','like','then','so','if','but','not','all','any','by','as','from','up','down','out','over','under','again','once','because','until','while','when','after','before','there','those','these','do','does','did','who','what']);
+function descriptorStem(text, n){
+  return (String(text).match(/[A-Za-z']+/g) || [])
+    .filter(w => w.length > 3 && !STOPWORDS.has(w.toLowerCase()))
+    .slice(0, n);
+}
+
+const COVER_STYLES = [
+  { label:"Dark Goddess Oracle", style:"richly painterly dark fantasy cover with an ornate title treatment", palette:"deep violet, gold accents, moody" },
+  { label:"Crystal Witch Deck", style:"luminous jewel-toned cover with a crystalline glow and refined typography", palette:"opal white, violet glass, silver shimmer" },
+  { label:"Gothic Shadow Tarot", style:"moody gothic cover with deep shadows, silver filigree and dramatic typography", palette:"charcoal, silver, blood rose" },
+  { label:"Botanical Grimoire Oracle", style:"herbarium-style cover with pressed botanicals and hand-lettered title work", palette:"sage green, sepia, cream paper" },
+  { label:"Deep Current Oracle", style:"oceanic dreamscape cover with flowing lines and an elegant serif title", palette:"abyssal blue, sea foam, moonlit silver" },
+  { label:"Bone & Bloom Tarot", style:"memento-mori cover blending bone and bloom motifs with vintage ornament", palette:"ivory, deep rose, antique gold" },
+  { label:"Storm Witch Tarot", style:"storm-lit atmospheric cover with charged skies and bold title lettering", palette:"slate grey, electric lilac, candle glow" },
+  { label:"Wildwood Folk Oracle", style:"folk-art cover with woodland motifs and hand-painted charm", palette:"forest green, bark brown, fern gold" },
+  { label:"Celestial Cartography Oracle", style:"antique celestial-map cover with gold constellation lines and engraved title", palette:"midnight indigo, gold leaf, star white" },
+  { label:"Insect Alchemy Oracle", style:"scientific-plate cover with gilded insect specimens and antique engraving", palette:"parchment, oxidized copper, emerald" },
+  { label:"Antique Anatomy Tarot", style:"vintage anatomy-plate cover with sepia engraving and a baroque frame", palette:"sepia, oxblood, bone white" },
+  { label:"Custom World", style:"richly painterly custom-world cover with an ornate title treatment", palette:"deep violet, gold accents, moody", custom:true }
+];
+
+const MOCKUP_SCENES = [
+  "the book lying open on a dark wooden table, angled slightly, soft directional window light, a few dried flowers and a lit candle nearby, shallow depth of field",
+  "the closed book held in both hands against a softly blurred outdoor autumn background, the cover fully visible and in sharp focus",
+  "the book standing upright on a rustic wooden shelf between old candlesticks and a small potted plant, warm ambient lighting",
+  "a flat-lay overhead shot of the closed book centered on a dark marble surface, surrounded by scattered dried botanicals and a piece of antique jewelry",
+  "the book propped open to a two-page spread on a bed of dark velvet fabric, moody low-key lighting from one side",
+  "the closed book resting on an old leather armchair beside a warm reading lamp, night-time cozy atmosphere",
+  "a stack of three copies of the book on a wooden desk beside an inkwell and quill, soft daylight",
+  "the book held open mid-page by a single hand, blurred cozy interior background, natural window light",
+  "the closed book leaning against a stack of other books on a windowsill, rain visible faintly on the glass behind it",
+  "the book displayed on a small easel stand as if in a boutique shop window, dramatic single-source spotlight",
+  "a close-up three-quarter angle of just the cover and spine, dramatic raking light emphasizing texture and any embossed details",
+  "the book resting open on moss and stone in an outdoor forest setting, dappled natural light through leaves"
+];
+
+const RATIO_BANK = [
+  { key:"1x1", label:"1:1 square", note:"square crop ready for Amazon thumbnails and listing images" },
+  { key:"4x5", label:"4:5 portrait", note:"portrait crop for social feeds and promo graphics" },
+  { key:"16x9", label:"16:9 wide", note:"wide crop for banners, hero sections and YouTube thumbnails" }
+];
+
+const LIGHTING_BANK = [
+  { label:"Golden hour", text:"warm golden-hour light raking across the scene, long soft shadows and amber highlights" },
+  { label:"Soft window light", text:"soft diffused window light from one side, gentle gradient falloff across the scene" },
+  { label:"Moody low-key", text:"moody low-key lighting, a single soft key light with deep ambient shadows" },
+  { label:"Candlelit warmth", text:"warm candlelit glow, flickering amber highlights and intimate soft shadows" },
+  { label:"Overcast daylight", text:"even overcast daylight, flat and true-to-print color rendering" },
+  { label:"Dramatic spotlight", text:"dramatic single-source spotlight from above, strong contrast and controlled falloff" }
+];
+
+const CAMERA_BANK = [
+  { label:"85mm", text:"shot on an 85mm lens, compressed perspective and creamy background bokeh" },
+  { label:"50mm", text:"shot on a 50mm lens at a slightly elevated eye level, natural perspective" },
+  { label:"35mm", text:"shot on a 35mm lens, natural near-field perspective with gentle depth" },
+  { label:"Macro", text:"macro-lens rendering, shallow depth of field with razor-sharp focus on the cover" },
+  { label:"Hero crane", text:"slight downward hero angle with cinematic composition and wide framing" }
+];
+
+const ATMOSPHERE_BANK = [
+  "cozy autumnal stillness",
+  "quiet midnight mystery",
+  "warm nostalgic study",
+  "serene early-morning calm",
+  "gothic romantic hush",
+  "enchanted woodland serenity"
+];
+
+const TEXTURE_BANK = [
+  "visible paper grain and a subtle cloth-like texture on the cover",
+  "soft embossing and debossed title letters that catch the light",
+  "a matte laminated cover with faint varnish highlights and natural contact shadows",
+  "a visible page block with layered paper-leaf edges and a slight book curve",
+  "fingerprint-free matte finish with a gentle reflective sheen only on the title area",
+  "fine linen-textured board with crisp, sharp print detail"
+];
+
+const DETAIL_BANK = [
+  "a ribbon bookmark hanging from the page block",
+  "a few scattered dried botanicals beside the book",
+  "a faint dust mote floating in the light beam",
+  "crisp, natural contact shadows under the book edges",
+  "the spine lettering fully readable in sharp detail",
+  "a soft reflection of the cover on the polished surface below"
+];
+
+const RENDER_QUALITY = "Photorealistic product photography, correct book proportions and realistic paper/cover texture, natural shadow and light behavior appropriate to the scene described, sharp focus on the cover and title text, high detail, professional marketing imagery quality";
+const NEGATIVE_BASE = "no distorted or blurry title text, no misspelled words, no warped cover geometry, no watermark, no studio stand, cables or tripod visible";
+const NEGATIVE_HANDS = "no uncanny anatomy — natural, correctly proportioned hands";
+
+function pickDistinct(pool, n){
+  const out = [];
+  let rest = shuffle(pool.slice());
+  while(out.length < n){
+    if(!rest.length) rest = shuffle(pool.slice());
+    out.push(rest.shift());
+  }
+  return out;
+}
+
+const titleInput = document.getElementById('titleInput');
+const titleHint = document.getElementById('titleHint');
+const styleSel = document.getElementById('styleSel');
+const customWorldInput = document.getElementById('customWorldInput');
+const customHint = document.getElementById('customHint');
+const colorInput = document.getElementById('colorInput');
+const variationsSel = document.getElementById('variationsSel');
+const ratioSel = document.getElementById('ratioSel');
+const lightingSel = document.getElementById('lightingSel');
+const cameraSel = document.getElementById('cameraSel');
+const trimSel = document.getElementById('trimSel');
+const generateBtn = document.getElementById('generateBtn');
+const regenBtn = document.getElementById('regenBtn');
+const copyAllBtn = document.getElementById('copyAllBtn');
+const exportBtn = document.getElementById('exportBtn');
+const cardsEl = document.getElementById('cards');
+const outputEmpty = document.getElementById('outputEmpty');
+const sheetMeta = document.getElementById('sheetMeta');
+const counter = document.getElementById('counter');
+
+COVER_STYLES.forEach(s => styleSel.add(new Option(s.label, s.label)));
+RATIO_BANK.forEach(r => ratioSel.add(new Option(r.label, r.key)));
+trimSel.add(new Option("Square 8.5 × 8.5 in — storybook", "square"));
+trimSel.add(new Option("Portrait 6 × 9 in — standard", "69"));
+trimSel.add(new Option("Portrait 6 × 8 in — compact", "68"));
+trimSel.add(new Option("Large 8.5 × 11 in — oversize", "811"));
+lightingSel.add(new Option("Auto — fresh pick every card", "Auto"));
+LIGHTING_BANK.forEach(l => lightingSel.add(new Option(l.label, l.label)));
+cameraSel.add(new Option("Auto — fresh pick every card", "Auto"));
+CAMERA_BANK.forEach(c => cameraSel.add(new Option(c.label, c.label)));
+
+styleSel.addEventListener('change', () => {
+  const custom = styleSel.value === "Custom World";
+  customWorldInput.classList.toggle('hidden', !custom);
+  customHint.classList.toggle('hidden', !custom);
+});
+titleInput.addEventListener('input', () => {
+  titleInput.classList.remove('has-error');
+  titleHint.classList.add('hidden');
+});
+customWorldInput.addEventListener('input', () => customHint.classList.add('hidden'));
+
+const TRIM_BANK = {
+  square: { key:"square", text:"square-format storybook", label:"Square 8.5 × 8.5 in — storybook" },
+  "69": { key:"69", text:"portrait-format book", label:"Portrait 6 × 9 in — standard" },
+  "68": { key:"68", text:"portrait-format book", label:"Portrait 6 × 8 in — compact" },
+  "811": { key:"811", text:"large oversize book", label:"Large 8.5 × 11 in — oversize" }
+};
+
+function findStyle(label){ return COVER_STYLES.find(s => s.label === label) || COVER_STYLES[0]; }
+
+function getStyle(){
+  const s = findStyle(styleSel.value);
+  if(!s.custom) return s;
+  const stem = descriptorStem(customWorldInput.value.trim() || 'mystical world', 2).join(' ') || 'mystical world';
+  return { label: s.label, style: `richly painterly ${stem} cover with an ornate title treatment`, palette: s.palette };
+}
+
+function cleanTitle(t){ return t.replace(/["“”]/g, "'").replace(/\s+/g, ' ').trim(); }
+
+let prompts = [];
+let batchSeed = "";
+let forgedCount = 0;
+
+function findLighting(label){ return LIGHTING_BANK.find(l => l.label === label) || null; }
+function findCamera(label){ return CAMERA_BANK.find(c => c.label === label) || null; }
+function findRatio(key){ return RATIO_BANK.find(r => r.key === key) || RATIO_BANK[0]; }
+
+function forge(){
+  const title = cleanTitle(titleInput.value);
+  if(!title){
+    titleInput.classList.add('has-error');
+    titleHint.classList.remove('hidden');
+    showToast("⚠ Add the book title first — it renders on the mockup cover");
+    return;
+  }
+  const st = getStyle();
+  const palette = colorInput.value.trim() ? colorInput.value.replace(/\s+/g, ' ').trim() : st.palette;
+  const N = Math.min(5, Math.max(1, Number(variationsSel.value) || 1));
+  const ratio = findRatio(ratioSel.value);
+  const trim = TRIM_BANK[trimSel.value] || TRIM_BANK.square;
+  const fixedLight = findLighting(lightingSel.value);
+  const fixedCam = findCamera(cameraSel.value);
+  const lights = fixedLight ? Array(N).fill(fixedLight) : pickDistinct(LIGHTING_BANK, N);
+  const cams = fixedCam ? Array(N).fill(fixedCam) : pickDistinct(CAMERA_BANK, N);
+  const scenes = pickDistinct(MOCKUP_SCENES, N);
+  const atmos = pickDistinct(ATMOSPHERE_BANK, N);
+  batchSeed = nextSeed();
+  prompts = scenes.map((scene, i) => ({
+    scene,
+    seed: nextSeed(),
+    ratio,
+    trimLabel: trim.label,
+    lighting: lights[i].text,
+    camera: cams[i].text,
+    atmos: atmos[i],
+    texture: pick(TEXTURE_BANK),
+    detail: pick(DETAIL_BANK),
+    text: buildPrompt(scene, i, st, palette, title, ratio, trim)
+  }));
+  render(title, st.label, N);
+}
+
+function buildPrompt(scene, i, st, palette, title, ratio, trim){
+  const p = prompts.length ? prompts[i] : null;
+  const neg = /hand/.test(scene) ? NEGATIVE_BASE + "; " + NEGATIVE_HANDS : NEGATIVE_BASE;
+  return [
+    `A photorealistic product mockup: ${scene}.`,
+    `The book's cover displays the title "${title}" in elegant, legible typography consistent with a ${st.style} aesthetic, printed on a ${trim.text} with ${p ? p.texture : TEXTURE_BANK[0]}.`,
+    `A subtle prop detail: ${p ? p.detail : DETAIL_BANK[0]}.`,
+    `Lighting: ${p ? p.lighting : LIGHTING_BANK[0].text}. Atmosphere: ${p ? p.atmos : ATMOSPHERE_BANK[0]}.`,
+    `Camera: ${p ? p.camera : CAMERA_BANK[0].text}. Aspect: ${ratio.note}.`,
+    `Color palette and mood: ${palette}.`,
+    `${RENDER_QUALITY}.`,
+    `Negative prompt: ${neg}.`
+  ].join(' ');
+}
+
+function render(title, styleLabel, N){
+  cardsEl.innerHTML = prompts.map((p, i) =>
+    `<div class="prompt-card"><div class="prompt-head"><span class="prompt-kicker">MOCKUP ${i + 1} OF ${N} · seed <b>${p.seed}</b></span><span class="chip">${p.ratio.label}</span><button class="btn btn-ghost copy-sm" id="copyB${i}">⧉ Copy</button></div><div class="scene-line">▸ ${p.scene}</div><div class="prompt-meta"><b>Lighting:</b> ${p.lighting}<br><b>Camera:</b> ${p.camera} · <b>Atmosphere:</b> ${p.atmos} · <b>Trim:</b> ${p.trimLabel}</div><div class="prompt-text">${p.text}</div></div>`
+  ).join('');
+  prompts.forEach((p, i) => document.getElementById('copyB' + i).addEventListener('click', () => copyPrompt(i)));
+  outputEmpty.classList.add('hidden');
+  cardsEl.classList.remove('hidden');
+  sheetMeta.innerHTML = `MDSE ◈ <b>${batchSeed}</b> · <b>${N}</b> mockup prompts · <b>${title}</b> · ${styleLabel} · ${prompts[0].ratio.label} · ${prompts.length} distinct scenes`;
+  forgedCount += N;
+  counter.innerHTML = `📸 Mockup prompt sets forged: <b>${forgedCount}</b>`;
+  showToast(`✦ ${N} mockup prompts forged — distinct scenes & lighting`);
+}
+
+function copyPrompt(i){
+  navigator.clipboard.writeText(prompts[i].text);
+  const b = document.getElementById('copyB' + i);
+  b.textContent = '✓ Copied';
+  showToast(`⧉ Mockup ${i + 1} copied to clipboard`);
+  setTimeout(() => { b.textContent = '⧉ Copy'; }, 1600);
+}
+
+function copyAll(){
+  if(!prompts.length){ showToast("Forge mockup prompts first"); return; }
+  navigator.clipboard.writeText(prompts.map(p => p.text).join("\n\n"));
+  copyAllBtn.textContent = '✓ Copied';
+  copyAllBtn.classList.add('copied');
+  showToast("⧉ All 3 mockup prompts copied");
+  setTimeout(() => { copyAllBtn.textContent = '⧉ Copy All'; copyAllBtn.classList.remove('copied'); }, 1600);
+}
+
+function exportTxt(){
+  if(!prompts.length){ showToast("Forge mockup prompts first"); return; }
+  const text = prompts.map((p, i) =>
+    `ARCANA MOCKUP FORGE · mockup prompt ${i + 1} of ${prompts.length} · seed ${p.seed}\n` +
+    `Scene: ${p.scene}\n` +
+    `Lighting: ${p.lighting}\n` +
+    `Camera: ${p.camera} · Atmosphere: ${p.atmos}\n` +
+    `Ratio: ${p.ratio.label} · Trim: ${p.trimLabel}\n\n` +
+    p.text
+  ).join("\n\n\n") + `\n\nMDSE ◈ ${batchSeed}`;
+  const a = document.createElement('a');
+  a.download = `arcana-mockup-prompts-${batchSeed}.txt`;
+  a.href = URL.createObjectURL(new Blob([text], { type:'text/plain' }));
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast(`💾 Exported arcana-mockup-prompts-${batchSeed}.txt`);
+}
+
+generateBtn.addEventListener('click', forge);
+regenBtn.addEventListener('click', forge);
+copyAllBtn.addEventListener('click', copyAll);
+exportBtn.addEventListener('click', exportTxt);
+
+</script>
+</body>
+</html>
