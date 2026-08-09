@@ -1,0 +1,640 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana KDP Metadata Forge — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0B0714;
+    --panel:#1A0F2E;
+    --panel-2:#241640;
+    --gold:#B565D8;
+    --gold-dim:#7A4499;
+    --amethyst:#C8D0E0;
+    --amethyst-soft:#9FA8C4;
+    --parchment:#EDEAF2;
+    --parchment-dim:#9B94AC;
+    --blood:#8B1E4A;
+    --line:rgba(181,101,216,0.22);
+    --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(181,101,216,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,208,224,0.07), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:1240px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(181,101,216,0.12), rgba(200,208,224,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:780px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:30px; position:relative;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .app-layout{display:grid; grid-template-columns:360px 1fr; gap:26px; align-items:start;}
+  @media (max-width:960px){ .app-layout{grid-template-columns:1fr;} }
+  .sidebar{position:sticky; top:24px;}
+  @media (max-width:960px){ .sidebar{position:static;} }
+  .step-head{margin-bottom:22px; text-align:center;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:21px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14px; max-width:600px; margin:0 auto; line-height:1.55;}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:7px;}
+  .field input[type="text"],.field select,.field textarea{width:100%; background:var(--void); border:1px solid var(--line); border-radius:3px; color:var(--parchment); font-family:'EB Garamond',serif; font-size:14.5px; padding:11px 13px; transition:border-color .18s ease;}
+  .field select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer; padding-right:34px;}
+  .field select:hover{border-color:var(--gold-dim);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.18);}
+  .field textarea{min-height:92px; resize:vertical; line-height:1.55; font-style:italic;}
+  .field .has-error{border-color:var(--blood); box-shadow:0 0 0 2px rgba(139,30,74,0.35);}
+  .inline-hint{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--gold); margin-top:6px; line-height:1.6;}
+
+  .btn-draw{font-family:'Cinzel',serif; font-size:14px; letter-spacing:0.06em; padding:16px 26px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600; width:100%; margin-top:4px;}
+  .btn-draw:hover{filter:brightness(1.08); box-shadow:0 4px 26px rgba(181,101,216,0.22);}
+  .counter-line{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--parchment-dim); text-align:center; margin-top:14px;}
+  .counter-line b{color:var(--gold); font-weight:500;}
+
+  .output-panel{display:flex; flex-direction:column;}
+  .output-head{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+  .output-meta{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--parchment-dim); line-height:1.7;}
+  .output-meta b{color:var(--gold); font-weight:500;}
+  .btn{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; white-space:nowrap;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft); font-size:12px; font-family:'Cinzel',serif; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; text-transform:uppercase; transition:all .18s ease;}
+  .btn-dice:hover{background:rgba(200,208,224,0.10); color:var(--parchment);}
+  .btn-gold{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-gold:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(181,101,216,0.25);}
+  .btn-gold.copied{filter:none; box-shadow:none;}
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+  .output-empty{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed var(--line); border-radius:4px; padding:70px 30px; text-align:center; color:var(--parchment-dim); font-style:italic; font-size:15px; line-height:1.8;}
+  .output-empty b{color:var(--gold-dim); font-style:normal; font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
+  .output-page{flex:1 1 auto; min-height:0; background:linear-gradient(180deg, #F4F1FA, var(--parchment)); color:var(--void); border:1px solid var(--gold-dim); border-radius:4px; padding:38px 42px; font-family:'EB Garamond',serif; font-size:15px; line-height:1.72; white-space:pre-wrap; word-wrap:break-word; overflow-y:auto; box-shadow:inset 0 0 70px rgba(181,101,216,0.10), 0 10px 40px rgba(0,0,0,0.35);}
+  .output-page::-webkit-scrollbar{width:10px;}
+  .output-page::-webkit-scrollbar-track{background:rgba(11,7,20,0.08);}
+  .output-page::-webkit-scrollbar-thumb{background:var(--gold-dim); border-radius:5px;}
+
+  .toast{position:fixed; left:50%; bottom:34px; transform:translateX(-50%) translateY(10px); background:var(--panel-2); border:1px solid var(--gold-dim); color:var(--parchment); font-family:'JetBrains Mono',monospace; font-size:12px; padding:11px 18px; border-radius:3px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:20; box-shadow:0 10px 30px rgba(0,0,0,0.45);}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:44px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA STORYBOOK AI BONUS · KDP 2026-rule-correct listing sheets — real Amazon category paths, 7 intent-driven keyword fields, subtitle, blurb, search intents &amp; batch forging ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Listing Metadata</div>
+    <h1>Arcana KDP Metadata <span>Forge</span></h1>
+    <p class="sub">Your finished book gets a complete, copy-paste-ready KDP listing sheet built on real 2026 rules — 3 real Amazon category paths with competition tiers and badge bets, 7 keyword fields each targeting a distinct reader search, a suggested subtitle, a full Amazon book description, buyer search intents, age-range notes, verified field rules, and a print checklist. Forge 1, 3 or 5 variations at once: the combinatorial engine draws from theme-grounded banks, so no two sheets are ever the same.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="panel sidebar">
+      <div class="step-head">
+        <div class="step-kicker">The Controls</div>
+        <div class="step-title">Describe your book</div>
+      </div>
+
+      <div class="field">
+        <label for="titleInput">Book Title</label>
+        <input type="text" id="titleInput" placeholder="e.g. The Moonlit Kingdom">
+        <div class="inline-hint hidden" id="titleHint">The title is required — it seeds your keywords.</div>
+      </div>
+
+      <div class="field">
+        <label for="genreSel">Visual World / Genre</label>
+        <select id="genreSel"></select>
+        <div class="inline-hint hidden" id="customHint">Describe your custom world — it seeds the genre keywords.</div>
+        <input type="text" id="customWorldInput" class="hidden" placeholder="e.g. moonlit kingdom of talking foxes" style="margin-top:8px;">
+      </div>
+
+      <div class="field">
+        <label for="ageSel">Target Age Range</label>
+        <select id="ageSel"></select>
+      </div>
+
+      <div class="field">
+        <label for="pagesInput">Page Count</label>
+        <input type="text" id="pagesInput" value="22" placeholder="e.g. 22 (12 / 22 / 34 / 54)">
+        <div class="inline-hint hidden" id="pagesHint">Needs a whole number between 1 and 999.</div>
+      </div>
+
+      <div class="field">
+        <label for="variationsSel">Variations per Forge</label>
+        <select id="variationsSel">
+          <option value="1">1 — single sheet</option>
+          <option value="3">3 — three variations</option>
+          <option value="5">5 — five variations</option>
+        </select>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">More variations = more combos to A/B test across formats and marketplaces</div>
+      </div>
+
+      <div class="field">
+        <label for="conceptInput">Story Concept Summary <span style="color:var(--parchment-dim); text-transform:none; letter-spacing:0.05em;">(optional)</span></label>
+        <textarea id="conceptInput" placeholder="One or two sentences — it gets included on the sheet so you keep the listing voice consistent."></textarea>
+      </div>
+
+      <button class="btn-draw" id="generateBtn">⚡ Forge KDP Metadata</button>
+      <div class="counter-line" id="counter">📋 Metadata sheets forged: <b>0</b></div>
+    </aside>
+    <section class="panel output-panel" id="outputPanel">
+      <div class="output-head">
+        <div class="output-meta" id="sheetMeta">Metadata sheet not forged yet</div>
+        <div class="btn-row">
+          <button class="btn btn-dice" id="regenBtn">🎲 Regenerate (new variation)</button>
+          <button class="btn btn-gold" id="copyBtn">📋 Copy Full Sheet</button>
+          <button class="btn btn-ghost" id="exportBtn">💾 Export .txt</button>
+        </div>
+      </div>
+      <div class="output-empty" id="outputEmpty"><b>Your metadata sheet will appear here</b>Forge it once and it becomes a full copyable listing sheet — real Amazon category paths, 7 intent-driven keyword fields, subtitle, Amazon book description, buyer search intents, 2026 field rules, and formatting checklist — ready to paste into KDP. Forge 3 or 5 variations for a batch of options to A/B test.</div>
+      <pre class="output-page hidden" id="sheet"></pre>
+    </section>
+  </div>
+  <footer class="note">ARCANA KDP METADATA FORGE — MASTER EDITION BONUS · real 2026 KDP rules (3 categories per format · 7×50-char keyword fields · spaces not commas) · real Amazon/BISAC category paths with competition tiers · theme-grounded combinatorial engine · subtitle · blurb · search intents · batch forge 1/3/5 · every forge a fresh variation</footer>
+</div>
+
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(181,101,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function nextSeed(){ return Math.random().toString(36).slice(2,6).toUpperCase(); }
+const STOPWORDS = new Set(['a','an','the','and','or','of','for','with','in','on','at','to','is','it','its','their','them','they','where','that','this','every','be','was','been','into','inside','like','then','so','if','but','not','all','any','by','as','from','up','down','out','over','under','again','once','because','until','while','when','after','before','there','those','these','do','does','did','who','what','theyre']);
+function descriptorStem(text, n){
+  return (String(text).match(/[A-Za-z']+/g) || [])
+    .filter(w => w.length > 3 && !STOPWORDS.has(w.toLowerCase()))
+    .slice(0, n);
+}
+
+const THEMES = [
+  { label:"Dark Goddess Oracle" },
+  { label:"Crystal Witch Deck" },
+  { label:"Gothic Shadow Tarot" },
+  { label:"Botanical Grimoire Oracle" },
+  { label:"Deep Current Oracle" },
+  { label:"Bone & Bloom Tarot" },
+  { label:"Storm Witch Tarot" },
+  { label:"Wildwood Folk Oracle" },
+  { label:"Celestial Cartography Oracle" },
+  { label:"Insect Alchemy Oracle" },
+  { label:"Antique Anatomy Tarot" },
+  { label:"Custom World" }
+];
+
+const AGE_RANGES = [
+  { key:"children", label:"Children (4–8)", audDisplay:"ages 4 to 8", guidance:"Read-aloud picture-book tier. Amazon shows age 4–8 listings primarily to parents searching children's storybooks; keep the blurb warm and family-oriented, and note 'read aloud in 10 minutes or less.'" },
+  { key:"mg", label:"Middle Grade (8–12)", audDisplay:"ages 8 to 12", guidance:"Strong Amazon kids'-book tier. Keywords like 'ages 8 to 12' and 'tween' perform well; make sure the title and cover clearly read as middle-grade, not YA." },
+  { key:"ya", label:"Young Adult (13–17)", audDisplay:"young adult readers", guidance:"The largest and most competitive Amazon fiction tier. Use clear genre signals in title, subtitle, and cover (fantasy, romance, dark academia); the first 10% of the blurb does the heaviest lifting." },
+  { key:"adult", label:"Adult (18+)", audDisplay:"adult readers", guidance:"Targeted at genre-literate adult readers. Lean into niche category paths and mood keywords to escape the broadest competition and reach exact-audience searches." }
+];
+
+/* ============ REAL DATA (verified 2026) ============ */
+
+const AMAZON_CATEGORIES = [
+  { path:"JUVENILE FICTION / Fantasy / Magic", code:"JUV037040", ages:["children","mg"], tier:"large", note:"the biggest kids' fantasy shelf — strong traffic, tough badge" },
+  { path:"JUVENILE FICTION / Fantasy / Faeries (Fairies, Pixies, Elves, etc.)", code:"JUV037020", ages:["children","mg"], tier:"mid", note:"smaller shelf, fairy-core buyers, easier to rank" },
+  { path:"JUVENILE FICTION / Fairy Tales & Folklore / Adaptations", code:"JUV012040", ages:["children","mg"], tier:"mid", note:"fairy-tale retelling buyers — strong Arcana fit" },
+  { path:"JUVENILE FICTION / Fairy Tales & Folklore / General", code:"JUV012030", ages:["children","mg"], tier:"mid", note:"classic shelf for fables and folk tales" },
+  { path:"JUVENILE FICTION / Bedtime & Dreams", code:"JUV010000", ages:["children"], tier:"niche", note:"low competition, gift & routine buyers — best badge bet for 4–8" },
+  { path:"JUVENILE FICTION / Legends, Myths, Fables / General", code:"JUV012020", ages:["children","mg"], tier:"niche", note:"myth-browsing families" },
+  { path:"JUVENILE FICTION / Monsters", code:"JUV052000", ages:["children","mg"], tier:"niche", note:"gothic-leaning kids' titles do well here" },
+  { path:"JUVENILE FICTION / Animals / General", code:"JUV002000", ages:["children"], tier:"mid", note:"animal protagonists — classic picture-book traffic" },
+  { path:"JUVENILE FICTION / Nature & The Natural World / General", code:"JUV029000", ages:["children","mg"], tier:"mid", note:"nature-magic stories, strong with forest themes" },
+  { path:"JUVENILE FICTION / Action & Adventure / General", code:"JUV001000", ages:["mg"], tier:"mid", note:"safe secondary shelf for quest stories" },
+  { path:"JUVENILE FICTION / Girls & Women", code:"JUV014000", ages:["mg","children"], tier:"niche", note:"young witch / heroine stories rank well here" },
+  { path:"JUVENILE NONFICTION / Activity Books / Coloring", code:null, ages:["children","mg"], tier:"mid", note:"only if the interior includes coloring pages" },
+  { path:"YOUNG ADULT FICTION / Fantasy / Dark Fantasy", code:"YAF019090", ages:["ya"], tier:"mid", note:"the gothic YA sweet spot — busy but winnable" },
+  { path:"YOUNG ADULT FICTION / Fantasy / Epic", code:"YAF019020", ages:["ya"], tier:"large", note:"broad shelf, huge traffic, tough badge" },
+  { path:"YOUNG ADULT FICTION / Fantasy", code:"YAF019000", ages:["ya"], tier:"large", note:"the parent shelf — only if narrow picks feel wrong" },
+  { path:"YOUNG ADULT FICTION / Fairy Tales & Folklore / Adaptations", code:"YAF037030", ages:["ya"], tier:"niche", note:"retelling readers, loyal and specific — strong badge bet" },
+  { path:"YOUNG ADULT FICTION / Fairy Tales & Folklore / General", code:"YAF037000", ages:["ya"], tier:"niche", note:"folk & fable readers" },
+  { path:"YOUNG ADULT FICTION / Occult & Supernatural", code:"YAF040000", ages:["ya"], tier:"mid", note:"witchcraft and gothic teens — core Arcana audience" },
+  { path:"YOUNG ADULT FICTION / Legends, Myths, Fables / General", code:null, ages:["ya"], tier:"niche", note:"mythic YA readers" },
+  { path:"FICTION / Fantasy / Dark Fantasy", code:"FIC009090", ages:["adult"], tier:"large", note:"big adult shelf — pair with a niche second pick" },
+  { path:"FICTION / Fantasy / Epic", code:"FIC009020", ages:["adult"], tier:"large", note:"epic readers, heavy competition" },
+  { path:"FICTION / Fantasy / General", code:"FIC009000", ages:["adult"], tier:"large", note:"the broadest adult fantasy shelf" },
+  { path:"FICTION / Fairy Tales, Folk Tales, Legends & Mythology", code:"FIC010000", ages:["adult"], tier:"mid", note:"adult fairy-tale readers — excellent thematic fit" },
+  { path:"FICTION / Occult & Supernatural", code:"FIC024000", ages:["adult"], tier:"mid", note:"witchy and gothic fiction readers" },
+  { path:"FICTION / Magical Realism", code:null, ages:["adult"], tier:"niche", note:"literary-leaning buyers, low competition" },
+  { path:"FICTION / Visionary & Metaphysical", code:"FIC029000", ages:["adult"], tier:"niche", note:"metaphysical fiction niche — strongest adult badge bet" },
+  { path:"BODY, MIND & SPIRIT / Divination / Tarot", code:"OCC008000", ages:["adult","ya"], tier:"niche", note:"gift-buyer traffic — ideal when the book doubles as a deck guide" },
+  { path:"BODY, MIND & SPIRIT / Witchcraft", code:"OCC014000", ages:["adult","ya"], tier:"mid", note:"witchy audiences buy fast here" }
+];
+
+const KDP_MOOD_WORDS = [
+  "gothic fairy tale","dark fantasy","whimsical storybook","mythic storytelling",
+  "atmospheric fiction","moonlit world","magical realism","enchanted forest",
+  "cozy magic","ancient symbolism","dreamlike adventure","illustrated fantasy"
+];
+
+const THEME_WORLDS = {
+  "Dark Goddess Oracle": { adj:["dark","lunar","chthonic","moon-blessed"], nouns:["goddess magic","lunar rites","underworld quest","moonlit magic"], desc:["moonlit shrines","veiled goddesses","underworld gardens","silver rites"], tone:["dark mythological","atmospheric","mystical"], settings:["a world of veiled goddesses","a land ruled by lunar rites"] },
+  "Crystal Witch Deck": { adj:["crystal","cottage","gemstone","hearth-lit"], nouns:["crystal witchcraft","herb magic","gemstone spells","altar magic"], desc:["crystal clusters","dried herb bundles","candlelit altars","gemstone gardens"], tone:["cozy","warm","folkloric"], settings:["a candlelit cottage","a world of raw crystals"] },
+  "Gothic Shadow Tarot": { adj:["gothic","victorian","shadowed","velvet"], nouns:["gothic romance","dark fairy tale","shadow magic","velvet intrigue"], desc:["wrought-iron gardens","candlelit mansions","mourning veils","dark rose corridors"], tone:["gothic","dark romantic","brooding"], settings:["a candlelit victorian manor","a city of wrought iron"] },
+  "Botanical Grimoire Oracle": { adj:["herbal","botanical","apothecary","rooted"], nouns:["herb magic","botanical spells","apothecary lore","seed magic"], desc:["pressed flowers","ink-stained herbals","specimen jars","root-and-blossom gardens"], tone:["earthy","poetic","quiet"], settings:["an apothecary of living herbs","a greenhouse of speaking plants"] },
+  "Deep Current Oracle": { adj:["drowned","abyssal","tidal","bioluminescent"], nouns:["deep-sea magic","tidal spells","ocean magic","coral magic"], desc:["glowing jellyfish processions","sunken bell-jar cities","coral thrones","drowned gardens"], tone:["dreamlike","deep","luminous"], settings:["a bioluminescent deep-sea world","an underwater kingdom of bells"] },
+  "Bone & Bloom Tarot": { adj:["memento-mori","blooming","ossuary","quiet"], nouns:["mortality magic","bloom-and-bone tales","funeral florals","ghost gardens"], desc:["skeletal hands cradling blossoms","mourning gardens","anatomical botany","blooming graves"], tone:["elegiac","delicate","gothic-poetic"], settings:["a garden where graves blossom","a victorian mourning garden"] },
+  "Storm Witch Tarot": { adj:["storm-lit","lightning-forged","wind-torn","barometric"], nouns:["storm magic","lightning rites","weather spells","thunder oaths"], desc:["cliff-edge cloaks","storm-glass talismans","barometric sigils","thunder-forged altars"], tone:["fierce","elemental","electric"], settings:["a cliff where storms gather","a kingdom ruled by weather"] },
+  "Wildwood Folk Oracle": { adj:["wildwood","antlered","mossy","foxfire"], nouns:["forest magic","old folklore","foxfire spells","antler rites"], desc:["moss-covered stone circles","antler-crowned figures","foxfire lanterns","deep-wood trails"], tone:["ancient","folkloric","whispered"], settings:["a deep forest older than names","a wood lit by foxfire"] },
+  "Celestial Cartography Oracle": { adj:["stellar","astrolabe","constellation","midnight"], nouns:["star magic","constellation lore","celestial maps","astrolabe spells"], desc:["hand-inked constellation maps","brass astrolabes","observatory domes","midnight star charts"], tone:["vast","precise","luminous"], settings:["a sky written like a map","an observatory above the clouds"] },
+  "Insect Alchemy Oracle": { adj:["iridescent","alchemical","winged","curious"], nouns:["insect alchemy","beetle magic","moth lore","specimen spells"], desc:["iridescent beetle wings","pinned moths","alchemical labels","cabinet curiosities"], tone:["curious","alchemical","jewel-toned"], settings:["a cabinet of living curiosities","a workshop of winged wonders"] },
+  "Antique Anatomy Tarot": { adj:["anatomist","antique","plate-engraved","ink-washed"], nouns:["anatomy lore","engraved tales","medical magic","specimen tales"], desc:["hand-labeled diagrams","aged medical plates","anatomical gardens","ink-washed specimens"], tone:["academic","gothic","precise"], settings:["a study of antique plates","a world drawn in ink"] }
+};
+
+const AGE_BANKS = {
+  children: {
+    format:["picture book","bedtime story","read aloud book","storybook"],
+    moodTail:["dark fairy tale","enchanted tales","whimsical adventures","storybook magic"],
+    audience:["books for kids who love magic","stories for little witches","read aloud for ages 4 to 8","books for 5 year old girls","childrens bedtime stories"],
+    giftNoun:["little witches","kids who love fairies","storybook collectors","toddler witches"],
+    adjacent:["fairy tale retellings","gentle fantasy","magic picture books","fable stories"],
+    audience2:["with full page illustrations","with soft painted art","with dreamy illustrations"],
+    seasonal:["halloween storybook","cozy autumn bedtime reading","magic gifts for kids","star-gazing bedtime stories"]
+  },
+  mg: {
+    format:["chapter book","middle grade fantasy","magic adventure book","book series starter"],
+    moodTail:["dark fairy tale","witchy adventures","mythic quests","enchanting mysteries"],
+    audience:["books for 9 year olds who love magic","middle grade witch books","tween fantasy adventure","books for ages 8 to 12","fantasy books for girls"],
+    giftNoun:["young witches","tween readers","magic-loving kids","middle grade fantasy fans"],
+    adjacent:["mythology retellings","school of magic stories","animal familiars fantasy","cursed forest tales"],
+    audience2:["with maps and spells","with original illustrations","with hidden secrets to find"],
+    seasonal:["summer reading for tweens","halloween chapter books","solstice adventure stories","cozy winter fantasy reads"]
+  },
+  ya: {
+    format:["young adult fantasy","dark fantasy novel","fairy tale retelling","series starter"],
+    moodTail:["gothic fairy tale","dark academia","witchy romance","atmospheric fiction"],
+    audience:["books for teenagers who like dark fairy tales","dark fantasy books for teens","witchy books for young adults","ya books with brave heroines","gothic romance for teens"],
+    giftNoun:["witchy teens","dark academia fans","fairy tale lovers","gothic readers"],
+    adjacent:["enchanted forest stories","magic academy books","cursed crown retellings","moonlight magic tales"],
+    audience2:["with a complete standalone ending","with elegant chapter art","with a moody gothic cover"],
+    seasonal:["spooky season ya reads","cozy winter fantasy","halloween witch books","autumn aesthetic books"]
+  },
+  adult: {
+    format:["adult dark fantasy","standalone fantasy novel","fairy tale retelling","literary fantasy"],
+    moodTail:["gothic fairy tale","dark academia","magical realism","atmospheric fiction"],
+    audience:["fantasy books for adults who like fairy tales","witchy books for grown ups","dark fantasy for adult readers","books for lovers of gothic tales","grown up fairy tale lovers"],
+    giftNoun:["witchy readers","gothic fiction lovers","tarot enthusiasts","dark fantasy fans"],
+    adjacent:["mythic fiction","metaphysical fantasy","tarot inspired fiction","velvet gothic romance"],
+    audience2:["with original full color art","as a collectible gift edition","with a hand illustrated cover"],
+    seasonal:["autumn reading list books","spooky season novels","cozy winter fantasy","yule witch books"]
+  }
+};
+
+const SEARCH_INTENTS = {
+  children:["books for kids who love magic","fairy tale picture books","bedtime stories with magic","witch stories for children","magical animal storybooks","kids books with beautiful illustrations","story books about brave little witches","picture books about the moon"],
+  mg:["books for 9 year old girls who like magic","middle grade witch adventures","fantasy books for ages 8 12","books with talking animals and magic","cursed forest books for kids","chapter books about young witches","magic school books for tweens","mythology books for kids"],
+  ya:["dark fairy tale books for teens","gothic fantasy young adult","witchy books aesthetic","ya fantasy with strong heroines","books for teenagers who like dark fairy tales","fairy tale retellings ya","magic and moonlight ya books","dark academia books for teens"],
+  adult:["dark fairy tales for adults","witchy fiction for grown ups","gothic fantasy novels","books for lovers of tarot","literary dark fantasy","fairy tale retellings for adults","atmospheric fantasy novels","velvet gothic reads"]
+};
+
+const AGE_BLURB = {
+  lines: { children:["every shadow hides a friendly secret"], mg:["no forest stays ordinary for long"], ya:["no spell comes without a price"], adult:["no bargain with the dark stays a bargain"] },
+  promise: { children:["A story gentle enough for bedtime, wondrous enough to be asked for again and again."], mg:["A story built for flashlight nights, with secrets to find on every re-read."], ya:["A story where every choice matters and every ending is earned."], adult:["A story for readers who keep velvet grimoires by the bed."] },
+  cta: { children:["Perfect for ages 4–8, and for the grown-ups who read it aloud."], mg:["Ideal for readers ages 8–12 who are done with the ordinary."], ya:["For readers who like their magic dark and their heroines brave."], adult:["For the reader who believes the fairy tales were true all along."] }
+};
+
+const KDP_RULES_2026 = [
+  "3 category slots PER FORMAT (ebook, paperback, hardcover each get their own) — the old email request for extra categories was retired in 2023.",
+  "7 backend keyword fields, 50 characters each = 350 characters of search indexing total.",
+  "Use spaces, not commas — commas waste roughly 10–15% of your keyword capacity.",
+  "Never repeat words from your title, subtitle, or categories in keywords — Amazon already indexes them.",
+  "Banned keyword content: quality claims, 'new / on sale', brand or author names, ASINs, program names, quotation marks.",
+  "Search snippets show only the first ~200 characters of your blurb — front-load the hook.",
+  "Titles over ~60 characters get skimmed in search results — keep title + subtitle tight.",
+  "Amazon reshelves based on sales and metadata for up to 72 hours — check rankings before judging."
+];
+
+const KDP_FORMATTING_NOTES = [
+  "Upload a print-ready PDF at 300 DPI (PDF/X-1a) — never a flattened JPEG or a Word export.",
+  "Keep at least 0.25 in margins; KDP's KTR (Kindle Text Renderer) handles your static text just fine.",
+  "Set the trim size on the KDP listing to exactly match your PDF page size — a mismatch is the #1 rejected-file cause.",
+  "Order a printed proof before the first sale; text-render issues and margin crop errors show up on paper, not in preview.",
+  "For full-bleed pages, design into 0.125 in bleed on all sides; KDP trims the excess automatically.",
+  "Export your manuscript from Canva at 8.5 × 8.5 in (or your exact trim) with 'crop marks off' to avoid ugly black corners.",
+  "Set the same categories and keywords for every format — Amazon does not copy them across for you.",
+  "Fill all 7 keyword fields but only with terms that genuinely fit — an empty slot is missed reach, an irrelevant one is wasted."
+];
+const titleInput = document.getElementById('titleInput');
+const titleHint = document.getElementById('titleHint');
+const genreSel = document.getElementById('genreSel');
+const customWorldInput = document.getElementById('customWorldInput');
+const customHint = document.getElementById('customHint');
+const ageSel = document.getElementById('ageSel');
+const pagesInput = document.getElementById('pagesInput');
+const pagesHint = document.getElementById('pagesHint');
+const variationsSel = document.getElementById('variationsSel');
+const conceptInput = document.getElementById('conceptInput');
+const generateBtn = document.getElementById('generateBtn');
+const regenBtn = document.getElementById('regenBtn');
+const copyBtn = document.getElementById('copyBtn');
+const exportBtn = document.getElementById('exportBtn');
+const counter = document.getElementById('counter');
+const sheetMeta = document.getElementById('sheetMeta');
+const outputEmpty = document.getElementById('outputEmpty');
+const sheet = document.getElementById('sheet');
+
+THEMES.forEach(t => genreSel.add(new Option(t.label, t.label)));
+AGE_RANGES.forEach(a => ageSel.add(new Option(a.label, a.key)));
+ageSel.value = "ya";
+
+genreSel.addEventListener('change', () => {
+  const custom = genreSel.value === "Custom World";
+  customWorldInput.classList.toggle('hidden', !custom);
+  customHint.classList.toggle('hidden', !custom);
+});
+titleInput.addEventListener('input', () => titleHint.classList.add('hidden'));
+pagesInput.addEventListener('input', () => pagesHint.classList.add('hidden'));
+customWorldInput.addEventListener('input', () => customHint.classList.add('hidden'));
+
+function getTheme(){
+  if(genreSel.value === "Custom World") return { label: "Custom World", descriptor: customWorldInput.value.trim() };
+  return { label: genreSel.value, descriptor: "" };
+}
+
+function genreStem(theme){
+  if(theme.label === 'Custom World'){
+    const w = descriptorStem(theme.descriptor || 'custom world', 2);
+    return (w.length ? w : ['custom','world']).join(' ');
+  }
+  let s = String(theme.label);
+  while(s !== (s = s.replace(/ (Oracle|Deck|Tarot|Folk)$/, ''))){}
+  return s.toLowerCase();
+}
+
+function themeWorld(theme){
+  const w = THEME_WORLDS[theme.label];
+  if(w) return w;
+  const stem = genreStem(theme);
+  const sw = descriptorStem(theme.descriptor || '', 3);
+  return {
+    adj: ["enchanted","mystical","whimsical"],
+    nouns: [stem + " magic", stem + " tales", "storybook magic"],
+    desc: [stem + " wonders", (sw[0] || "moonlit") + " magic", (sw[1] || "hidden") + " tales"],
+    tone: ["atmospheric","dreamlike","lyrical"],
+    settings: ["a " + stem + " world", "a " + stem + " tale"]
+  };
+}
+
+function buildCategories(ageKey){
+  const pool = AMAZON_CATEGORIES.filter(c => c.ages.includes(ageKey));
+  const niches = pool.filter(c => c.tier === "niche");
+  const rest = pool.filter(c => c.tier !== "niche");
+  const picked = [];
+  if(niches.length && Math.random() < 0.8){
+    const n = pick(niches);
+    picked.push(n);
+    shuffle(rest).forEach(c => { if(picked.length < 3) picked.push(c); });
+  } else {
+    shuffle(rest).forEach(c => { if(picked.length < 3) picked.push(c); });
+  }
+  return picked;
+}
+
+function buildKeywords(theme, age, bannedStrict, bannedRelax){
+  const w = themeWorld(theme);
+  const A = AGE_BANKS[age.key];
+  const out = [];
+  const usedWords = new Set();
+  const addField = (label, makePhrase, relaxed) => {
+    const banned = relaxed ? bannedRelax : bannedStrict;
+    for(let tries = 0; tries < 60; tries++){
+      const p = makePhrase().toLowerCase().replace(/\s+/g, ' ').trim();
+      const toks = p.split(/\s+/);
+      const sig = toks.filter(t => t.length > 4);
+      if(!p || p.length > 50) continue;
+      if(new Set(toks).size !== toks.length) continue;
+      if(sig.some(t => banned.has(t))) continue;
+      if(!relaxed && sig.some(t => usedWords.has(t))) continue;
+      if(!relaxed) sig.forEach(t => usedWords.add(t));
+      out.push({ label, text: p });
+      return true;
+    }
+    return false;
+  };
+  addField("Long-tail", () => `${pick(w.adj)} ${pick(w.nouns)} ${pick(A.format)}`, true);
+  addField("Tone & mood", () => `${pick(w.tone)} ${pick(A.moodTail)}`);
+  addField("Audience", () => pick(A.audience), true);
+  addField("Gift & use", () => `gift for ${pick(A.giftNoun)}`, true);
+  addField("Adjacent niche", () => `${pick(A.adjacent)} ${pick(A.giftNoun)}`, true);
+  addField("Format & features", () => `${pick(A.format)} ${pick(A.audience2)}`, true);
+  addField("Seasonal & trend", () => pick(A.seasonal), true);
+  return out;
+}
+
+function buildSearchIntents(ageKey){
+  return shuffle(SEARCH_INTENTS[ageKey].slice()).slice(0, 4);
+}
+
+function article(word){
+  return /^[aeiou]/i.test(word) ? "an" : "a";
+}
+
+function buildSubtitle(theme, age){
+  const w = themeWorld(theme);
+  const A = AGE_BANKS[age.key];
+  const patterns = [
+    () => {
+      const a = pick(w.adj);
+      return `${article(a)} ${a} ${pick(w.nouns)} — ${pick(A.moodTail)} ${pick(A.format)}`;
+    },
+    () => `${pick(w.adj)} ${pick(w.nouns)}: ${pick(A.moodTail)} for ${age.audDisplay}`,
+    () => {
+      const t = pick(w.tone);
+      return `${article(t)} ${t} ${pick(w.nouns)} of ${pick(w.desc)}`;
+    },
+    () => `${pick(w.desc)}: ${pick(A.moodTail)} ${pick(A.format)}`
+  ];
+  let best = "";
+  for(let tries = 0; tries < 24; tries++){
+    const t = pick(patterns)();
+    const words = t.toLowerCase().match(/[a-z']+/g) || [];
+    const dups = words.filter((w, i) => words.indexOf(w) !== i && w.length > 3);
+    const unique = new Set(words.filter(w => w.length > 3));
+    const tooShort = unique.size < Math.min(4, Math.ceil(words.length * 0.5));
+    if(!dups.length && !tooShort){ best = t; break; }
+    if(tries === 23) best = t;
+  }
+  return best.length > 200 ? best.slice(0, 197).trimEnd() + "..." : best;
+}
+
+function buildBlurb(theme, age, title, pages, concept){
+  const w = themeWorld(theme);
+  const A = AGE_BANKS[age.key];
+  const d = shuffle(w.desc.slice()).slice(0, 3);
+  const p1 = concept
+    ? `"${concept}"`
+    : `In ${pick(w.settings)}, ${pick(w.adj)} ${pick(w.nouns)} prove that ${pick(AGE_BLURB.lines[age.key])}.`;
+  const tone = pick(w.tone);
+  const fmt = pick(A.format);
+  const p2 = `Step into ${pick(w.settings)} — ${article(tone)} ${tone} journey of ${d[0]}, ${d[1]}, and ${d[2]}. ${pick(AGE_BLURB.promise[age.key])}`;
+  const p3 = `${title} is ${article(fmt)} ${fmt} of ${pages} pages, ${pick(A.audience2)}. ${pick(AGE_BLURB.cta[age.key])}`;
+  return [p1, p2, p3].join("\n\n");
+}
+
+function buildVariation(title, theme, age, pages, concept, titleBanned){
+  const seed = nextSeed();
+  const categories = buildCategories(age.key);
+  const catAll = new Set();
+  const catFreq = new Set();
+  const counts = {};
+  categories.forEach(c => {
+    c.path.toLowerCase().match(/[a-z']+/g).forEach(t => {
+      counts[t] = (counts[t] || 0) + 1;
+      catAll.add(t);
+      if(counts[t] >= 2) catFreq.add(t);
+    });
+  });
+  const bannedStrict = new Set([...titleBanned, ...catAll]);
+  const bannedRelax = new Set([...titleBanned, ...catFreq]);
+  const keywords = buildKeywords(theme, age, bannedStrict, bannedRelax);
+  const intents = buildSearchIntents(age.key);
+  const subtitle = buildSubtitle(theme, age);
+  const blurb = buildBlurb(theme, age, title, pages, concept);
+  const checklist = shuffle(KDP_FORMATTING_NOTES.slice()).slice(0, 5);
+  const badge = categories.find(c => c.tier === "niche");
+  const line = "═".repeat(56);
+
+  let out = "";
+  out += `✦ ARCANA KDP METADATA FORGE — MDSE ◈ ${seed}\n`;
+  out += `${title.toUpperCase()}\n`;
+  out += `Genre: ${theme.label} · Age: ${age.label} · Pages: ${pages}\n`;
+  if(concept) out += `Concept: ${concept}\n`;
+  out += `\n${line}\n`;
+  out += `1 · AMAZON CATEGORY PATHS (real 2026 shelf paths · pick 3 in KDP, one per format)\n`;
+  categories.forEach(c => {
+    out += `• ${c.path}${c.code ? "  [" + c.code + "]" : ""} — competition: ${c.tier}\n`;
+    out += `    ${c.note}\n`;
+  });
+  if(badge) out += `  ► Badge bet: ${badge.path} — the narrowest shelf, easiest #1 bestseller badge.\n`;
+  out += `\n${line}\n`;
+  out += `2 · SUGGESTED SUBTITLE (≤ 200 chars — carries your best reader phrase)\n`;
+  out += `• ${subtitle}\n`;
+  out += `\n${line}\n`;
+  out += `3 · KDP KEYWORDS (7 fields · 50 chars each · spaces not commas · no title/category repeats)\n`;
+  keywords.forEach((k, i) => {
+    out += `Field ${i+1} · ${k.label} (${k.text.length}/50): ${k.text}\n`;
+  });
+  out += `\n${line}\n`;
+  out += `4 · READER SEARCH INTENTS (real phrases buyers type on Amazon)\n`;
+  intents.forEach(i => { out += `• ${i}\n`; });
+  out += `\n${line}\n`;
+  out += `5 · BOOK DESCRIPTION (Amazon blurb · paste as-is · first ~200 chars carry the snippet)\n`;
+  out += blurb.split("\n").map(p => "  " + p).join("\n\n") + "\n";
+  out += `\n${line}\n`;
+  out += `6 · AGE-RANGE PUBLISHING NOTES\n`;
+  out += `${age.label} — ${age.guidance}\n`;
+  out += `\n${line}\n`;
+  out += `7 · KDP 2026 FIELD RULES (verified — read before publishing)\n`;
+  KDP_RULES_2026.forEach((r, i) => { out += `${i+1}. ${r}\n`; });
+  out += `\n${line}\n`;
+  out += `8 · INTERIOR FORMATTING CHECKLIST\n`;
+  checklist.forEach(c => { out += `• ${c}\n`; });
+
+  return { seed, text: out, keywords, categories, subtitle, intents, blurb, checklist };
+}
+
+function validate(){
+  let ok = true;
+  const title = titleInput.value.trim();
+  if(title.length < 2){ titleHint.classList.remove('hidden'); titleInput.classList.add('has-error'); ok = false; }
+  else titleInput.classList.remove('has-error');
+  const pages = pagesInput.value.trim();
+  const n = Number(pages);
+  if(!pages || !Number.isInteger(n) || n < 1 || n > 999){ pagesHint.classList.remove('hidden'); pagesInput.classList.add('has-error'); ok = false; }
+  else pagesInput.classList.remove('has-error');
+  if(genreSel.value === "Custom World" && !customWorldInput.value.trim()){ customHint.classList.remove('hidden'); customWorldInput.classList.add('has-error'); ok = false; }
+  else customWorldInput.classList.remove('has-error');
+  return ok;
+}
+
+let forgedCount = 0;
+let lastSeed = "";
+
+function forge(){
+  if(!validate()){ showToast("⚠ Fix the highlighted fields before forging"); return; }
+  const theme = getTheme();
+  const age = AGE_RANGES.find(a => a.key === ageSel.value);
+  const title = titleInput.value.trim();
+  const pages = Number(pagesInput.value.trim());
+  const concept = conceptInput.value.trim();
+  const N = Math.min(5, Math.max(1, Number(variationsSel.value) || 1));
+
+  const titleTokens = new Set((String(title).toLowerCase().match(/[a-z']+/g) || []).filter(w => w.length > 2));
+
+  const parts = [];
+  let metaSeed = "";
+  for(let i = 1; i <= N; i++){
+    const v = buildVariation(title, theme, age, pages, concept, titleTokens);
+    if(i === N) metaSeed = v.seed;
+    parts.push((N > 1 ? `◈ ◈ ◈  VARIATION ${i} OF ${N}  ◈ ◈ ◈\n\n` : "") + v.text);
+  }
+  lastSeed = metaSeed;
+
+  const out = parts.join("\n\n");
+  sheet.textContent = out;
+  sheetMeta.innerHTML = `MDSE ◈ <b>${metaSeed}</b> · <b>${N}</b> variation${N > 1 ? "s" : ""} · <b>${title}</b> · ${theme.label} · ${age.label} · ${pages} pages · 3 category paths · 7 keyword fields · subtitle · 4 intents · blurb · 5 checklist`;
+  outputEmpty.classList.add('hidden');
+  sheet.classList.remove('hidden');
+  forgedCount += N;
+  counter.innerHTML = `📋 Metadata sheets forged: <b>${forgedCount}</b>`;
+  showToast(N > 1 ? `✦ ${N} variations forged — batch ready` : "✦ Sheet forged — new variation ready");
+}
+
+generateBtn.addEventListener('click', forge);
+regenBtn.addEventListener('click', forge);
+
+copyBtn.addEventListener('click', async () => {
+  if(!sheet.textContent){ showToast("Forge a sheet first"); return; }
+  try{
+    await navigator.clipboard.writeText(sheet.textContent);
+    copyBtn.textContent = "✓ Copied";
+    copyBtn.classList.add('copied');
+    showToast("📋 Full sheet copied to clipboard");
+    setTimeout(() => { copyBtn.textContent = "📋 Copy Full Sheet"; copyBtn.classList.remove('copied'); }, 1600);
+  }catch(e){ showToast("Copy failed — select the text manually"); }
+});
+
+exportBtn.addEventListener('click', () => {
+  if(!sheet.textContent){ showToast("Forge a sheet first"); return; }
+  const blob = new Blob([sheet.textContent], { type:'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `arcana-kdp-metadata-${lastSeed}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast("💾 Sheet exported as .txt");
+});
+</script>
+</body>
+</html>
+
