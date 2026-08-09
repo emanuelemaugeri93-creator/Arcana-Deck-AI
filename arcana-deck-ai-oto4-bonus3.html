@@ -1,0 +1,419 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Lore Forge — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0B0714;
+    --panel:#1A0F2E;
+    --panel-2:#241640;
+    --gold:#B565D8;
+    --gold-dim:#7A4499;
+    --amethyst:#C8D0E0;
+    --amethyst-soft:#9FA8C4;
+    --parchment:#EDEAF2;
+    --parchment-dim:#9B94AC;
+    --blood:#8B1E4A;
+    --line:rgba(181,101,216,0.22);
+    --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(181,101,216,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,208,224,0.07), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:1240px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(181,101,216,0.12), rgba(200,208,224,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:780px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:30px; position:relative;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .app-layout{display:grid; grid-template-columns:360px 1fr; gap:26px; align-items:start;}
+  @media (max-width:960px){ .app-layout{grid-template-columns:1fr;} }
+  .sidebar{position:sticky; top:24px;}
+  @media (max-width:960px){ .sidebar{position:static;} }
+  .step-head{margin-bottom:22px; text-align:center;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:21px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14px; max-width:600px; margin:0 auto; line-height:1.55;}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:7px;}
+  .field input[type="text"],.field select,.field textarea{width:100%; background:var(--void); border:1px solid var(--line); border-radius:3px; color:var(--parchment); font-family:'EB Garamond',serif; font-size:14.5px; padding:11px 13px; transition:border-color .18s ease;}
+  .field select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer; padding-right:34px;}
+  .field select:hover{border-color:var(--gold-dim);}
+  .field input:focus,.field select:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.18);}
+  .field .has-error{border-color:var(--blood); box-shadow:0 0 0 2px rgba(139,30,74,0.35);}
+  .inline-hint{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--gold); margin-top:6px; line-height:1.6;}
+
+  .btn-draw{font-family:'Cinzel',serif; font-size:14px; letter-spacing:0.06em; padding:16px 26px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600; width:100%; margin-top:4px;}
+  .btn-draw:hover{filter:brightness(1.08); box-shadow:0 4px 26px rgba(181,101,216,0.22);}
+  .counter-line{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--parchment-dim); text-align:center; margin-top:14px;}
+  .counter-line b{color:var(--gold); font-weight:500;}
+
+  .output-panel{display:flex; flex-direction:column;}
+  .output-head{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+  .output-meta{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--parchment-dim); line-height:1.7;}
+  .output-meta b{color:var(--gold); font-weight:500;}
+  .btn{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; white-space:nowrap;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft); font-size:12px; font-family:'Cinzel',serif; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; text-transform:uppercase; transition:all .18s ease;}
+  .btn-dice:hover{background:rgba(200,208,224,0.10); color:var(--parchment);}
+  .btn-gold{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-gold:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(181,101,216,0.25);}
+  .btn-gold.copied{filter:none; box-shadow:none;}
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+  .output-empty{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed var(--line); border-radius:4px; padding:70px 30px; text-align:center; color:var(--parchment-dim); font-style:italic; font-size:15px; line-height:1.8;}
+  .output-empty b{color:var(--gold-dim); font-style:normal; font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
+
+  .lore-page{flex:1 1 auto; min-height:0; background:linear-gradient(180deg, #F4F1FA, var(--parchment)); color:var(--void); border:1px solid var(--gold-dim); border-radius:4px; padding:44px 48px; font-family:'EB Garamond',serif; font-size:15.5px; overflow-y:auto; box-shadow:inset 0 0 70px rgba(181,101,216,0.10), 0 10px 40px rgba(0,0,0,0.35);}
+  .lore-page::-webkit-scrollbar{width:10px;}
+  .lore-page::-webkit-scrollbar-track{background:rgba(11,7,20,0.08);}
+  .lore-page::-webkit-scrollbar-thumb{background:var(--gold-dim); border-radius:5px;}
+  .doc-title{font-family:'Cinzel Decorative','Cinzel',serif; font-size:clamp(20px,2.4vw,27px); line-height:1.4; text-align:center; margin:0 0 6px;}
+  .doc-sub{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold-dim); text-align:center; margin:0 0 24px;}
+  .doc-sigil{width:90px; height:1px; margin:0 auto 26px; background:linear-gradient(90deg, transparent, var(--gold-dim), transparent); position:relative;}
+  .doc-sigil::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:9px; color:var(--gold-dim); background:var(--parchment); padding:0 8px;}
+  .doc-intro{font-style:italic; line-height:1.85; margin:0 0 26px;}
+  .doc-note{font-size:13.5px; color:#7A6F92; line-height:1.7; margin:0 0 26px; padding-left:16px; border-left:2px solid rgba(122,68,153,0.45); font-style:italic;}
+  .entry{margin:0 0 15px; line-height:1.68;}
+  .entry b{font-family:'Cinzel',serif; font-weight:600; color:#5A2D82;}
+  .doc-close{text-align:center; font-style:italic; font-size:15px; margin:28px 0 4px;}
+  .doc-foot{text-align:center; font-size:12.5px; color:#8B84A0; font-style:italic; margin-top:30px; letter-spacing:0.03em;}
+
+  .toast{position:fixed; left:50%; bottom:34px; transform:translateX(-50%) translateY(10px); background:var(--panel-2); border:1px solid var(--gold-dim); color:var(--parchment); font-family:'JetBrains Mono',monospace; font-size:12px; padding:11px 18px; border-radius:3px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:20; box-shadow:0 10px 30px rgba(0,0,0,0.45);}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:44px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA STORYBOOK AI BONUS · unlimited world-glossary content, ready to add as book front matter ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Reader-Facing Lore</div>
+    <h1>Arcana Lore <span>Forge</span></h1>
+    <p class="sub">A ready-to-print front-matter page for your finished storybook: "The World of {title}: A Reader's Guide to Its Symbols." Each forge builds a complete guide — an opening paragraph, a how-to-read note, 4 to 10 archetypal symbols each explained in the visual language of your chosen theme with its own quiet echo, and a closing blessing. Choose the entry order, regenerate for a fresh combination, and paste it into your book as front matter.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="panel sidebar">
+      <div class="step-head">
+        <div class="step-kicker">The Controls</div>
+        <div class="step-title">Describe your world</div>
+      </div>
+
+      <div class="field">
+        <label for="titleInput">Book Title</label>
+        <input type="text" id="titleInput" placeholder="e.g. The Moonlit Kingdom">
+        <div class="inline-hint hidden" id="titleHint">The title is required — it appears in the guide header.</div>
+      </div>
+
+      <div class="field">
+        <label for="themeSel">Visual World / Theme</label>
+        <select id="themeSel"></select>
+        <div class="inline-hint hidden" id="customHint">Describe your custom world — it flavors the symbol meanings.</div>
+        <input type="text" id="customWorldInput" class="hidden" placeholder="e.g. moonlit kingdom of talking foxes" style="margin-top:8px;">
+      </div>
+
+      <div class="field">
+        <label for="countSel">Glossary Entries</label>
+        <select id="countSel">
+          <option value="4">4 — short guide</option>
+          <option value="6" selected>6 — standard guide</option>
+          <option value="8">8 — full guide</option>
+          <option value="10">10 — deluxe guide</option>
+        </select>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">Non-repeating symbols from a bank of 20, no two forges the same</div>
+      </div>
+
+      <div class="field">
+        <label for="orderSel">Entry Order</label>
+        <select id="orderSel">
+          <option value="random" selected>Reading order — gathered at random</option>
+          <option value="alpha">Alphabetical — A to Z</option>
+          <option value="arc">Thematic arc — from hidden to revealed</option>
+        </select>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">Thematic arc opens on the moon and ends on what is worn and seen</div>
+      </div>
+
+      <button class="btn-draw" id="generateBtn">⚡ Forge Glossary Page</button>
+      <div class="counter-line" id="counter">📖 Glossary pages forged: <b>0</b></div>
+    </aside>
+
+    <section class="panel output-panel" id="outputPanel">
+      <div class="output-head">
+        <div class="output-meta" id="sheetMeta">No glossary page forged yet</div>
+        <div class="btn-row">
+          <button class="btn btn-dice" id="regenBtn">🎲 Regenerate</button>
+          <button class="btn btn-gold" id="copyBtn">📋 Copy Full Glossary Page</button>
+          <button class="btn btn-ghost" id="exportBtn">💾 Export .txt</button>
+        </div>
+      </div>
+      <div class="output-empty" id="outputEmpty"><b>Your front-matter page will appear here</b>Forge it once and it becomes a complete reader-facing guide — a title header, an opening paragraph, a how-to-read note, 4 to 10 symbol entries written in the visual language of your theme, and a closing blessing. Every forge draws from 20 symbols with two meaning variants each, so no two pages are ever alike. Paste it into your book as front matter, regenerate, or export a .txt.</div>
+      <div class="lore-page hidden" id="page"></div>
+    </section>
+  </div>
+
+  <footer class="note">ARCANA LORE FORGE — MASTER EDITION BONUS · front-matter "World &amp; Symbolism Guide" · 20 symbols × 2 meaning variants × echo lines · 3 flavor-languages per theme · 4/6/8/10 entries · intro, how-to-read note &amp; closing blessing · random / alphabetical / thematic-arc order · copy &amp; .txt export · every page a new combination</footer>
+</div>
+
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(181,101,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function nextSeed(){ return Math.random().toString(36).slice(2,6).toUpperCase(); }
+const STOPWORDS = new Set(['a','an','the','and','or','of','for','with','in','on','at','to','is','it','its','their','them','they','where','that','this','every','be','was','been','into','inside','like','then','so','if','but','not','all','any','by','as','from','up','down','out','over','under','again','once','because','until','while','when','after','before','there','those','these','do','does','did','who','what']);
+function descriptorStem(text, n){
+  return (String(text).match(/[A-Za-z']+/g) || [])
+    .filter(w => w.length > 3 && !STOPWORDS.has(w.toLowerCase()))
+    .slice(0, n);
+}
+
+const THEMES = [
+  { label:"Dark Goddess Oracle" },
+  { label:"Crystal Witch Deck" },
+  { label:"Gothic Shadow Tarot" },
+  { label:"Botanical Grimoire Oracle" },
+  { label:"Deep Current Oracle" },
+  { label:"Bone & Bloom Tarot" },
+  { label:"Storm Witch Tarot" },
+  { label:"Wildwood Folk Oracle" },
+  { label:"Celestial Cartography Oracle" },
+  { label:"Insect Alchemy Oracle" },
+  { label:"Antique Anatomy Tarot" },
+  { label:"Custom World" }
+];
+
+const THEME_FLAVORS = {
+  "Dark Goddess Oracle": ["the quiet authority of the underworld", "the fierce mercy of the night mother", "the stillness that comes before a great change"],
+  "Crystal Witch Deck": ["the clarity held inside every stone", "the glittering honesty of cut glass", "the light that enters a stone at the right angle"],
+  "Gothic Shadow Tarot": ["the velvet weight of unspoken things", "the elegance of haunted twilight", "the beauty that lives in half-light"],
+  "Botanical Grimoire Oracle": ["the patient wisdom of green things", "the quiet language of pressed leaves", "the slow arithmetic of growth and decay"],
+  "Deep Current Oracle": ["the slow gravity of the deep", "the memory held in every current", "the patience of water wearing down stone"],
+  "Bone & Bloom Tarot": ["the tenderness of things that end", "the persistence of life through decay", "the garden that grows from what was mourned"],
+  "Storm Witch Tarot": ["the wild mercy of the storm", "the electricity before the change", "the calm that returns after the sky releases"],
+  "Wildwood Folk Oracle": ["the cunning kindness of the forest", "the old agreement between trees and travelers", "the debt every traveler owes the green"],
+  "Celestial Cartography Oracle": ["the order hidden in the stars", "the map written by light itself", "the certain path drawn in starlight"],
+  "Insect Alchemy Oracle": ["the small miracles of transformation", "the gold left behind by change", "the patience of wings still folded"],
+  "Antique Anatomy Tarot": ["the truth carried inside the body", "the fragile machinery of being alive", "the gentle clockwork of breath and bone"]
+};
+
+const SYMBOL_TEMPLATES = [
+  { symbol:"The Moon", meaning:["represents {theme_flavor}, the pull of intuition and what stays hidden until it's ready to be seen", "is the story's mirror for {theme_flavor}, the quiet weather of the heart that no one announces"], echo:"Watch for it whenever the night outgrows the day." },
+  { symbol:"The Threshold", meaning:["marks {theme_flavor}, the boundary between what was known and what must be discovered", "is where {theme_flavor} begins — the line no character crosses unchanged"], echo:"Every door in this world leads somewhere it did not before." },
+  { symbol:"The Garden (or wild place)", meaning:["reflects {theme_flavor}, growth that happens outside anyone's control", "reminds the reader of {theme_flavor} — wild things growing where no one planned them"], echo:"Not every growth is tended; not every tended thing grows." },
+  { symbol:"The Mirror (or still water)", meaning:["shows {theme_flavor}, truths the protagonist isn't yet ready to face directly", "holds {theme_flavor} up at arm's length — the self the character has not yet agreed to meet"], echo:"Look twice at reflections; they are often a page ahead." },
+  { symbol:"The Guide (animal, spirit, or stranger)", meaning:["embodies {theme_flavor}, wisdom that arrives from outside the protagonist's own understanding", "speaks with {theme_flavor}, arriving exactly when the protagonist's own wisdom runs out"], echo:"Guides are never hired; they are recognized." },
+  { symbol:"The Flame (or light source)", meaning:["signifies {theme_flavor}, a fragile hope carried through the story's darkest points", "is {theme_flavor} made visible — a small refusal to let the dark have the last word"], echo:"It is the same flame, carried to the final page." },
+  { symbol:"The Bound Object (key, lock, chain, seal)", meaning:["represents {theme_flavor}, a promise or debt that shapes the entire journey", "is the story's promise written in iron — {theme_flavor}, made into something you can hold"], echo:"What binds can also be unbound — but never for free." },
+  { symbol:"The Crossroads", meaning:["stands for {theme_flavor}, the moment of choice that cannot be undone", "is where {theme_flavor} makes its demand — a choice that cannot be taken back or split in two"], echo:"Standing still at a crossroads is also a road." },
+  { symbol:"The Shroud or Veil", meaning:["conveys {theme_flavor}, the space between what is known and what remains mysterious", "keeps {theme_flavor} on the other side of thin cloth — near enough to reach through, far enough to be feared"], echo:"The veil does not hide; it holds." },
+  { symbol:"The Root (or ancestral object)", meaning:["carries {theme_flavor}, inheritance — both gift and burden — passed down without consent", "passes {theme_flavor} down through the family line — given without asking, carried without choice"], echo:"Roots remember what the surface forgets." },
+  { symbol:"The Key", meaning:["opens {theme_flavor} — the door that was always there, waiting for the right hand", "is {theme_flavor} given a shape and a weight — permission, in brass or bone"], echo:"Every key knows which door it belongs to." },
+  { symbol:"The Door (or gate)", meaning:["stands between the reader and {theme_flavor} — the story's own intake of breath", "guards {theme_flavor}, and opens only when the protagonist is finally ready"], echo:"Doors in this world are patient." },
+  { symbol:"The River", meaning:["carries {theme_flavor} onward — the current that decides what is kept and what is let go", "runs beneath {theme_flavor}, steady and indifferent to the urgency above"], echo:"No one steps in the same river twice — and the river does not mind." },
+  { symbol:"The Bell", meaning:["sounds {theme_flavor} into the air — announcement, warning, or the small grief of a chapter ending", "marks {theme_flavor} the way a year marks itself on stone — once, and then it is remembered"], echo:"The bell does not repeat itself; that is the point." },
+  { symbol:"The Lantern", meaning:["carries {theme_flavor} by hand — a portable piece of the night made useful", "sways with {theme_flavor} as the story walks — light that follows, never leading far ahead"], echo:"A lantern lights the next step, not the whole road." },
+  { symbol:"The Well", meaning:["keeps {theme_flavor} deep and cool — what is drawn up is never what was expected", "is the story's ear to the ground — {theme_flavor} rising in small, deliberate replies"], echo:"The well answers; it does not explain." },
+  { symbol:"The Nest", meaning:["holds {theme_flavor} in the treetops — shelter built from what the forest left behind", "is {theme_flavor} at its most tender — home woven strand by strand, no blueprint"], echo:"Home is built; it is never simply found." },
+  { symbol:"The Crown (or circlet)", meaning:["weighs {theme_flavor} on the wearer's head — power measured in obligations, not in gold", "passes {theme_flavor} from rule to rule — a circle with no beginning and no forgiveness"], echo:"Crowns are inherited by those who would rather not hold them." },
+  { symbol:"The Ember", meaning:["keeps {theme_flavor} alive in the ash — the story's most stubborn refusal to end", "is {theme_flavor} reduced to its patient core — quiet, but far from out"], echo:"Embers have all the time in the world." },
+  { symbol:"The Mask", meaning:["wears {theme_flavor} over the face — the self presented, the self protected, both at once", "is {theme_flavor} in its social form — what a character needs the world to believe"], echo:"Everyone in this story wears at least one." }
+];
+
+const ARC_ORDER = ["The Moon", "The Threshold", "The Guide (animal, spirit, or stranger)", "The Flame (or light source)", "The Bound Object (key, lock, chain, seal)", "The Crossroads", "The Shroud or Veil", "The Root (or ancestral object)", "The Garden (or wild place)", "The Mirror (or still water)", "The Key", "The Door (or gate)", "The River", "The Lantern", "The Well", "The Bell", "The Ember", "The Nest", "The Crown (or circlet)", "The Mask"];
+
+const INTRO_BANK = [
+  "Before the first adventure begins, a word about the language of this world. The symbols below appear throughout {title} — each one a small lantern lit to guide your reading.",
+  "This little guide is a map of the world's inner imagery. In {title}, nothing is only what it seems: every symbol carries a meaning that deepens the story as you watch it unfold.",
+  "Welcome to the world of {title}. The pages ahead are full of quiet signs — the glossary that follows gathers the most important ones, so you can read their language as the story unfolds.",
+  "Some stories reveal themselves twice: once in words, once in symbols. This is the reader's key to the second language of {title}.",
+  "Before you begin, one small secret: {title} is a story told twice over. Once in its words, and once in the signs it leaves in your path — this guide reads those signs for you.",
+  "A note to the reader: symbols in {title} are not decorations. They are the story's other voice. When one of them appears, listen — it is speaking to you."
+];
+
+const NOTE_BANK = [
+  "How to read this guide: each entry names a symbol, then the part it plays in {title}. When you meet one in the story, you will know what it is really saying.",
+  "The entries below are gathered in no order of importance — only the order they were found. Meet them the way the story does.",
+  "Not every symbol appears on every page, but all of them live somewhere beneath it. Consider this page a map of the book's dreams."
+];
+
+const CLOSE_BANK = [
+  "May {theme_flavor} keep you company through the pages ahead.",
+  "Keep these signs in mind, and {title} will keep you in its confidence.",
+  "And if the story ever feels like it is speaking in riddles — it is. This page is your answer."
+];
+
+const titleInput = document.getElementById('titleInput');
+const titleHint = document.getElementById('titleHint');
+const themeSel = document.getElementById('themeSel');
+const customWorldInput = document.getElementById('customWorldInput');
+const customHint = document.getElementById('customHint');
+const countSel = document.getElementById('countSel');
+const orderSel = document.getElementById('orderSel');
+const generateBtn = document.getElementById('generateBtn');
+const regenBtn = document.getElementById('regenBtn');
+const copyBtn = document.getElementById('copyBtn');
+const exportBtn = document.getElementById('exportBtn');
+const pageEl = document.getElementById('page');
+const outputEmpty = document.getElementById('outputEmpty');
+const sheetMeta = document.getElementById('sheetMeta');
+const counter = document.getElementById('counter');
+
+THEMES.forEach(t => themeSel.add(new Option(t.label, t.label)));
+
+themeSel.addEventListener('change', () => {
+  const custom = themeSel.value === "Custom World";
+  customWorldInput.classList.toggle('hidden', !custom);
+  customHint.classList.toggle('hidden', !custom);
+});
+titleInput.addEventListener('input', () => {
+  titleInput.classList.remove('has-error');
+  titleHint.classList.add('hidden');
+});
+customWorldInput.addEventListener('input', () => customHint.classList.add('hidden'));
+
+function getTheme(){
+  const label = themeSel.value || THEMES[0].label;
+  if(label === "Custom World"){
+    return { label, descriptor: customWorldInput.value.trim() };
+  }
+  return { label };
+}
+
+function themeFlavor(theme){
+  if(theme.label === "Custom World"){
+    const stem = descriptorStem(theme.descriptor || 'this world', 3).join(' ') || 'this world';
+    return pick([`the hidden heart of ${stem}`, `the quiet magic of ${stem}`, "the quiet magic of this story"]);
+  }
+  const opts = THEME_FLAVORS[theme.label] || THEME_FLAVORS["Dark Goddess Oracle"];
+  return pick(opts);
+}
+
+function cleanTitle(t){ return t.replace(/["“”]/g, "'").replace(/\s+/g, ' ').trim(); }
+
+let page = null;
+let batchSeed = "";
+let forgedCount = 0;
+
+function forge(){
+  const title = cleanTitle(titleInput.value);
+  if(!title){
+    titleInput.classList.add('has-error');
+    titleHint.classList.remove('hidden');
+    showToast("⚠ Add the book title first — it appears in the guide header");
+    return;
+  }
+  const theme = getTheme();
+  if(theme.label === "Custom World" && !theme.descriptor){
+    customWorldInput.classList.add('has-error');
+    customHint.classList.remove('hidden');
+    showToast("⚠ Describe your custom world so its symbols can speak its language");
+    return;
+  }
+  customWorldInput.classList.remove('has-error');
+  const N = Math.min(10, Math.max(4, Number(countSel.value) || 6));
+  const order = orderSel.value || 'random';
+  const flavor = themeFlavor(theme);
+  const intro = pick(INTRO_BANK).replace(/\{title\}/g, title);
+  const note = pick(NOTE_BANK).replace(/\{title\}/g, title);
+  const closing = pick(CLOSE_BANK).replace(/\{title\}/g, title).replace(/\{theme_flavor\}/g, flavor);
+  let entries = shuffle(SYMBOL_TEMPLATES).slice(0, N).map(t => ({
+    symbol: t.symbol,
+    meaning: pick(t.meaning).replace(/\{theme_flavor\}/g, flavor),
+    echo: t.echo
+  }));
+  if(order === 'alpha'){
+    entries = entries.slice().sort((a, b) => a.symbol.localeCompare(b.symbol));
+  } else if(order === 'arc'){
+    entries = entries.slice().sort((a, b) => ARC_ORDER.indexOf(a.symbol) - ARC_ORDER.indexOf(b.symbol));
+  }
+  batchSeed = nextSeed();
+  page = { title, themeLabel: theme.label, flavor, intro, note, closing, entries, order };
+  render();
+}
+
+function render(){
+  const p = page;
+  pageEl.innerHTML =
+    `<div class="doc-title">The World of ${p.title}: A Reader's Guide to Its Symbols</div>` +
+    `<div class="doc-sigil"></div>` +
+    `<div class="doc-intro">${p.intro}</div>` +
+    `<div class="doc-note">${p.note}</div>` +
+    p.entries.map(e => `<p class="entry"><b>${e.symbol}</b> — ${e.meaning}. ${e.echo}</p>`).join('') +
+    `<div class="doc-close">${p.closing}</div>` +
+    `<div class="doc-foot">— the symbols of ${p.title}, gathered for its readers —</div>`;
+  outputEmpty.classList.add('hidden');
+  pageEl.classList.remove('hidden');
+  const orderName = p.order === 'alpha' ? 'alphabetical' : (p.order === 'arc' ? 'thematic arc' : 'reading order');
+  sheetMeta.innerHTML = `MDSE ◈ <b>${batchSeed}</b> · <b>${p.entries.length}</b> entries · <b>${p.title}</b> · ${p.themeLabel} · ${orderName} · “${p.flavor}”`;
+  forgedCount += 1;
+  counter.innerHTML = `📖 Glossary pages forged: <b>${forgedCount}</b>`;
+  showToast(`✦ Glossary page forged — ${p.entries.length} symbol entries, no repeats`);
+}
+
+function pageAsText(){
+  const p = page;
+  const body = p.entries.map(e => `**${e.symbol}** — ${e.meaning}. ${e.echo}`).join("\n");
+  return `The World of ${p.title}: A Reader's Guide to Its Symbols\n\n${p.intro}\n\n${p.note}\n\n${body}\n\n${p.closing}\n\n— the symbols of ${p.title}, gathered for its readers —`;
+}
+
+function copyPage(){
+  if(!page){ showToast("Forge a glossary page first"); return; }
+  navigator.clipboard.writeText(pageAsText());
+  copyBtn.textContent = '✓ Copied';
+  copyBtn.classList.add('copied');
+  showToast("📋 Full glossary page copied — paste-ready front matter");
+  setTimeout(() => { copyBtn.textContent = '📋 Copy Full Glossary Page'; copyBtn.classList.remove('copied'); }, 1600);
+}
+
+function exportTxt(){
+  if(!page){ showToast("Forge a glossary page first"); return; }
+  const text = pageAsText() + `\n\nMDSE ◈ ${batchSeed}`;
+  const a = document.createElement('a');
+  a.download = `arcana-lore-glossary-${batchSeed}.txt`;
+  a.href = URL.createObjectURL(new Blob([text], { type:'text/plain' }));
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast(`💾 Exported arcana-lore-glossary-${batchSeed}.txt`);
+}
+
+generateBtn.addEventListener('click', forge);
+regenBtn.addEventListener('click', forge);
+copyBtn.addEventListener('click', copyPage);
+exportBtn.addEventListener('click', exportTxt);
+
+</script>
+</body>
+</html>
