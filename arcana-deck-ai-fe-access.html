@@ -27,139 +27,49 @@
   .sigil-divider{width:120px; height:1px; margin:26px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
   .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
 
-  /* SIDE MENU TOGGLE BUTTON */
-  .side-menu-toggle{
-    position:fixed; top:24px; right:24px; z-index:200;
-    width:52px; height:52px; border-radius:50%;
-    background:var(--panel-2); border:2px solid var(--gold-dim);
-    cursor:pointer; display:flex; align-items:center; justify-content:center;
-    transition:all .25s ease; box-shadow:0 0 20px rgba(201,169,97,0.2);
-    animation: pulse-gold 2s ease-in-out infinite;
-  }
-  @keyframes pulse-gold{
-    0%,100%{box-shadow:0 0 20px rgba(201,169,97,0.2);}
-    50%{box-shadow:0 0 35px rgba(201,169,97,0.45);}
-  }
-  .side-menu-toggle:hover{
-    background:var(--panel); border-color:var(--gold);
-    box-shadow:0 0 30px rgba(201,169,97,0.4); animation:none;
-  }
-  .side-menu-toggle svg{
-    width:24px; height:24px; fill:none; stroke:var(--gold);
-    stroke-width:2.5; transition:all .3s ease;
-  }
-  .side-menu-toggle.open{
-    border-color:var(--gold); background:var(--panel);
-    box-shadow:0 0 30px rgba(201,169,97,0.35); animation:none;
-  }
-  .side-menu-toggle.open svg line:nth-child(1){
-    transform:rotate(45deg) translate(5px,5px);
-  }
-  .side-menu-toggle.open svg line:nth-child(2){opacity:0;}
-  .side-menu-toggle.open svg line:nth-child(3){
-    transform:rotate(-45deg) translate(5px,-5px);
-  }
-
-  /* ANIMATED ARROW POINTING AT THE BUTTON */
-  .pointing-arrow{
-    position:fixed; top:90px; right:42px; z-index:201;
-    pointer-events:none; animation:bounce-arrow 1.2s ease-in-out infinite;
-  }
-  .pointing-arrow svg{
-    width:32px; height:32px; fill:var(--gold); opacity:0.85;
-  }
-  @keyframes bounce-arrow{
-    0%,100%{transform:translateY(0);}
-    40%{transform:translateY(-12px);}
-    60%{transform:translateY(-4px);}
-  }
-  .pointing-arrow.hidden-arrow{display:none;}
+  /* SIDE MENU TOGGLE BUTTON — always visible, top right corner */
+  .side-menu-toggle{position:fixed; top:20px; right:20px; z-index:200; width:48px; height:48px; border-radius:50%; background:var(--panel-2); border:1px solid var(--gold-dim); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .25s ease; box-shadow:0 2px 12px rgba(0,0,0,0.6);}
+  .side-menu-toggle:hover{background:var(--panel); border-color:var(--gold); box-shadow:0 0 16px rgba(201,169,97,0.25);}
+  .side-menu-toggle .icon-wrap{position:relative; width:22px; height:22px;}
+  .side-menu-toggle svg{position:absolute; top:0; left:0; width:22px; height:22px; fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round; transition:opacity .3s ease;}
+  .side-menu-toggle .hamburger-icon{opacity:1;}
+  .side-menu-toggle .close-icon{opacity:0;}
+  .side-menu-toggle.open .hamburger-icon{opacity:0;}
+  .side-menu-toggle.open .close-icon{opacity:1;}
+  .side-menu-toggle .tooltip-hint{position:absolute; right:60px; background:var(--panel-2); border:1px solid var(--gold-dim); color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 12px; border-radius:3px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s ease;}
+  .side-menu-toggle:hover .tooltip-hint{opacity:1;}
 
   /* SIDE MENU OVERLAY */
-  .side-overlay{
-    position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:150;
-    opacity:0; pointer-events:none; transition:opacity .3s ease;
-  }
+  .side-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:150; opacity:0; pointer-events:none; transition:opacity .3s ease;}
   .side-overlay.open{opacity:1; pointer-events:all;}
 
   /* SIDE MENU PANEL */
-  .side-menu{
-    position:fixed; top:0; right:-420px; width:400px; max-width:92vw;
-    height:100vh; background:linear-gradient(180deg, var(--panel), var(--panel-2));
-    border-left:2px solid var(--gold-dim); z-index:160; overflow-y:auto;
-    padding:30px 24px 40px;
-    transition:right .35s cubic-bezier(0.22, 0.61, 0.36, 1);
-    box-shadow:-8px 0 40px rgba(0,0,0,0.6);
-  }
+  .side-menu{position:fixed; top:0; right:-420px; width:400px; max-width:92vw; height:100vh; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-left:2px solid var(--gold-dim); z-index:160; overflow-y:auto; padding:30px 24px 40px; transition:right .35s cubic-bezier(0.22, 0.61, 0.36, 1); box-shadow:-8px 0 40px rgba(0,0,0,0.6);}
   .side-menu.open{right:0;}
 
-  .side-menu h2{
-    font-family:'Cinzel',serif; font-size:20px; color:var(--gold);
-    margin:0 0 28px; text-align:center; letter-spacing:0.04em;
-  }
+  .side-menu h2{font-family:'Cinzel',serif; font-size:20px; color:var(--gold); margin:0 0 28px; text-align:center; letter-spacing:0.04em;}
   .side-menu-section{margin-bottom:30px;}
-  .side-menu-section h3{
-    font-family:'Cinzel',serif; font-size:12px; color:var(--amethyst-soft);
-    margin:0 0 14px; letter-spacing:0.08em; text-transform:uppercase;
-    border-bottom:1px solid var(--line); padding-bottom:10px;
-  }
+  .side-menu-section h3{font-family:'Cinzel',serif; font-size:12px; color:var(--amethyst-soft); margin:0 0 14px; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1px solid var(--line); padding-bottom:10px;}
 
-  /* SIDE MENU BONUS BUTTONS */
-  .side-bonus-btn{
-    display:flex; align-items:center; gap:12px; width:100%;
-    margin-bottom:10px; padding:14px 16px;
-    background:rgba(0,0,0,0.35); border:1px solid var(--amethyst-soft);
-    border-radius:4px; color:var(--parchment);
-    font-family:'Cinzel',serif; font-size:14px; text-align:left;
-    cursor:pointer; transition:all .22s ease; text-decoration:none; position:relative;
-  }
-  .side-bonus-btn:hover{
-    background:rgba(122,92,158,0.18); border-color:var(--gold);
-    transform:translateX(-4px); box-shadow:0 0 18px rgba(201,169,97,0.15);
-  }
-  .side-bonus-btn .bonus-icon{font-size:26px; flex:0 0 auto;}
+  /* SIDE MENU BONUS BUTTONS — explicit clickable style */
+  .side-bonus-btn{display:flex; align-items:center; gap:12px; width:100%; margin-bottom:10px; padding:14px 16px; background:rgba(0,0,0,0.35); border:1px solid var(--amethyst-soft); border-radius:4px; color:var(--parchment); font-family:'Cinzel',serif; font-size:14px; text-align:left; cursor:pointer; transition:all .22s ease; text-decoration:none; position:relative;}
+  .side-bonus-btn:hover{background:rgba(122,92,158,0.18); border-color:var(--gold); transform:translateX(-3px); box-shadow:0 0 18px rgba(201,169,97,0.15);}
+  .side-bonus-btn .bonus-icon{font-size:24px; flex:0 0 auto;}
   .side-bonus-btn .bonus-content{flex:1; min-width:0;}
-  .side-bonus-btn .bonus-label{
-    font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold);
-    letter-spacing:0.08em; display:block; margin-bottom:3px; text-transform:uppercase;
-  }
-  .side-bonus-btn .bonus-name{
-    font-family:'Cinzel',serif; font-size:14px; color:var(--parchment);
-  }
-  .side-bonus-btn .bonus-arrow{
-    font-size:20px; color:var(--amethyst-soft); flex:0 0 auto;
-    transition:all .22s ease;
-  }
+  .side-bonus-btn .bonus-label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold); letter-spacing:0.08em; display:block; margin-bottom:3px; text-transform:uppercase;}
+  .side-bonus-btn .bonus-name{font-family:'Cinzel',serif; font-size:13px; color:var(--parchment);}
+  .side-bonus-btn .bonus-arrow{font-size:18px; color:var(--amethyst-soft); flex:0 0 auto; transition:all .22s ease;}
   .side-bonus-btn:hover .bonus-arrow{color:var(--gold); transform:translateX(4px);}
 
-  /* SIDE MENU UPGRADE BUTTONS */
-  .side-upgrade-btn{
-    display:flex; align-items:center; gap:12px; width:100%;
-    margin-bottom:10px; padding:15px 16px;
-    background:linear-gradient(135deg, rgba(201,169,97,0.10), rgba(122,92,158,0.08));
-    border:1px solid var(--gold-dim); border-radius:4px;
-    color:var(--parchment); font-family:'Cinzel',serif; font-size:13px;
-    letter-spacing:0.04em; cursor:pointer; transition:all .22s ease;
-  }
-  .side-upgrade-btn:hover{
-    background:linear-gradient(135deg, rgba(201,169,97,0.22), rgba(122,92,158,0.16));
-    border-color:var(--gold); transform:translateX(-4px);
-    box-shadow:0 0 20px rgba(201,169,97,0.2);
-  }
-  .side-upgrade-btn .upgrade-icon{font-size:28px; flex:0 0 auto;}
-  .side-upgrade-btn .upgrade-name{flex:1; min-width:0; text-align:left; font-size:13px;}
-  .side-upgrade-btn .upgrade-arrow{
-    font-size:20px; color:var(--gold-dim); flex:0 0 auto;
-    transition:all .22s ease;
-  }
+  /* SIDE MENU UPGRADE BUTTONS — explicit premium style */
+  .side-upgrade-btn{display:flex; align-items:center; gap:12px; width:100%; margin-bottom:10px; padding:15px 16px; background:linear-gradient(135deg, rgba(201,169,97,0.10), rgba(122,92,158,0.08)); border:1px solid var(--gold-dim); border-radius:4px; color:var(--parchment); font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.04em; cursor:pointer; transition:all .22s ease;}
+  .side-upgrade-btn:hover{background:linear-gradient(135deg, rgba(201,169,97,0.22), rgba(122,92,158,0.16)); border-color:var(--gold); transform:translateX(-3px); box-shadow:0 0 20px rgba(201,169,97,0.2);}
+  .side-upgrade-btn .upgrade-icon{font-size:26px; flex:0 0 auto;}
+  .side-upgrade-btn .upgrade-name{flex:1; min-width:0; text-align:left;}
+  .side-upgrade-btn .upgrade-arrow{font-size:18px; color:var(--gold-dim); flex:0 0 auto; transition:all .22s ease;}
   .side-upgrade-btn:hover .upgrade-arrow{color:var(--gold); transform:translateX(4px);}
 
-  .side-close{
-    display:block; width:100%; margin-top:20px; padding:14px;
-    background:transparent; border:1px solid var(--blood); border-radius:4px;
-    color:var(--blood); font-family:'JetBrains Mono',monospace; font-size:12px;
-    cursor:pointer; text-align:center; transition:all .18s ease;
-  }
+  .side-close{display:block; width:100%; margin-top:20px; padding:14px; background:transparent; border:1px solid var(--blood); border-radius:4px; color:var(--blood); font-family:'JetBrains Mono',monospace; font-size:12px; cursor:pointer; text-align:center; transition:all .18s ease;}
   .side-close:hover{background:rgba(139,42,58,0.12);}
 
   /* LAYOUT & RAIL */
@@ -295,20 +205,22 @@
 <canvas class="stars"></canvas>
 <div class="toast" id="toast"></div>
 
-<!-- ANIMATED POINTING ARROW -->
-<div class="pointing-arrow" id="pointingArrow">
-  <svg viewBox="0 0 24 24">
-    <path d="M12 4l-8 12h6v4h4v-4h6z"/>
-  </svg>
-</div>
-
-<!-- SIDE MENU TOGGLE BUTTON -->
+<!-- SIDE MENU TOGGLE BUTTON — always visible, top right, with two separate SVG icons -->
 <button class="side-menu-toggle" id="sideMenuToggle" aria-label="Open treasury menu">
-  <svg viewBox="0 0 24 24">
-    <line x1="4" y1="6" x2="20" y2="6" />
-    <line x1="4" y1="12" x2="20" y2="12" />
-    <line x1="4" y1="18" x2="20" y2="18" />
-  </svg>
+  <div class="icon-wrap">
+    <!-- Hamburger icon (3 lines) -->
+    <svg class="hamburger-icon" viewBox="0 0 24 24">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+    <!-- Close icon (X) -->
+    <svg class="close-icon" viewBox="0 0 24 24">
+      <line x1="6" y1="6" x2="18" y2="18" />
+      <line x1="18" y1="6" x2="6" y2="18" />
+    </svg>
+  </div>
+  <span class="tooltip-hint">Bonuses & Upgrades</span>
 </button>
 
 <!-- SIDE MENU OVERLAY -->
@@ -525,19 +437,17 @@
 </div>
 
 <script>
-/* ============ SIDE MENU LOGIC (BUG FIXED) ============ */
+/* ============ SIDE MENU LOGIC ============ */
 (function(){
   const toggleBtn = document.getElementById('sideMenuToggle');
   const overlay = document.getElementById('sideOverlay');
   const menu = document.getElementById('sideMenu');
   const closeBtn = document.getElementById('sideClose');
-  const pointingArrow = document.getElementById('pointingArrow');
 
   function openMenu(){
     menu.classList.add('open');
     overlay.classList.add('open');
     toggleBtn.classList.add('open');
-    pointingArrow.classList.add('hidden-arrow');
     document.body.style.overflow = 'hidden';
   }
 
@@ -545,7 +455,6 @@
     menu.classList.remove('open');
     overlay.classList.remove('open');
     toggleBtn.classList.remove('open');
-    pointingArrow.classList.remove('hidden-arrow');
     document.body.style.overflow = '';
   }
 
@@ -560,18 +469,11 @@
   overlay.addEventListener('click', closeMenu);
   closeBtn.addEventListener('click', closeMenu);
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape' && menu.classList.contains('open')){
       closeMenu();
     }
   });
-
-  // Hide arrow after first click on toggle button
-  toggleBtn.addEventListener('click', function once(){
-    pointingArrow.style.display = 'none';
-    toggleBtn.removeEventListener('click', once);
-  }, {once: false});
 })();
 
 /* ============ TOAST NOTIFICATION ============ */
