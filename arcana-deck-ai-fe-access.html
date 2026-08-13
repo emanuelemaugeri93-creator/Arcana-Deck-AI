@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,60 +27,8 @@
   .sigil-divider{width:120px; height:1px; margin:26px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
   .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
 
-  /* SIDE MENU TOGGLE BUTTON — with pulsing glow animation to indicate it's clickable */
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 0 0 0 rgba(201,169,97,0.4); }
-    50% { box-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 0 0 8px rgba(201,169,97,0); }
-  }
-  @keyframes pulse-icon {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-  .side-menu-toggle{position:fixed; top:20px; right:20px; z-index:200; width:48px; height:48px; border-radius:50%; background:var(--panel-2); border:2px solid var(--gold); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .25s ease; animation: pulse-glow 2.5s ease-in-out infinite;}
-  .side-menu-toggle:hover{background:var(--panel); border-color:var(--gold); box-shadow:0 0 20px rgba(201,169,97,0.4); animation: none;}
-  .side-menu-toggle .icon-wrap{position:relative; width:22px; height:22px;}
-  .side-menu-toggle svg{position:absolute; top:0; left:0; width:22px; height:22px; fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round; transition:opacity .3s ease;}
-  .side-menu-toggle .hamburger-icon{opacity:1; animation: pulse-icon 2.5s ease-in-out infinite;}
-  .side-menu-toggle:hover .hamburger-icon{animation: none; opacity:1;}
-  .side-menu-toggle .close-icon{opacity:0;}
-  .side-menu-toggle.open .hamburger-icon{opacity:0; animation: none;}
-  .side-menu-toggle.open .close-icon{opacity:1;}
-  .side-menu-toggle.open{animation: none; border-color:var(--gold-dim);}
-  .side-menu-toggle .tooltip-hint{position:absolute; right:60px; background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 12px; border-radius:3px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s ease;}
-  .side-menu-toggle:hover .tooltip-hint{opacity:1;}
 
-  /* SIDE MENU OVERLAY */
-  .side-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:150; opacity:0; pointer-events:none; transition:opacity .3s ease;}
-  .side-overlay.open{opacity:1; pointer-events:all;}
 
-  /* SIDE MENU PANEL */
-  .side-menu{position:fixed; top:0; right:-420px; width:400px; max-width:92vw; height:100vh; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-left:2px solid var(--gold-dim); z-index:160; overflow-y:auto; padding:30px 24px 40px; transition:right .35s cubic-bezier(0.22, 0.61, 0.36, 1); box-shadow:-8px 0 40px rgba(0,0,0,0.6);}
-  .side-menu.open{right:0;}
-
-  .side-menu h2{font-family:'Cinzel',serif; font-size:20px; color:var(--gold); margin:0 0 28px; text-align:center; letter-spacing:0.04em;}
-  .side-menu-section{margin-bottom:30px;}
-  .side-menu-section h3{font-family:'Cinzel',serif; font-size:12px; color:var(--amethyst-soft); margin:0 0 14px; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1px solid var(--line); padding-bottom:10px;}
-
-  /* SIDE MENU BONUS BUTTONS — explicit clickable style, arrow always visible */
-  .side-bonus-btn{display:flex; align-items:center; gap:12px; width:100%; margin-bottom:10px; padding:14px 16px; background:rgba(0,0,0,0.35); border:1px solid var(--amethyst-soft); border-radius:4px; color:var(--parchment); font-family:'Cinzel',serif; font-size:14px; text-align:left; cursor:pointer; transition:all .22s ease; text-decoration:none; position:relative;}
-  .side-bonus-btn:hover{background:rgba(122,92,158,0.18); border-color:var(--gold); transform:translateX(-3px); box-shadow:0 0 18px rgba(201,169,97,0.15);}
-  .side-bonus-btn .bonus-icon{font-size:22px; flex:0 0 auto; width:28px; text-align:center;}
-  .side-bonus-btn .bonus-content{flex:1; min-width:0; overflow:hidden;}
-  .side-bonus-btn .bonus-label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold); letter-spacing:0.08em; display:block; margin-bottom:3px; text-transform:uppercase;}
-  .side-bonus-btn .bonus-name{font-family:'Cinzel',serif; font-size:13px; color:var(--parchment); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .side-bonus-btn .bonus-arrow{font-size:16px; color:var(--amethyst-soft); flex:0 0 auto; width:20px; text-align:center; transition:all .22s ease;}
-  .side-bonus-btn:hover .bonus-arrow{color:var(--gold);}
-
-  /* SIDE MENU UPGRADE BUTTONS — explicit premium style, arrow always visible */
-  .side-upgrade-btn{display:flex; align-items:center; gap:12px; width:100%; margin-bottom:10px; padding:15px 16px; background:linear-gradient(135deg, rgba(201,169,97,0.10), rgba(122,92,158,0.08)); border:1px solid var(--gold-dim); border-radius:4px; color:var(--parchment); font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.04em; cursor:pointer; transition:all .22s ease;}
-  .side-upgrade-btn:hover{background:linear-gradient(135deg, rgba(201,169,97,0.22), rgba(122,92,158,0.16)); border-color:var(--gold); transform:translateX(-3px); box-shadow:0 0 20px rgba(201,169,97,0.2);}
-  .side-upgrade-btn .upgrade-icon{font-size:22px; flex:0 0 auto; width:28px; text-align:center;}
-  .side-upgrade-btn .upgrade-name{flex:1; min-width:0; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .side-upgrade-btn .upgrade-arrow{font-size:16px; color:var(--gold-dim); flex:0 0 auto; width:20px; text-align:center; transition:all .22s ease;}
-  .side-upgrade-btn:hover .upgrade-arrow{color:var(--gold);}
-
-  .side-close{display:block; width:100%; margin-top:20px; padding:14px; background:transparent; border:1px solid var(--blood); border-radius:4px; color:var(--blood); font-family:'JetBrains Mono',monospace; font-size:12px; cursor:pointer; text-align:center; transition:all .18s ease;}
-  .side-close:hover{background:rgba(139,42,58,0.12);}
 
   /* LAYOUT & RAIL */
   .layout{display:grid; grid-template-columns:220px 1fr; gap:36px; align-items:start;}
@@ -99,6 +47,9 @@
   .rail-title{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.04em; color:var(--parchment); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .rail-arcana{font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--parchment-dim); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
+
+
+
   /* PANELS */
   .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative;}
   .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
@@ -108,6 +59,9 @@
   .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
   .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
   .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:620px;}
+
+
+
 
   /* CHOICE CARDS */
   .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px;}
@@ -119,6 +73,9 @@
   .choice-name{font-family:'Cinzel',serif; font-size:13.5px; color:var(--parchment); margin-bottom:4px; line-height:1.3;}
   .choice-meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); line-height:1.5;}
 
+
+
+
   /* FORM ELEMENTS */
   .field{margin-bottom:22px;}
   .field-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:10px; display:block;}
@@ -126,6 +83,11 @@
   textarea:focus,input[type=text]:focus{outline:none; border-color:var(--gold);}
   textarea{min-height:110px; line-height:1.6;}
   .hint{font-size:12.5px; color:var(--parchment-dim); margin-top:7px; font-style:italic;}
+  select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:12px 14px; border-radius:3px; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer;}
+  select:focus{outline:none; border-color:var(--gold);}
+
+
+
 
   /* PALETTE */
   .palette-gen-box{border:1px solid var(--line); border-radius:4px; padding:16px; margin-top:12px; background:rgba(0,0,0,0.15);}
@@ -136,6 +98,9 @@
   .btn-palette{font-family:'JetBrains Mono',monospace; font-size:11px; padding:10px 18px; border-radius:3px; border:1px solid var(--amethyst-soft); background:transparent; color:var(--amethyst-soft); cursor:pointer; transition:all .18s ease;}
   .btn-palette:hover{background:rgba(122,92,158,0.15); color:var(--parchment);}
   .palette-label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold-dim); letter-spacing:0.05em;}
+
+
+
 
   /* BUTTONS */
   .btn-row{display:flex; gap:14px; margin-top:30px; align-items:center; flex-wrap:wrap;}
@@ -154,10 +119,16 @@
   .pill{border:1px solid var(--line); padding:10px 16px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--parchment-dim);}
   .pill.selected{border-color:var(--gold); color:var(--gold); background:rgba(201,169,97,0.08);}
 
+
+
+
   /* SUBTITLE TOGGLE */
   .subtitle-toggle{margin-top:12px; margin-bottom:16px; display:flex; align-items:center; gap:10px;}
   .subtitle-toggle input[type=checkbox]{accent-color:var(--gold); width:16px; height:16px; cursor:pointer;}
   .subtitle-toggle label{font-family:'EB Garamond',serif; font-size:14px; color:var(--parchment-dim); cursor:pointer;}
+
+
+
 
   /* ORACLE CARD LIST */
   .card-gen-container{border:1px solid var(--line); border-radius:4px; padding:20px; margin-bottom:16px; background:rgba(0,0,0,0.2); position:relative;}
@@ -173,6 +144,9 @@
   .btn-remove-card:hover{background:rgba(139,42,58,0.12);}
   .gen-actions{display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; align-items:center;}
   .card-count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--parchment-dim); margin-left:auto;}
+
+
+
 
   /* RESULTS */
   .results-toolbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:22px; padding-bottom:18px; border-bottom:1px solid var(--line);}
@@ -201,98 +175,102 @@
   .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
   .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
 
+
+
+
   /* UTILITY */
   .hidden{display:none !important;}
   footer.note{text-align:center; margin-top:56px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
   .fe-tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:10px; padding:2px 9px; margin-left:8px; vertical-align:middle;}
 
+
+
+
   /* TOAST */
   .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
   .toast.show{opacity:1;}
+
+  /* SIDE MENU */
+  .side-menu-toggle{position:fixed; top:18px; right:18px; z-index:160; border-radius:30px; background:linear-gradient(135deg, rgba(201,169,97,0.18), rgba(122,92,158,0.24)); border:1px solid var(--line); cursor:pointer; display:flex; align-items:center; gap:6px; padding:6px 12px; transition:border-color .3s, background .3s, transform .3s; animation:pulse-glow 3s ease-in-out infinite;}
+  .side-menu-toggle:hover{transform:translateY(-1px); border-color:var(--gold); background:linear-gradient(135deg, rgba(201,169,97,0.28), rgba(122,92,158,0.32));}
+  .side-menu-toggle svg{width:14px; height:14px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
+  .side-menu-toggle .menu-label{font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); white-space:nowrap;}
+  .side-menu-toggle .icon-close{display:none;}
+  .side-menu-toggle.menu-open .icon-gift,.side-menu-toggle.menu-open .menu-label{display:none;}
+  .side-menu-toggle.menu-open .icon-close{display:block;}
+  @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(201,169,97,0.35);} 50%{box-shadow:0 0 18px 4px rgba(201,169,97,0.18);}}
+  .side-overlay{position:fixed; inset:0; background:rgba(18,12,30,0.6); backdrop-filter:blur(3px); z-index:170; opacity:0; pointer-events:none; transition:opacity .35s ease;}
+  .side-overlay.open{opacity:1; pointer-events:auto;}
+  .side-menu{position:fixed; top:0; right:-340px; width:320px; height:100%; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-left:1px solid var(--line); z-index:180; transition:right .4s cubic-bezier(0.22,1,0.36,1); display:flex; flex-direction:column; overflow-y:auto;}
+  .side-menu.open{right:0;}
+  .side-menu-inner{padding:24px 20px 40px; flex:1;}
+  .side-menu-heading{font-family:'Cinzel Decorative','Cinzel',serif; font-size:15px; letter-spacing:0.06em; color:var(--gold); margin:0 0 6px;}
+  .side-menu-sub{font-size:13px; color:var(--parchment-dim); margin:0 0 20px; font-style:italic;}
+  .side-section-label{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin:28px 0 12px;}
+  .side-section-label:first-child{margin-top:0;}
+  .side-bonus-btn{display:block; width:100%; text-align:left; background:rgba(201,169,97,0.07); border:1px solid var(--line); border-left:2px solid var(--gold); border-radius:3px; padding:12px 14px; margin-bottom:10px; cursor:pointer; text-decoration:none; transition:background .25s, transform .25s; color:var(--parchment);}
+  .side-bonus-btn:hover{background:rgba(201,169,97,0.14); transform:translateX(3px);}
+  .side-bonus-btn b{color:var(--gold); font-family:'Cinzel',serif; font-size:13.5px; font-weight:600; display:block; margin-bottom:3px; letter-spacing:0.03em;}
+  .side-bonus-btn .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,97,0.35); border-radius:20px; padding:1px 8px; margin-top:7px;}
+  .side-bonus-btn .tag.soon{color:var(--parchment-dim); border-color:var(--line);}
+  .side-bonus-btn small{display:block; margin-top:6px; font-size:11.5px; color:var(--parchment-dim); font-style:italic;}
+  .side-upgrade-btn{display:flex; align-items:center; justify-content:space-between; width:100%; background:linear-gradient(90deg, rgba(122,92,158,0.14), rgba(201,169,97,0.08)); border:1px solid var(--line); border-left:2px solid var(--amethyst); border-radius:3px; padding:11px 14px; margin-bottom:10px; cursor:pointer; font-family:'Cinzel',serif; font-size:12.5px; font-weight:600; color:var(--parchment); transition:background .25s, transform .25s; letter-spacing:0.03em;}
+  .side-upgrade-btn:hover{background:linear-gradient(90deg, rgba(122,92,158,0.24), rgba(201,169,97,0.14)); transform:translateX(3px);}
+  .side-upgrade-btn .u-arrow{color:var(--gold-dim); font-family:'EB Garamond',serif; font-size:16px; margin-left:8px; transition:transform .25s;}
+  .side-upgrade-btn:hover .u-arrow{transform:translateX(3px); color:var(--gold);}
+  .side-close{position:absolute; top:14px; right:14px; background:none; border:none; color:var(--gold-dim); font-size:26px; line-height:1; cursor:pointer; padding:4px; transition:color .25s, transform .25s;}
+  .side-close:hover{color:var(--gold); transform:rotate(90deg);}
 </style>
 </head>
 <body>
 <canvas class="stars"></canvas>
 <div class="toast" id="toast"></div>
 
-<!-- SIDE MENU TOGGLE BUTTON — with pulsing animation to indicate it's clickable -->
-<button class="side-menu-toggle" id="sideMenuToggle" aria-label="Open treasury menu">
-  <div class="icon-wrap">
-    <!-- Hamburger icon (3 lines) -->
-    <svg class="hamburger-icon" viewBox="0 0 24 24">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-    <!-- Close icon (X) -->
-    <svg class="close-icon" viewBox="0 0 24 24">
-      <line x1="6" y1="6" x2="18" y2="18" />
-      <line x1="18" y1="6" x2="6" y2="18" />
-    </svg>
-  </div>
-  <span class="tooltip-hint">Click for Bonuses & Upgrades</span>
+<button class="side-menu-toggle" id="sideMenuToggle" aria-label="Open bonuses menu">
+  <svg class="icon-gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+  <span class="menu-label">Bonuses Here</span>
+  <svg class="icon-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
 </button>
-
-<!-- SIDE MENU OVERLAY -->
 <div class="side-overlay" id="sideOverlay"></div>
-
-<!-- SIDE MENU PANEL -->
-<aside class="side-menu" id="sideMenu">
-  <h2>✦ Treasury & Upgrades</h2>
-
-  <div class="side-menu-section">
-    <h3>🎁 Free Bonuses</h3>
-    <a href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-fe-bonus1.html" target="_blank" class="side-bonus-btn">
-      <span class="bonus-icon">📋</span>
-      <span class="bonus-content">
-        <span class="bonus-label">BONUS #1</span>
-        <span class="bonus-name">Arcana Listing Forge</span>
-      </span>
-      <span class="bonus-arrow">→</span>
+<aside class="side-menu" id="sideMenu" aria-label="Bonus menu">
+  <button class="side-close" id="sideClose">✕</button>
+  <div class="side-menu-inner">
+    <p class="side-menu-heading">✦ Treasury &amp; Upgrades</p>
+    <p class="side-menu-sub">Your free bonuses for this product — plus premium expansions when you're ready to grow.</p>
+    <div class="side-section-label">Free Bonuses — Yours Today</div>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-fe-bonus1.html" target="_blank" rel="noopener">
+      <b>Arcana Listing Forge</b>
+      <small>30 polished Etsy listing prompts for your deck — titles, descriptions, and tags, done.</small>
+      <span class="tag">BONUS #1</span>
     </a>
-    <a href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-fe-bonus2.html" target="_blank" class="side-bonus-btn">
-      <span class="bonus-icon">📖</span>
-      <span class="bonus-content">
-        <span class="bonus-label">BONUS #2</span>
-        <span class="bonus-name">Arcana Codex Forge</span>
-      </span>
-      <span class="bonus-arrow">→</span>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-fe-bonus2.html" target="_blank" rel="noopener">
+      <b>Arcana Codex Forge</b>
+      <small>A complete companion guidebook generator — turn your deck into a full 80+ page book.</small>
+      <span class="tag">BONUS #2</span>
     </a>
-    <a href="https://docs.google.com/document/d/1QibNl2ptlQiePm0JzbTZsm0UOu9QMH_c/edit?usp=sharing&ouid=106711963256230190707&rtpof=true&sd=true" target="_blank" class="side-bonus-btn">
-      <span class="bonus-icon">🚀</span>
-      <span class="bonus-content">
-        <span class="bonus-label">BONUS #3</span>
-        <span class="bonus-name">"From Prompt to Etsy Sale" Guide</span>
-      </span>
-      <span class="bonus-arrow">→</span>
+    <a class="side-bonus-btn" href="https://docs.google.com/document/d/1QibNl2ptlQiePm0JzbTZsm0UOu9QMH_c/edit?usp=sharing&ouid=106711963256230190707&rtpof=true&sd=true" target="_blank" rel="noopener">
+      <b>From Prompt to Etsy Sale</b>
+      <small>Step-by-step free mini-course on turning your AI decks into a real income stream.</small>
+      <span class="tag">BONUS #3</span>
     </a>
-  </div>
-
-  <div class="side-menu-section">
-    <h3>⬆️ Unlock Premium Upgrades</h3>
-    <button class="side-upgrade-btn" onclick="alert('Coming soon')">
-      <span class="upgrade-icon">✦</span>
-      <span class="upgrade-name">Unlock ARCANA DECK AI — LUXE EDITION</span>
-      <span class="upgrade-arrow">→</span>
+    <div class="side-section-label">Unlock Premium Upgrades</div>
+    <button class="side-upgrade-btn" onclick="alert('Coming soon! This upgrade is still in development. Stay tuned — big things are on the way.')">
+      <span>✦ LUXE EDITION — Deep Realism &amp; Fine Art</span>
+      <span class="u-arrow">→</span>
     </button>
-    <button class="side-upgrade-btn" onclick="alert('Coming soon')">
-      <span class="upgrade-icon">✦✦</span>
-      <span class="upgrade-name">Unlock ARCANA DECK AI — FULL ARCANA MASTER PACK</span>
-      <span class="upgrade-arrow">→</span>
+    <button class="side-upgrade-btn" onclick="alert('Coming soon! This upgrade is still in development. Stay tuned — big things are on the way.')">
+      <span>✦ FULL ARCANA MASTER PACK</span>
+      <span class="u-arrow">→</span>
     </button>
-    <button class="side-upgrade-btn" onclick="alert('Coming soon')">
-      <span class="upgrade-icon">🎨</span>
-      <span class="upgrade-name">Unlock ARCANA COLORING BOOK AI</span>
-      <span class="upgrade-arrow">→</span>
+    <button class="side-upgrade-btn" onclick="alert('Coming soon! This upgrade is still in development. Stay tuned — big things are on the way.')">
+      <span>✦ ARCANA COLORING BOOK AI</span>
+      <span class="u-arrow">→</span>
     </button>
-    <button class="side-upgrade-btn" onclick="alert('Coming soon')">
-      <span class="upgrade-icon">📚</span>
-      <span class="upgrade-name">Unlock ARCANA STORYBOOK AI</span>
-      <span class="upgrade-arrow">→</span>
+    <button class="side-upgrade-btn" onclick="alert('Coming soon! This upgrade is still in development. Stay tuned — big things are on the way.')">
+      <span>✦ ARCANA STORYBOOK AI</span>
+      <span class="u-arrow">→</span>
     </button>
   </div>
-
-  <button class="side-close" id="sideClose">✕ Close Menu</button>
 </aside>
 
 <div class="wrap">
@@ -303,6 +281,9 @@
     <p class="sub">An unlimited prompt builder — every regeneration produces a completely fresh, never-repeated variation. Navigate freely between steps.</p>
     <div class="sigil-divider"></div>
   </header>
+
+
+
 
   <div class="layout">
     <nav class="rail" id="rail"></nav>
@@ -323,6 +304,9 @@
         </div>
       </section>
 
+
+
+
       <!-- STEP 2 -->
       <section class="panel step-panel hidden" id="step-2">
         <div class="step-head">
@@ -336,6 +320,9 @@
           <button class="btn btn-primary" id="toStep3" disabled>Continue →</button>
         </div>
       </section>
+
+
+
 
       <!-- STEP 3 -->
       <section class="panel step-panel hidden" id="step-3">
@@ -367,11 +354,15 @@
           <div class="grid-cards" id="frameChoices" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));"></div>
         </div>
         
+        <!-- NEW SUBJECT CHOICES FIELD ADDED HERE -->
         <div class="field">
           <label class="field-label">Subject type <span style="font-size:10px; color:var(--amethyst-soft);">— Oracle decks only, randomized per card</span></label>
           <div class="grid-cards" id="subjectChoices" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));"></div>
           <div class="hint">Major Arcana always uses traditional human-figure symbolism — this setting has no effect for that deck type. Categories with multiple options (animal, creature, object, landscape) pick a new specific subject at random for every card and every regeneration.</div>
         </div>
+
+
+
 
         <div class="field">
           <label class="field-label">Typography style</label>
@@ -394,6 +385,9 @@
           <button class="btn btn-primary" id="toStep4" disabled>Continue →</button>
         </div>
       </section>
+
+
+
 
       <!-- STEP 4 -->
       <section class="panel step-panel hidden" id="step-4">
@@ -419,6 +413,14 @@
           </div>
         </div>
         <div id="tarotFields">
+          <div class="field" style="margin-bottom:16px;">
+            <label class="field-label" for="numberingSel">Card Numbering System</label>
+            <select id="numberingSel">
+              <option value="modern" selected>Modern (RWS) — Strength VIII · Justice XI</option>
+              <option value="traditional">Traditional (Marseille) — Justice VIII · Strength XI</option>
+            </select>
+            <div class="hint">Only cards 8 and 11 differ between the two systems; the other twenty are identical. Strength at 8 / Justice at 11 is the modern standard most readers expect.</div>
+          </div>
           <div class="hint" style="margin-bottom:18px;">All 22 Major Arcana are mapped with traditional symbolism. Enable subtitles above for unique poetic variations on each card name.</div>
         </div>
         <div class="btn-row">
@@ -426,6 +428,9 @@
           <button class="btn btn-primary" id="generateBtn">✦ Generate Deck Prompts</button>
         </div>
       </section>
+
+
+
 
       <!-- RESULTS -->
       <section class="panel hidden" id="results">
@@ -446,46 +451,10 @@
   <footer class="note">ARCANA DECK AI — UNLIMITED EDITION · navigate freely · regenerate infinitely</footer>
 </div>
 
+
+
+
 <script>
-/* ============ SIDE MENU LOGIC ============ */
-(function(){
-  const toggleBtn = document.getElementById('sideMenuToggle');
-  const overlay = document.getElementById('sideOverlay');
-  const menu = document.getElementById('sideMenu');
-  const closeBtn = document.getElementById('sideClose');
-
-  function openMenu(){
-    menu.classList.add('open');
-    overlay.classList.add('open');
-    toggleBtn.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu(){
-    menu.classList.remove('open');
-    overlay.classList.remove('open');
-    toggleBtn.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    if(menu.classList.contains('open')){
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  overlay.addEventListener('click', closeMenu);
-  closeBtn.addEventListener('click', closeMenu);
-
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && menu.classList.contains('open')){
-      closeMenu();
-    }
-  });
-})();
-
 /* ============ TOAST NOTIFICATION ============ */
 function showToast(msg){
   const t = document.getElementById('toast');
@@ -495,6 +464,9 @@ function showToast(msg){
   t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
 }
 
+
+
+
 /* ============ STARFIELD ============ */
 (function(){
   const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
@@ -503,9 +475,15 @@ function showToast(msg){
   function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(201,169,97,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
 })();
 
+
+
+
 /* ============ HELPER ============ */
 function randomOf(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+
+
 
 /* ============ SUBTITLE GENERATOR FOR TAROT ============ */
 const SUBTITLE_GENERATOR = {
@@ -513,6 +491,9 @@ const SUBTITLE_GENERATOR = {
   verbs: ["begins", "falls", "rises", "turns", "burns", "calls", "breaks", "holds", "opens", "closes", "waits", "speaks", "fades", "blooms", "shatters"],
   nouns: ["the path", "the veil", "the light", "the shadow", "silence", "the storm", "the dawn", "the abyss", "truth", "the dream", "the mirror", "the threshold", "the flame", "the tide", "the wound", "the gift", "the key", "the door", "the star", "the root"],
   concepts: ["everything", "nothing", "becoming", "undoing", "remembering", "forgetting", "arriving", "leaving", "transforming", "awakening", "surrendering", "receiving", "releasing", "knowing", "unknowing"],
+
+
+
 
   generate() {
     const patterns = [
@@ -527,6 +508,9 @@ const SUBTITLE_GENERATOR = {
     return randomOf(patterns)();
   }
 };
+
+
+
 
 /* ============ INFINITE CARD NAME GENERATOR ENGINE ============ */
 const CARD_NAME_GENERATOR = {
@@ -556,6 +540,9 @@ const CARD_NAME_GENERATOR = {
     "Exile", "Return", "Threshold", "Liminality", "Decay", "Bloom"
   ],
 
+
+
+
   generateName() {
     const patterns = [
       () => `The ${randomOf(this.adjectives)} ${randomOf(this.nouns)}`,
@@ -569,6 +556,9 @@ const CARD_NAME_GENERATOR = {
     ];
     return randomOf(patterns)();
   },
+
+
+
 
   generateKeyword() {
     const keywords = [
@@ -602,6 +592,9 @@ const CARD_NAME_GENERATOR = {
   }
 };
 
+
+
+
 /* ============ PALETTE GENERATOR ENGINE ============ */
 const PALETTE_GENERATOR = {
   colorFamilies: [
@@ -624,6 +617,9 @@ const PALETTE_GENERATOR = {
     { name: "Verdigris & Rust", colors: ["#0F1210", "#1E2B1E", "#3A5C3A", "#7A8B5C", "#C9A85C"] }
   ],
 
+
+
+
   generatePalette() {
     const base = randomOf(this.colorFamilies);
     if(Math.random() > 0.3) {
@@ -632,6 +628,9 @@ const PALETTE_GENERATOR = {
     }
     return { name: base.name, colors: [...base.colors] };
   },
+
+
+
 
   mutateHex(hex) {
     const r = parseInt(hex.slice(1,3), 16);
@@ -645,6 +644,9 @@ const PALETTE_GENERATOR = {
     return `#${nr}${ng}${nb}`;
   }
 };
+
+
+
 
 /* ============ COMPOSITION SEED GENERATOR ============ */
 const COMPOSITION_SEEDS = {
@@ -701,6 +703,9 @@ const COMPOSITION_SEEDS = {
   ]
 };
 
+
+
+
 function pickCompositionSeed(){
   return {
     cameraAngle: randomOf(COMPOSITION_SEEDS.cameraAngles),
@@ -709,6 +714,9 @@ function pickCompositionSeed(){
     colorAccent: randomOf(COMPOSITION_SEEDS.colorAccents)
   };
 }
+
+
+
 
 /* ============ VARIANT BANKS ============ */
 const VARIANTS = {
@@ -760,6 +768,9 @@ const VARIANTS = {
   ]
 };
 
+
+
+
 function pickVariantSet(){
   return {
     lighting: randomOf(VARIANTS.lighting),
@@ -768,6 +779,9 @@ function pickVariantSet(){
     mood: randomOf(VARIANTS.mood)
   };
 }
+
+
+
 
 /* ============ SUBJECT POOLS & TYPES ============ */
 const SUBJECT_POOLS = {
@@ -802,6 +816,9 @@ const SUBJECT_POOLS = {
     "a field of wildflowers under a low moon", "a bridge disappearing into mist"
   ]
 };
+
+
+
 
 const SUBJECT_TYPES = {
   "human-figure": {
@@ -840,6 +857,9 @@ const SUBJECT_TYPES = {
   }
 };
 
+
+
+
 /* ============ TAROT DATA ============ */
 const MAJOR_ARCANA = [
   ["0","The Fool","a young wanderer stepping toward a cliff edge with a small bundle and a white rose, a loyal dog at their heel, dawn light ahead","new beginnings, innocence, a leap of faith"],
@@ -866,6 +886,23 @@ const MAJOR_ARCANA = [
   ["XXI","The World","a dancing figure wreathed in a laurel oval, four winged creatures in each corner of the composition, ribbons trailing around the wreath","completion, wholeness, integration of the journey"]
 ];
 
+function majorArcana(){
+  const list = MAJOR_ARCANA.map(e => e.slice());
+  if(state.numbering === 'traditional'){
+    const s = list.find(e => e[1] === 'Strength');
+    const j = list.find(e => e[1] === 'Justice');
+    if(s && j){
+      const tmp = s[0];
+      s[0] = j[0];
+      j[0] = tmp;
+    }
+  }
+  return list;
+}
+
+
+
+
 /* ============ THEMES ============ */
 const THEMES = {
   "dark-goddess":{label:"Dark Goddess Oracle", descriptor:"chthonic dark-goddess mythology, lunar shrines, veiled feminine power, underworld gardens", palette:"#1B1030, #4A1E33, #C9A961, #E8DCC8", frame:"ornate-gilded"},
@@ -873,6 +910,9 @@ const THEMES = {
   "gothic-shadow":{label:"Gothic Shadow Tarot", descriptor:"Victorian gothic romance, wrought iron and candlelight, mourning veils, dark rose motifs", palette:"#0D0B12, #2B1220, #8B2A3A, #C9A961", frame:"thorned-vine"},
   "botanical-grimoire":{label:"Botanical Grimoire Oracle", descriptor:"an old apothecary's herbal grimoire, pressed flowers between glass, hand-labeled specimen jars, ink-stained botanical diagrams", palette:"#2A2E1F, #5C6B3D, #C9A961, #EDE4D3", frame:"pressed-botanical"}
 };
+
+
+
 
 /* ============ STYLES ============ */
 const STYLES = {
@@ -934,6 +974,9 @@ const STYLES = {
   }
 };
 
+
+
+
 /* ============ TYPOGRAPHY ============ */
 const TYPOGRAPHY = {
   "ornate-serif": "elegant serif typography with decorative swash capitals, title rendered in gold or metallic, keyword in smaller italic beneath",
@@ -943,6 +986,9 @@ const TYPOGRAPHY = {
   "victorian-ornate": "ornate Victorian typography with decorative borders around the text block, title in bold serif with shadow, keyword in copperplate script",
   "minimalist-modern": "clean modern sans-serif, generous letter-spacing, title aligned left, thin rule separating title from keyword, all in one color from the palette"
 };
+
+
+
 
 /* ============ FRAMES ============ */
 const FRAMES = {
@@ -968,12 +1014,18 @@ const FRAMES = {
   }
 };
 
+
+
+
 /* ============ ENGINE NOTES ============ */
 const ENGINE_NOTES = {
   "gpt-image":"Rendering target: GPT Image (ChatGPT). Write as a single flowing natural-language paragraph with rich descriptive detail.",
   "nano-pro":"Rendering target: Nano Banana Pro. Natural-language paragraph, high fidelity detail supported. Include specific artistic references.",
   "nano-2":"Rendering target: Nano Banana 2. Natural-language paragraph. Keep style-lock phrasing identical across every card to preserve consistency. Be very specific about text placement and typography."
 };
+
+
+
 
 /* ============ PRINT FORMATS ============ */
 const FORMATS = {
@@ -985,6 +1037,9 @@ const FORMATS = {
     spec:()=> `Trim size 2.75 × 4.75 inches (70 × 120mm) at 300dpi, art extended 3mm beyond trim on all sides for bleed.` }
 };
 
+
+
+
 /* ============ STATE ============ */
 const state = {
   deckType:null,
@@ -993,14 +1048,18 @@ const state = {
   palette:"",
   paletteName:"",
   frame:null,
-  subjectType: "mixed-auto",
+  subjectType: "mixed-auto", // Default to mixed-auto
   typography:null,
   format:null,
   engine:null,
   oracleCards: [],
   useSubtitles: true,
+  numbering: "modern",
   currentStep: 1
 };
+
+
+
 
 /* ============ RENDER STATIC CHOICE GRIDS ============ */
 function renderThemeChoices(){
@@ -1015,6 +1074,9 @@ function renderThemeChoices(){
     });
   });
 }
+
+
+
 
 function renderStyleChoices(){
   document.getElementById('styleChoices').innerHTML = Object.entries(STYLES).map(([key,obj])=>
@@ -1031,6 +1093,9 @@ function renderStyleChoices(){
   });
 }
 
+
+
+
 function renderFrameChoices(){
   document.getElementById('frameChoices').innerHTML = Object.entries(FRAMES).map(([key,obj])=>
     `<div class="choice-card ${state.frame===key?'selected':''}" data-frame="${key}">
@@ -1046,6 +1111,10 @@ function renderFrameChoices(){
   });
 }
 
+
+
+
+/* ============ RENDER SUBJECT CHOICES ============ */
 function renderSubjectChoices(){
   document.getElementById('subjectChoices').innerHTML = Object.entries(SUBJECT_TYPES).map(([key,s])=>
     `<div class="choice-card ${state.subjectType===key?'selected':''}" data-subject="${key}"><div class="choice-name">${s.label}</div><div class="choice-meta">${s.meta}</div></div>`
@@ -1057,6 +1126,9 @@ function renderSubjectChoices(){
     });
   });
 }
+
+
+
 
 function renderTypoChoices(){
   document.getElementById('typoChoices').innerHTML = Object.entries(TYPOGRAPHY).map(([key,desc])=>
@@ -1070,6 +1142,9 @@ function renderTypoChoices(){
   });
 }
 
+
+
+
 function renderFormatChoices(){
   document.getElementById('formatChoices').innerHTML = Object.entries(FORMATS).map(([key,f])=>
     `<div class="choice-card ${state.format===key?'selected':''}" data-format="${key}"><div class="choice-name">${f.label}</div><div class="choice-meta">${f.meta}</div></div>`
@@ -1082,13 +1157,19 @@ function renderFormatChoices(){
   });
 }
 
+
+
+
 // Initial render
 renderThemeChoices();
 renderStyleChoices();
 renderFrameChoices();
-renderSubjectChoices();
+renderSubjectChoices(); // Render subjects on load
 renderTypoChoices();
 renderFormatChoices();
+
+
+
 
 /* ============ RAIL (clickable) ============ */
 function renderRail(activeStep){
@@ -1100,6 +1181,9 @@ function renderRail(activeStep){
     {n:4, title:"Cards", key:()=> state.deckType==='oracle' ? (state.oracleCards.length? state.oracleCards.length+" cards" : "—") : "auto-mapped", clickable: !!(state.style && state.palette && state.frame && state.typography && state.format && state.engine)}
   ];
 
+
+
+
   document.getElementById('rail').innerHTML = steps.map(s=>{
     const cls = s.n===activeStep ? 'active' : s.n<activeStep ? 'done' : '';
     const clickCls = (s.clickable && s.n !== activeStep) ? 'clickable' : '';
@@ -1109,6 +1193,10 @@ function renderRail(activeStep){
     </div>`;
   }).join('');
 
+
+
+
+  // Add click handlers to clickable rail steps
   document.querySelectorAll('.rail-step.clickable').forEach(step => {
     step.addEventListener('click', () => {
       const targetStep = parseInt(step.dataset.step);
@@ -1121,7 +1209,14 @@ function renderRail(activeStep){
   });
 }
 
+
+
+
+// FIX: render the rail immediately on page load so it is always visible on the first screen
 renderRail(1);
+
+
+
 
 /* ============ NAVIGATION ============ */
 function goToStep(n){
@@ -1131,6 +1226,10 @@ function goToStep(n){
   document.getElementById('step-'+n).classList.remove('hidden');
   renderRail(n);
 
+
+
+
+  // Re-render choices to reflect current state
   if(n === 1) {
     document.querySelectorAll('#deckTypeChoices .choice-card').forEach(c=>{
       c.classList.toggle('selected', c.dataset.type === state.deckType);
@@ -1144,7 +1243,7 @@ function goToStep(n){
   if(n === 3) {
     renderStyleChoices();
     renderFrameChoices();
-    renderSubjectChoices();
+    renderSubjectChoices(); // Render subjects when navigating to step 3
     renderTypoChoices();
     renderFormatChoices();
     if(state.palette){
@@ -1160,8 +1259,14 @@ function goToStep(n){
     checkStep3Ready();
   }
 
+
+
+
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+
+
 
 function goToStep4(){
   state.currentStep = 4;
@@ -1170,9 +1275,15 @@ function goToStep4(){
   document.getElementById('step-4').classList.remove('hidden');
   renderRail(4);
 
+
+
+
   const t4 = document.getElementById('step4Title');
   const d4 = document.getElementById('step4Desc');
   const subToggle = document.getElementById('tarotSubtitleToggle');
+
+
+
 
   if(state.deckType==='oracle'){
     document.getElementById('oracleFields').classList.remove('hidden');
@@ -1187,14 +1298,24 @@ function goToStep4(){
     document.getElementById('tarotFields').classList.remove('hidden');
     subToggle.classList.remove('hidden');
     document.getElementById('useSubtitles').checked = state.useSubtitles;
+    document.getElementById('numberingSel').value = state.numbering;
     t4.textContent = "Major Arcana — structure locked in";
     d4.textContent = "All 22 cards are mapped with traditional symbolism. Toggle subtitles for unique poetic variations.";
   }
 
+
+
+
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+
+
+
 document.querySelectorAll('[data-back]').forEach(b=> b.addEventListener('click', ()=> goToStep(parseInt(b.dataset.back))));
+
+
+
 
 /* ============ STEP 1 ============ */
 document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
@@ -1202,6 +1323,7 @@ document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
     document.querySelectorAll('#deckTypeChoices .choice-card').forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
     state.deckType = card.dataset.type;
+    // Reset oracle cards when switching deck type
     if(state.deckType !== state._prevDeckType){
       state.oracleCards = [];
       state._prevDeckType = state.deckType;
@@ -1211,6 +1333,9 @@ document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
 });
 document.getElementById('toStep2').addEventListener('click', ()=> goToStep(2));
 
+
+
+
 /* ============ STEP 2 -> 3 ============ */
 document.getElementById('toStep3').addEventListener('click', ()=>{
   if(!state.palette) generateAndSetPalette();
@@ -1219,6 +1344,9 @@ document.getElementById('toStep3').addEventListener('click', ()=>{
   checkStep3Ready();
   goToStep(3);
 });
+
+
+
 
 /* ============ PALETTE FUNCTIONS ============ */
 function generateAndSetPalette(){
@@ -1230,6 +1358,9 @@ function generateAndSetPalette(){
   renderPalettePreview(generated);
 }
 
+
+
+
 function renderPalettePreview(paletteObj){
   const preview = document.getElementById('palettePreview');
   if(!preview) return;
@@ -1240,10 +1371,16 @@ function renderPalettePreview(paletteObj){
   if(nameLabel) nameLabel.textContent = `"${paletteObj.name}"`;
 }
 
+
+
+
 document.getElementById('regeneratePaletteBtn').addEventListener('click', () => {
   generateAndSetPalette();
   checkStep3Ready();
 });
+
+
+
 
 document.getElementById('paletteInput').addEventListener('input', (e) => {
   state.palette = e.target.value.trim();
@@ -1255,6 +1392,9 @@ document.getElementById('paletteInput').addEventListener('input', (e) => {
   checkStep3Ready();
 });
 
+
+
+
 /* ============ STEP 3 ============ */
 document.querySelectorAll('#engineChoices .pill').forEach(p=>{
   p.addEventListener('click', ()=>{
@@ -1263,18 +1403,38 @@ document.querySelectorAll('#engineChoices .pill').forEach(p=>{
   });
 });
 
+
+
+
+/* 
+   FIX: checkStep3Ready now checks for subjectType 
+   ONLY if deckType is oracle. 
+   Since subjectType defaults to 'mixed-auto', the user never gets stuck.
+*/
 function checkStep3Ready(){
   const baseReady = state.style && state.palette && state.palette.length>3 && state.frame && state.typography && state.format && state.engine;
   const subjectReady = state.deckType === 'oracle' ? !!state.subjectType : true;
   document.getElementById('toStep4').disabled = !(baseReady && subjectReady);
 }
 
+
+
+
 document.getElementById('toStep4').addEventListener('click', goToStep4);
+
+
+
 
 /* ============ SUBTITLE TOGGLE ============ */
 document.getElementById('useSubtitles').addEventListener('change', (e) => {
   state.useSubtitles = e.target.checked;
 });
+document.getElementById('numberingSel').addEventListener('change', (e) => {
+  state.numbering = e.target.value;
+});
+
+
+
 
 /* ============ STEP 4 — ORACLE CARD MANAGEMENT ============ */
 function initializeOracleCards(){
@@ -1287,6 +1447,9 @@ function initializeOracleCards(){
   }
   renderOracleCards();
 }
+
+
+
 
 function renderOracleCards(){
   const container = document.getElementById('oracleCardList');
@@ -1302,11 +1465,18 @@ function renderOracleCards(){
     </div>
   `).join('');
 
+
+
+
   document.getElementById('oracleCardCount').textContent = `${state.oracleCards.length} / 20 cards`;
   setupOracleListeners();
 }
 
+
+
+
 function setupOracleListeners(){
+  // Input change handlers
   document.querySelectorAll('#oracleCardList input').forEach(input => {
     input.addEventListener('input', (e) => {
       const index = parseInt(e.target.dataset.index);
@@ -1316,10 +1486,17 @@ function setupOracleListeners(){
     });
   });
 
+
+
+
+  // Button handlers
   document.querySelectorAll('#oracleCardList button').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const index = parseInt(e.target.dataset.index);
       const action = e.target.dataset.action;
+
+
+
 
       if(action === 'regen'){
         state.oracleCards[index].name = CARD_NAME_GENERATOR.generateName();
@@ -1335,6 +1512,10 @@ function setupOracleListeners(){
     });
   });
 
+
+
+
+  // Add card button
   document.getElementById('addOracleCard').onclick = () => {
     if(state.oracleCards.length < 20){
       state.oracleCards.push({
@@ -1345,6 +1526,10 @@ function setupOracleListeners(){
     }
   };
 
+
+
+
+  // Regenerate all button
   document.getElementById('regenAllOracleCards').onclick = () => {
     state.oracleCards = state.oracleCards.map(() => ({
       name: CARD_NAME_GENERATOR.generateName(),
@@ -1353,6 +1538,9 @@ function setupOracleListeners(){
     renderOracleCards();
   };
 }
+
+
+
 
 /* ============ GENERATE DECK ============ */
 document.getElementById('generateBtn').addEventListener('click', ()=>{
@@ -1365,6 +1553,9 @@ document.getElementById('generateBtn').addEventListener('click', ()=>{
   generateDeck();
 });
 
+
+
+
 /* ============ PROMPT ENGINE ============ */
 function themeDescriptor(){ return THEMES[state.theme].descriptor; }
 function themeLabelText(){ return THEMES[state.theme].label; }
@@ -1372,6 +1563,9 @@ function styleDescriptor(){ return STYLES[state.style].descriptor; }
 function frameDescriptor(){ return FRAMES[state.frame].descriptor; }
 function typoDescriptor(){ return TYPOGRAPHY[state.typography]; }
 function formatSpec(){ return FORMATS[state.format].spec(); }
+
+
+
 
 function buildFrontPrompt(cardName, symbolicContent, extraMeaning, variantSet, compSeed, subtitle){
   const displayName = subtitle ? `${cardName} — ${subtitle}` : cardName;
@@ -1385,8 +1579,14 @@ function buildFrontPrompt(cardName, symbolicContent, extraMeaning, variantSet, c
   const negative = `Avoid: photo-realism, modern-day technology or clothing, extra or malformed limbs, blurred or low-detail rendering, cropped elements at edges, placeholder or generic compositions. The image must look like a finished, print-ready card that could be sold as part of a premium deck.`;
   const engineNote = ENGINE_NOTES[state.engine];
 
+
+
+
   return `[STYLE LOCK]\n${styleLock}\n\n[ATMOSPHERE & LIGHTING]\n${atmosphere}\n\n[COMPOSITION SEED]\n${composition}\n\n[SYMBOLIC CONTENT]\n${symbolic}\n\n[FRAME & PRINT SPEC]\n${frameAndFormat}\n\n[TYPOGRAPHY — RENDER ON CARD]\n${typography}\n\n[PALETTE LOCK]\n${paletteLock}\n\n[NEGATIVE CONSTRAINTS]\n${negative}\n\n[ENGINE NOTE]\n${engineNote}`;
 }
+
+
+
 
 function buildBackPrompt(variantSet, compSeed){
   const styleLock = `${styleDescriptor()}, ${themeDescriptor()}, the uniform card-back design for the entire deck — identical pattern on every card, no unique imagery`;
@@ -1398,16 +1598,29 @@ function buildBackPrompt(variantSet, compSeed){
   const negative = `Avoid: any text or lettering, asymmetry, off-center placement, photographic realism, low detail, any element that would reveal card orientation.`;
   const engineNote = ENGINE_NOTES[state.engine];
 
+
+
+
   return `[STYLE LOCK — CARD BACK]\n${styleLock}\n\n[ATMOSPHERE]\n${atmosphere}\n\n[SYMBOLIC CONTENT]\n${symbolic}\n\n[COMPOSITION]\n${composition}\n\n[FRAME & PRINT SPEC]\n${frameAndFormat}\n\n[PALETTE LOCK]\n${paletteLock}\n\n[NEGATIVE CONSTRAINTS]\n${negative}\n\n[ENGINE NOTE]\n${engineNote}`;
 }
 
+
+
+
 let generatedDeck = [];
 let currentSubtitles = [];
+
+
+
 
 function generateDeck(){
   generatedDeck = [];
   currentSubtitles = [];
 
+
+
+
+  // Card back
   const backVariant = pickVariantSet();
   const backComp = pickCompositionSeed();
   generatedDeck.push({
@@ -1420,8 +1633,11 @@ function generateDeck(){
     prompt: buildBackPrompt(backVariant, backComp)
   });
 
+
+
+
   if(state.deckType==='tarot-major'){
-    MAJOR_ARCANA.forEach(([num, name, symbol, meaning])=>{
+    majorArcana().forEach(([num, name, symbol, meaning])=>{
       const variantSet = pickVariantSet();
       const compSeed = pickCompositionSeed();
       const subtitle = state.useSubtitles ? SUBTITLE_GENERATOR.generate() : null;
@@ -1439,7 +1655,12 @@ function generateDeck(){
     state.oracleCards.forEach((cardData, i)=>{
       const variantSet = pickVariantSet();
       const compSeed = pickCompositionSeed();
+      
+      // Compute subject instruction for this specific card
       const subjectInstruction = state.subjectType ? SUBJECT_TYPES[state.subjectType].build() : SUBJECT_TYPES['human-figure'].build();
+
+
+
 
       generatedDeck.push({
         badge: (i+1),
@@ -1454,15 +1675,24 @@ function generateDeck(){
   renderResults();
 }
 
+
+
+
 function renderResults(){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.add('hidden'));
   document.getElementById('results').classList.remove('hidden');
-  renderRail(5);
+  renderRail(5); // Special rail state for results
   window.scrollTo({top:0, behavior:'smooth'});
+
+
+
 
   const engineLabel = document.querySelector('#engineChoices .selected')?.textContent.trim() || 'GPT Image';
   document.getElementById('deckMetaLine').innerHTML =
     `<b>${generatedDeck.length}</b> items · <b>${themeLabelText()}</b> · format: <b>${FORMATS[state.format].label}</b> · engine: <b>${engineLabel}</b><span class="fe-tag">UNLIMITED</span><br>commercial license included · card back included · typography rendered on card · each regeneration is completely unique`;
+
+
+
 
   const list = document.getElementById('cardList');
   list.innerHTML = generatedDeck.map((cardData, i)=>{
@@ -1497,15 +1727,25 @@ function renderResults(){
     </div>`;
   }).join('');
 
+
+
+
+  // Mark all rail steps as done
   document.querySelectorAll('.rail-step').forEach(s => {
     s.classList.add('done');
     s.classList.remove('active', 'clickable');
   });
 }
 
+
+
+
 function toggleCard(i){
   document.getElementById('card-'+i).classList.toggle('open');
 }
+
+
+
 
 function copyPrompt(i, btn){
   navigator.clipboard.writeText(generatedDeck[i].prompt).then(()=>{
@@ -1518,32 +1758,51 @@ function copyPrompt(i, btn){
   });
 }
 
+
+
+
 function regenCard(i){
   const variantSet = pickVariantSet();
   const compSeed = pickCompositionSeed();
 
+
+
+
   if(i === 0){
+    // Card back
     generatedDeck[i].prompt = buildBackPrompt(variantSet, compSeed);
   } else if(state.deckType === 'tarot-major'){
-    const [num, name, symbol, meaning] = MAJOR_ARCANA[i-1];
+    const [num, name, symbol, meaning] = majorArcana()[i-1];
     const subtitle = state.useSubtitles ? SUBTITLE_GENERATOR.generate() : null;
     generatedDeck[i].subtitle = subtitle;
     generatedDeck[i].prompt = buildFrontPrompt(name, symbol, meaning, variantSet, compSeed, subtitle);
   } else {
     const cardData = state.oracleCards[i-1];
+    // Compute new random subject instruction for regeneration
     const subjectInstruction = state.subjectType ? SUBJECT_TYPES[state.subjectType].build() : SUBJECT_TYPES['human-figure'].build();
     generatedDeck[i].prompt = buildFrontPrompt(cardData.name, `an original oracle card illustration embodying the concept "${cardData.name}" — ${subjectInstruction}`, cardData.keyword || '', variantSet, compSeed, null);
   }
+
+
+
 
   const wasOpen = document.getElementById('card-'+i).classList.contains('open');
   renderResults();
   if(wasOpen) document.getElementById('card-'+i).classList.add('open');
 }
 
+
+
+
 /* ============ REGENERATE ALL ============ */
 document.getElementById('regenAllBtn').addEventListener('click', ()=>{
+  // 1. New palette
   generateAndSetPalette();
 
+
+
+
+  // 2. New oracle names if applicable
   if(state.deckType === 'oracle'){
     state.oracleCards = state.oracleCards.map(() => ({
       name: CARD_NAME_GENERATOR.generateName(),
@@ -1551,9 +1810,16 @@ document.getElementById('regenAllBtn').addEventListener('click', ()=>{
     }));
   }
 
+
+
+
+  // 3. Regenerate all prompts with completely new seeds
   generateDeck();
   showToast("All cards regenerated with new palette, names & compositions!");
 });
+
+
+
 
 /* ============ BACK TO EDIT ============ */
 document.getElementById('backToEditBtn').addEventListener('click', ()=>{
@@ -1561,8 +1827,12 @@ document.getElementById('backToEditBtn').addEventListener('click', ()=>{
   showToast("Returned to card editor — modify and regenerate anytime");
 });
 
+
+
+
 /* ============ NEW DECK ============ */
 document.getElementById('newDeckBtn').addEventListener('click', ()=>{
+  // Reset state but keep engine preference
   const savedEngine = state.engine;
   state.deckType = null;
   state.theme = null;
@@ -1570,7 +1840,7 @@ document.getElementById('newDeckBtn').addEventListener('click', ()=>{
   state.palette = "";
   state.paletteName = "";
   state.frame = null;
-  state.subjectType = "mixed-auto";
+  state.subjectType = "mixed-auto"; // Reset subject type to default
   state.typography = null;
   state.format = null;
   state.engine = savedEngine;
@@ -1580,12 +1850,18 @@ document.getElementById('newDeckBtn').addEventListener('click', ()=>{
   generatedDeck = [];
   currentSubtitles = [];
 
+
+
+
   goToStep(1);
   document.getElementById('toStep2').disabled = true;
   document.getElementById('toStep3').disabled = true;
   document.getElementById('toStep4').disabled = true;
   showToast("New deck started — configure your fresh creation");
 });
+
+
+
 
 /* ============ COPY ALL ============ */
 document.getElementById('copyAllBtn').addEventListener('click', ()=>{
@@ -1596,6 +1872,9 @@ document.getElementById('copyAllBtn').addEventListener('click', ()=>{
     setTimeout(()=>btn.textContent="Copy all", 1600);
   });
 });
+
+
+
 
 /* ============ EXPORT ============ */
 function download(filename, content, type){
@@ -1608,6 +1887,9 @@ function download(filename, content, type){
   URL.revokeObjectURL(url);
 }
 
+
+
+
 document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
   const all = generatedDeck.map(c=>{
     const overlayTxt = !c.isBack ? `\nTitle: ${c.textInfo.title}${c.textInfo.numeral?' | Numeral: '+c.textInfo.numeral:''}${c.textInfo.keyword?' | Keyword: '+c.textInfo.keyword:''}${c.subtitle?' | Subtitle: '+c.subtitle:''}\n` : '';
@@ -1615,6 +1897,20 @@ document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
   }).join('\n\n---\n\n');
   download('arcana-deck-ai-prompts.txt', all, 'text/plain');
 });
+
+/* ============ SIDE MENU LOGIC ============ */
+(function(){
+  const toggle = document.getElementById('sideMenuToggle');
+  const overlay = document.getElementById('sideOverlay');
+  const menu = document.getElementById('sideMenu');
+  const closeBtn = document.getElementById('sideClose');
+  function openMenu(){ toggle.classList.add('menu-open'); overlay.classList.add('open'); menu.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu(){ toggle.classList.remove('menu-open'); overlay.classList.remove('open'); menu.classList.remove('open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMenu(); });
+})();
 </script>
 </body>
 </html>
