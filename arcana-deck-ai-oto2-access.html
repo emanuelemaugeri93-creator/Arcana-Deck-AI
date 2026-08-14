@@ -89,6 +89,8 @@
   textarea:focus,input[type=text]:focus{outline:none; border-color:var(--gold);}
   textarea{min-height:110px; line-height:1.6;}
   .hint{font-size:12.5px; color:var(--parchment-dim); margin-top:7px; font-style:italic;}
+  select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:12px 14px; border-radius:3px; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer;}
+  select:focus{outline:none; border-color:var(--gold);}
 
 
 
@@ -352,6 +354,14 @@
           </div>
         </div>
         <div id="tarotFields">
+          <div class="field" style="margin-bottom:16px;">
+            <label class="field-label" for="numberingSel">Card Numbering System</label>
+            <select id="numberingSel">
+              <option value="modern" selected>Modern (RWS) — Strength VIII · Justice XI</option>
+              <option value="traditional">Traditional (Marseille) — Justice VIII · Strength XI</option>
+            </select>
+            <div class="hint">Only cards 8 and 11 differ between the two systems; the other twenty are identical. Strength at 8 / Justice at 11 is the modern standard most readers expect.</div>
+          </div>
           <div class="hint" style="margin-bottom:18px;">All 22 Major Arcana are mapped with traditional symbolism. Enable subtitles above for unique poetic variations on each card name.</div>
         </div>
         <div class="btn-row">
@@ -817,6 +827,20 @@ const MAJOR_ARCANA = [
   ["XXI","The World","a dancing figure wreathed in a laurel oval, four winged creatures in each corner of the composition, ribbons trailing around the wreath","completion, wholeness, integration of the journey"]
 ];
 
+function majorArcana(){
+  const list = MAJOR_ARCANA.map(e => e.slice());
+  if(state.numbering === 'traditional'){
+    const s = list.find(e => e[1] === 'Strength');
+    const j = list.find(e => e[1] === 'Justice');
+    if(s && j){
+      const tmp = s[0];
+      s[0] = j[0];
+      j[0] = tmp;
+    }
+  }
+  return list;
+}
+
 
 
 
@@ -1032,6 +1056,7 @@ const state = {
   textMode: "overlay",
   oracleCards: [],
   useSubtitles: true,
+  numbering: "modern",
   currentStep: 1
 };
 
@@ -1295,6 +1320,7 @@ function goToStep4(){
     document.getElementById('tarotFields').classList.remove('hidden');
     subToggle.classList.remove('hidden');
     document.getElementById('useSubtitles').checked = state.useSubtitles;
+    document.getElementById('numberingSel').value = state.numbering;
     if(state.deckType==='tarot-full'){
       t4.textContent = "Full Tarot — structure locked in";
       d4.textContent = "All 78 cards are mapped: 22 Major Arcana with traditional symbolism plus 56 Minor Arcana across the four suits. Toggle subtitles for unique poetic variations.";
@@ -1429,6 +1455,9 @@ document.getElementById('toStep4').addEventListener('click', goToStep4);
 /* ============ SUBTITLE TOGGLE ============ */
 document.getElementById('useSubtitles').addEventListener('change', (e) => {
   state.useSubtitles = e.target.checked;
+});
+document.getElementById('numberingSel').addEventListener('change', (e) => {
+  state.numbering = e.target.value;
 });
 
 
@@ -1639,7 +1668,7 @@ function generateDeck(){
 
 
   if(state.deckType==='tarot-major' || state.deckType==='tarot-full'){
-    MAJOR_ARCANA.forEach(([num, name, symbol, meaning])=>{
+    majorArcana().forEach(([num, name, symbol, meaning])=>{
       const variantSet = pickVariantSet();
       const compSeed = pickCompositionSeed();
       const subtitle = state.useSubtitles ? SUBTITLE_GENERATOR.generate() : null;
