@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,6 +13,7 @@
     --parchment:#F2EFE6; --parchment-dim:#9C9890;
     --blood:#5A2626;
     --line:rgba(232,228,216,0.18); --ok:#7FB88A;
+    --accent-wax:#C45C5C;
   }
   *{box-sizing:border-box;} html,body{margin:0;padding:0;}
   body{background:radial-gradient(ellipse at 20% -10%, rgba(139,58,58,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(232,228,216,0.06), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
@@ -173,11 +173,71 @@
   /* TOAST */
   .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
   .toast.show{opacity:1;}
+
+  /* SIDE MENU TOGGLE - COLORING BOOK STYLE */
+  .side-menu-toggle{position:fixed; top:18px; right:18px; z-index:160; border-radius:30px; background:rgba(196,92,92,0.15); border:1px solid rgba(196,92,92,0.5); cursor:pointer; display:flex; align-items:center; gap:6px; padding:8px 14px; transition:border-color .3s, background .3s, transform .3s; animation:bonusGlow 2s ease-in-out infinite; backdrop-filter:blur(4px);}
+  .side-menu-toggle:hover{transform:translateY(-1px); border-color:var(--accent-wax); background:rgba(196,92,92,0.25); box-shadow:0 0 20px rgba(196,92,92,0.4);}
+  .side-menu-toggle svg{width:14px; height:14px; stroke:var(--accent-wax); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
+  .side-menu-toggle .menu-label{font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:var(--accent-wax); white-space:nowrap;}
+  .side-menu-toggle .icon-close{display:none;}
+  .side-menu-toggle.menu-open .icon-gift,.side-menu-toggle.menu-open .menu-label{display:none;}
+  .side-menu-toggle.menu-open .icon-close{display:block;}
+  @keyframes bonusGlow{
+    0%,100%{box-shadow:0 0 8px rgba(196,92,92,0.2);}
+    50%{box-shadow:0 0 18px rgba(196,92,92,0.5);}
+  }
+  .side-overlay{position:fixed; inset:0; background:rgba(13,13,16,0.6); backdrop-filter:blur(3px); z-index:170; opacity:0; pointer-events:none; transition:opacity .35s ease;}
+  .side-overlay.open{opacity:1; pointer-events:auto;}
+  .side-menu{position:fixed; top:0; right:-340px; width:320px; height:100%; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-left:1px solid var(--line); z-index:180; transition:right .4s cubic-bezier(0.22,1,0.36,1); display:flex; flex-direction:column; overflow-y:auto;}
+  .side-menu.open{right:0;}
+  .side-menu-inner{padding:24px 20px 40px; flex:1;}
+  .side-menu-heading{font-family:'Cinzel Decorative','Cinzel',serif; font-size:15px; letter-spacing:0.06em; color:var(--gold); margin:0 0 6px;}
+  .side-menu-sub{font-size:13px; color:var(--parchment-dim); margin:0 0 20px; font-style:italic;}
+  .side-section-label{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin:28px 0 12px;}
+  .side-section-label:first-child{margin-top:0;}
+  .side-bonus-btn{display:block; width:100%; text-align:left; background:rgba(232,228,216,0.06); border:1px solid var(--line); border-left:2px solid var(--gold); border-radius:3px; padding:12px 14px; margin-bottom:10px; cursor:pointer; text-decoration:none; transition:background .25s, transform .25s; color:var(--parchment);}
+  .side-bonus-btn:hover{background:rgba(232,228,216,0.12); transform:translateX(3px);}
+  .side-bonus-btn b{color:var(--gold); font-family:'Cinzel',serif; font-size:13.5px; font-weight:600; display:block; margin-bottom:3px; letter-spacing:0.03em;}
+  .side-bonus-btn .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(232,228,216,0.3); border-radius:20px; padding:1px 8px; margin-top:7px;}
+  .side-bonus-btn small{display:block; margin-top:6px; font-size:11.5px; color:var(--parchment-dim); font-style:italic;}
+  .side-close{position:absolute; top:14px; right:14px; background:none; border:none; color:var(--gold-dim); font-size:26px; line-height:1; cursor:pointer; padding:4px; transition:color .25s, transform .25s;}
+  .side-close:hover{color:var(--gold); transform:rotate(90deg);}
 </style>
 </head>
 <body>
 <canvas class="stars"></canvas>
 <div class="toast" id="toast"></div>
+
+<button class="side-menu-toggle" id="sideMenuToggle" aria-label="Open bonuses menu">
+  <svg class="icon-gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+  <span class="menu-label">Bonuses Here</span>
+  <svg class="icon-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+</button>
+<div class="side-overlay" id="sideOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-label="Bonus menu">
+  <button class="side-close" id="sideClose">✕</button>
+  <div class="side-menu-inner">
+    <p class="side-menu-heading">✦ Treasury &amp; Bonuses</p>
+    <p class="side-menu-sub">Your exclusive bonuses for the Coloring Book AI — free with your purchase.</p>
+    <div class="side-section-label">Your Coloring Bonuses</div>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-oto3-bonus1.html" target="_blank" rel="noopener">
+      <b>Coloring Listing Forge</b>
+      <small>Premium Etsy listing prompts optimized for coloring cards — titles, descriptions, and tags that command higher prices.</small>
+      <span class="tag">BONUS #1</span>
+    </a>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-oto3-bonus2.html" target="_blank" rel="noopener">
+      <b>Coloring Codex Forge</b>
+      <small>A premium companion guidebook generator — turn your coloring deck into a complete collector's edition with companion content.</small>
+      <span class="tag">BONUS #2</span>
+    </a>
+    <a class="side-bonus-btn" href="https://docs.google.com/document/d/1j5IONwARF7lA3j8EBzI_kJ8u_qXoDgXb/edit?usp=sharing&ouid=106711963256230190707&rtpof=true&sd=true" target="_blank" rel="noopener">
+      <b>Coloring Book Quick Start Guide</b>
+      <small>Step-by-step instructions for using the Coloring Book AI — from prompt to printable coloring card.</small>
+      <span class="tag">GUIDE</span>
+    </a>
+  </div>
+</aside>
+
 <div class="wrap">
   <div class="license-banner">✦ COMMERCIAL LICENSE INCLUDED — every coloring card you generate is yours to sell or print as an individual piece, starting now ✦</div>
   <header class="top">
@@ -1552,6 +1612,20 @@ document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
   const all = generatedDeck.map(c=>`=== ${c.name}${c.subtitle ? ' — '+c.subtitle : ''} (${c.arcana}) ===\n${c.prompt}`).join('\n\n---\n\n');
   download('arcana-coloring-book-prompts.txt', all, 'text/plain');
 });
+
+/* ============ SIDE MENU LOGIC ============ */
+(function(){
+  const toggle = document.getElementById('sideMenuToggle');
+  const overlay = document.getElementById('sideOverlay');
+  const menu = document.getElementById('sideMenu');
+  const closeBtn = document.getElementById('sideClose');
+  function openMenu(){ toggle.classList.add('menu-open'); overlay.classList.add('open'); menu.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu(){ toggle.classList.remove('menu-open'); overlay.classList.remove('open'); menu.classList.remove('open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMenu(); });
+})();
 </script>
 </body>
 </html>
