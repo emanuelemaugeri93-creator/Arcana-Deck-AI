@@ -12,6 +12,7 @@
     --gold:#C8D4DC; --gold-dim:#8A96A0; --amethyst:#B78CD6; --amethyst-soft:#CBA8E0;
     --parchment:#E8EAED; --parchment-dim:#9AA0A8; --blood:#D6486B;
     --line:rgba(200,212,220,0.22); --ok:#7FB88A;
+    --accent-cyan:#7FD4D4;
   }
   *{box-sizing:border-box;} html,body{margin:0;padding:0;}
   body{background:radial-gradient(ellipse at 20% -10%, rgba(183,140,214,0.25), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,212,220,0.10), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
@@ -161,11 +162,66 @@
   /* TOAST */
   .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
   .toast.show{opacity:1;}
+
+  /* SIDE MENU TOGGLE - LUXE STYLE */
+  .side-menu-toggle{position:fixed; top:18px; right:18px; z-index:160; border-radius:30px; background:rgba(127,212,212,0.12); border:1px solid rgba(127,212,212,0.45); cursor:pointer; display:flex; align-items:center; gap:6px; padding:8px 14px; transition:border-color .3s, background .3s, transform .3s; animation:bonusGlow 2s ease-in-out infinite; backdrop-filter:blur(4px);}
+  .side-menu-toggle:hover{transform:translateY(-1px); border-color:var(--accent-cyan); background:rgba(127,212,212,0.22); box-shadow:0 0 20px rgba(127,212,212,0.4);}
+  .side-menu-toggle svg{width:14px; height:14px; stroke:var(--accent-cyan); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
+  .side-menu-toggle .menu-label{font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:var(--accent-cyan); white-space:nowrap;}
+  .side-menu-toggle .icon-close{display:none;}
+  .side-menu-toggle.menu-open .icon-gift,.side-menu-toggle.menu-open .menu-label{display:none;}
+  .side-menu-toggle.menu-open .icon-close{display:block;}
+  @keyframes bonusGlow{
+    0%,100%{box-shadow:0 0 8px rgba(127,212,212,0.2);}
+    50%{box-shadow:0 0 18px rgba(127,212,212,0.5);}
+  }
+  .side-overlay{position:fixed; inset:0; background:rgba(10,8,18,0.6); backdrop-filter:blur(3px); z-index:170; opacity:0; pointer-events:none; transition:opacity .35s ease;}
+  .side-overlay.open{opacity:1; pointer-events:auto;}
+  .side-menu{position:fixed; top:0; right:-340px; width:320px; height:100%; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-left:1px solid var(--line); z-index:180; transition:right .4s cubic-bezier(0.22,1,0.36,1); display:flex; flex-direction:column; overflow-y:auto;}
+  .side-menu.open{right:0;}
+  .side-menu-inner{padding:24px 20px 40px; flex:1;}
+  .side-menu-heading{font-family:'Cinzel Decorative','Cinzel',serif; font-size:15px; letter-spacing:0.06em; color:var(--gold); margin:0 0 6px;}
+  .side-menu-sub{font-size:13px; color:var(--parchment-dim); margin:0 0 20px; font-style:italic;}
+  .side-section-label{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin:28px 0 12px;}
+  .side-section-label:first-child{margin-top:0;}
+  .side-bonus-btn{display:block; width:100%; text-align:left; background:rgba(200,212,220,0.07); border:1px solid var(--line); border-left:2px solid var(--gold); border-radius:3px; padding:12px 14px; margin-bottom:10px; cursor:pointer; text-decoration:none; transition:background .25s, transform .25s; color:var(--parchment);}
+  .side-bonus-btn:hover{background:rgba(200,212,220,0.14); transform:translateX(3px);}
+  .side-bonus-btn b{color:var(--gold); font-family:'Cinzel',serif; font-size:13.5px; font-weight:600; display:block; margin-bottom:3px; letter-spacing:0.03em;}
+  .side-bonus-btn .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(200,212,220,0.35); border-radius:20px; padding:1px 8px; margin-top:7px;}
+  .side-bonus-btn small{display:block; margin-top:6px; font-size:11.5px; color:var(--parchment-dim); font-style:italic;}
+  .side-close{position:absolute; top:14px; right:14px; background:none; border:none; color:var(--gold-dim); font-size:26px; line-height:1; cursor:pointer; padding:4px; transition:color .25s, transform .25s;}
+  .side-close:hover{color:var(--gold); transform:rotate(90deg);}
 </style>
 </head>
 <body>
 <canvas class="stars"></canvas>
 <div class="toast" id="toast"></div>
+
+<button class="side-menu-toggle" id="sideMenuToggle" aria-label="Open bonuses menu">
+  <svg class="icon-gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+  <span class="menu-label">Bonuses Here</span>
+  <svg class="icon-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+</button>
+<div class="side-overlay" id="sideOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-label="Bonus menu">
+  <button class="side-close" id="sideClose">✕</button>
+  <div class="side-menu-inner">
+    <p class="side-menu-heading">✦ Treasury &amp; Bonuses</p>
+    <p class="side-menu-sub">Your exclusive bonuses for the Luxe Edition — free with your purchase.</p>
+    <div class="side-section-label">Your Luxe Bonuses</div>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-oto1-bonus1.html" target="_blank" rel="noopener">
+      <b>Luxe Listing Forge</b>
+      <small>Premium Etsy listing prompts optimized for luxury decks — titles, descriptions, and tags that command higher prices.</small>
+      <span class="tag">BONUS #1</span>
+    </a>
+    <a class="side-bonus-btn" href="https://emanuelemaugeri93-creator.github.io/Arcana-Deck-AI/arcana-deck-ai-oto1-bonus2.html" target="_blank" rel="noopener">
+      <b>Luxe Codex Forge</b>
+      <small>A premium companion guidebook generator — turn your Luxe deck into a full collector's edition book.</small>
+      <span class="tag">BONUS #2</span>
+    </a>
+  </div>
+</aside>
+
 <div class="wrap">
   <div class="license-banner">✦ COMMERCIAL LICENSE INCLUDED — every prompt you generate here is yours to sell as finished decks on Etsy, KDP, or anywhere else ✦</div>
   <header class="top">
@@ -390,22 +446,13 @@ const ENGINE_NOTES={"gpt-image":"Rendering target: GPT Image (ChatGPT). Write as
 /* ============ PRINT FORMATS ============ */
 const FORMATS={"single":{label:"Single Card — Full Page",meta:"one hi-res card, full-bleed",spec:()=>"Output as a single full-bleed card image, final crop at 300dpi print resolution."},"poker":{label:"Poker-Size Card",meta:"2.5 × 3.5 in + bleed",spec:()=>"Trim size 2.5 × 3.5 inches (63.5 × 88.9mm) at 300dpi, art extended 3mm beyond trim on all sides for bleed."},"tarot":{label:"Tarot-Size Card",meta:"2.75 × 4.75 in + bleed",spec:()=>"Trim size 2.75 × 4.75 inches (70 × 120mm) at 300dpi, art extended 3mm beyond trim on all sides for bleed."}};
 
-/* ============ BASE VARIANTS (gothic/classic phrasing) ============ */
+/* ============ BASE VARIANTS ============ */
 const VARIANTS={lighting:["soft diffused candlelight falling across the scene from multiple small sources","a cool, pale moonlit glow that silver-limns every edge","warm golden-hour light low on the horizon, long dramatic shadows","a single dramatic side-light from one direction casting deep chiaroscuro shadows","an ambient, unexplained inner glow lighting the subject from within as if from their own soul","hazy, soft dawn light with a faint golden mist diffusing everything","flickering firelight with deep warm amber shadow pockets","even, overcast light with muted soft shadow — like light through stained glass","silver starlight filtering through a canopy of leaves or clouds","a bioluminescent glow emanating from the subject or their surroundings","candlelight reflecting off polished stone or metal surfaces","the cold blue light of a winter dusk, long shadows on snow"],atmosphere:["a faint mist curling at the edges of the composition like breath on glass","drifting dust motes or pollen caught in shafts of light","a still, quiet, undisturbed air — the weight of silence made visible","petals or embers drifting gently through the scene, frozen mid-fall","a subtle veil of incense smoke threading upward in lazy spirals","fine falling snow or ash softening the background into abstraction","a faint luminous halo rimming the central subject against the dark","the charged stillness before a storm — electricity in the air","a veil of twilight settling over every surface like poured honey","rain-streaked atmosphere with wet surfaces catching the light"],texture:["visible fine brush texture across every surface — the hand of the artist present","soft grain and natural paper tooth throughout, like a vintage print","delicate, controlled linework detail with ink-like precision","rich, layered pigment texture with visible depth and impasto quality","crisp clean linework with minimal texture noise — almost digital precision","slightly weathered, aged surface texture with subtle crackle and patina","intricate stippling and crosshatching detail creating depth through mark-making","luminous wash blending with sharp ink outlines — wet-into-wet technique"],mood:["a contemplative, meditative calm pervades the image — sacred stillness","an undercurrent of quiet tension and anticipation — something is about to happen","a serene, almost sacred stillness — this is a holy moment","a sense of gentle melancholy and nostalgia for something never known","quiet triumph and inner strength radiate from the subject","a liminal, dreamlike quality — as if between waking and sleep, between worlds","a protective, nurturing warmth suffuses the composition like an embrace","a dark, brooding intensity — beauty found in shadows and secrets"]};
 
-/* ============ LUXE VARIANTS (metallic/holographic/cosmic phrasing) ============ */
+/* ============ LUXE VARIANTS ============ */
 const LUXE_VARIANTS={lighting:["sharp specular highlights raking across every reflective surface, hard-edged and directional","a cold studio-style key light producing crisp mirror-bright reflections","ambient light refracting into visible spectral color fringes at every edge","a pulsing internal glow that seems to breathe rather than stay static","harsh rim lighting separating the subject from a near-black void","prismatic light scatter, breaking into small rainbow fragments across metallic surfaces","a single hard spotlight creating deep specular hotspots and sharp cast shadows","soft bioluminescent underglow mixed with hard external highlight, two light sources at once"],atmosphere:["fine metallic dust or glitter suspended and catching light mid-air","faint chromatic aberration at the edges of high-contrast areas","a subtle lens-flare bloom around the brightest highlight in the composition","wisps of colored light-fog drifting through the scene like visible energy","a faint scan-line or holographic interference pattern layered subtly over the whole image","static-like sparkle particles scattered unevenly across dark areas","a soft chromatic haze bleeding color between adjacent surfaces"],texture:["hyper-smooth polished surface texture with zero visible brushwork","fine engraved micro-linework beneath a reflective coating","a layered lenticular texture that implies shifting detail depending on angle","crisp vector-clean edges with gradient-mapped metallic shading","granular holographic foil texture, fine and evenly distributed","sculptural high-relief texture as if pressed or embossed rather than drawn"],mood:["an aura of expensive, deliberate excess — nothing here reads as accidental","a cold, futuristic composure, precise and untouchable","an electric sense of energy barely contained within the frame","a dreamlike unreality, like the image exists slightly outside normal light physics","a triumphant, spotlighted presence, built to be looked at","a hypnotic, shifting quality that rewards a longer look"]};
 
-/* ============ pickV() — now pulls from active bank ============ */
-function pickV(){
-  const bank = getActiveVariantsBank();
-  return {
-    lighting: randomOf(bank.lighting),
-    atmosphere: randomOf(bank.atmosphere),
-    texture: randomOf(bank.texture),
-    mood: randomOf(bank.mood)
-  };
-}
+function pickV(){const bank=getActiveVariantsBank();return{lighting:randomOf(bank.lighting),atmosphere:randomOf(bank.atmosphere),texture:randomOf(bank.texture),mood:randomOf(bank.mood)};}
 
 /* ============ STATE ============ */
 const state={deckType:null,theme:null,style:null,palette:"",paletteName:"",frame:null,subjectType:"mixed-auto",typography:null,format:null,engine:null,oracleCards:[],useSubtitles:true,currentStep:1};
@@ -420,49 +467,30 @@ function renderThemeChoices(){
 function renderStyleChoices(){
   const container=document.getElementById('styleChoicesContainer');
   let html='';
-  
-  // Group 1: Signature Styles (base 14)
   html+=`<div class="style-group-header">Signature Styles</div><div class="grid-cards">`;
   html+=Object.entries(STYLES).map(([k,o])=>`<div class="choice-card ${state.style===k?'selected':''}" data-style="${k}"><div class="choice-name">${o.label}</div><div class="choice-meta">${o.descriptor.slice(0,60)}${o.descriptor.length>60?'…':''}</div></div>`).join('');
   html+=`</div>`;
-  
-  // Luxe groups
   const luxeGroups={};
-  Object.entries(LUXE_STYLES).forEach(([k,o])=>{
-    if(!luxeGroups[o.group])luxeGroups[o.group]=[];
-    luxeGroups[o.group].push([k,o]);
-  });
-  
+  Object.entries(LUXE_STYLES).forEach(([k,o])=>{if(!luxeGroups[o.group])luxeGroups[o.group]=[];luxeGroups[o.group].push([k,o]);});
   for(const [groupName,styles] of Object.entries(luxeGroups)){
     html+=`<div class="style-group-header">${groupName}</div><div class="grid-cards">`;
     html+=styles.map(([k,o])=>`<div class="choice-card ${state.style===k?'selected':''}" data-style="${k}"><span class="luxe-badge">LUXE</span><div class="choice-name">${o.label}</div><div class="choice-meta">${o.descriptor.slice(0,60)}${o.descriptor.length>60?'…':''}</div></div>`).join('');
     html+=`</div>`;
   }
-  
   container.innerHTML=html;
-  
   container.querySelectorAll('.choice-card').forEach(card=>{
     card.addEventListener('click',()=>{
       const newStyle=card.dataset.style;
       const oldStyle=state.style;
-      
-      // Check if we're crossing the base/luxe boundary
       const wasLuxe=oldStyle&&isLuxeStyle(oldStyle);
       const wasBase=oldStyle&&isBaseStyle(oldStyle);
       const nowLuxe=isLuxeStyle(newStyle);
       const nowBase=isBaseStyle(newStyle);
-      
-      // Only regenerate palette when crossing between families
       const crossingBoundary=(wasLuxe&&nowBase)||(wasBase&&nowLuxe)||(!oldStyle);
-      
       container.querySelectorAll('.choice-card').forEach(c=>c.classList.remove('selected'));
       card.classList.add('selected'); 
       state.style=newStyle; 
-      
-      if(crossingBoundary){
-        generateAndSetPalette();
-      }
-      
+      if(crossingBoundary){generateAndSetPalette();}
       checkStep3Ready();
     });
   });
@@ -595,6 +623,20 @@ document.getElementById('newDeckBtn').addEventListener('click',()=>{const se=sta
 document.getElementById('copyAllBtn').addEventListener('click',()=>{const all=generatedDeck.map(c=>`=== ${c.name}${c.subtitle?' — '+c.subtitle:''} ===\n${c.prompt}`).join('\n\n---\n\n');navigator.clipboard.writeText(all).then(()=>{const b=document.getElementById('copyAllBtn');b.textContent="Copied ✓";setTimeout(()=>b.textContent="Copy all",1600);});});
 function download(fn,ct,tp){const bl=new Blob([ct],{type:tp});const u=URL.createObjectURL(bl);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);}
 document.getElementById('exportTxtBtn').addEventListener('click',()=>{const all=generatedDeck.map(c=>{const ot=!c.isBack?`\nTitle: ${c.textInfo.title}${c.textInfo.numeral?' | Numeral: '+c.textInfo.numeral:''}${c.textInfo.keyword?' | Keyword: '+c.textInfo.keyword:''}${c.subtitle?' | Subtitle: '+c.subtitle:''}\n`:'';return`=== ${c.name}${c.subtitle?' — '+c.subtitle:''} (${c.arcana}) ===${ot}\n${c.prompt}`;}).join('\n\n---\n\n');download('arcana-deck-ai-luxe-prompts.txt',all,'text/plain');});
+
+/* ============ SIDE MENU LOGIC ============ */
+(function(){
+  const toggle=document.getElementById('sideMenuToggle');
+  const overlay=document.getElementById('sideOverlay');
+  const menu=document.getElementById('sideMenu');
+  const closeBtn=document.getElementById('sideClose');
+  function openMenu(){toggle.classList.add('menu-open');overlay.classList.add('open');menu.classList.add('open');document.body.style.overflow='hidden';}
+  function closeMenu(){toggle.classList.remove('menu-open');overlay.classList.remove('open');menu.classList.remove('open');document.body.style.overflow='';}
+  toggle.addEventListener('click',()=>menu.classList.contains('open')?closeMenu():openMenu());
+  closeBtn.addEventListener('click',closeMenu);
+  overlay.addEventListener('click',closeMenu);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+})();
 </script>
 </body>
 </html>
