@@ -1,0 +1,1377 @@
+
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Storybook AI — Master Blueprint — Master Edition Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0B0714;
+    --panel:#1A0F2E;
+    --panel-2:#241640;
+    --gold:#B565D8;        /* repurposed as "orchid" primary accent — vivid violet-magenta */
+    --gold-dim:#7A4499;
+    --amethyst:#C8D0E0;    /* repurposed as "moon-silver" secondary accent — cool pale blue-silver */
+    --amethyst-soft:#9FA8C4;
+    --parchment:#EDEAF2;   /* cool lavender-white, not warm parchment */
+    --parchment-dim:#9B94AC;
+    --blood:#8B1E4A;       /* repurposed as "crimson" accent */
+    --line:rgba(181,101,216,0.22);
+    --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(181,101,216,0.18), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(200,208,224,0.07), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:40px 24px 120px;}
+  .bonus-banner{max-width:1240px; margin:0 auto 32px; background:linear-gradient(90deg, rgba(181,101,216,0.12), rgba(200,208,224,0.08)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:40px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:14px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(30px,4.6vw,48px); margin:0 0 12px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:16px; color:var(--parchment-dim); max-width:720px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:120px; height:1px; margin:24px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
+
+
+
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:30px; position:relative;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .app-layout{display:grid; grid-template-columns:360px 1fr; gap:26px; align-items:start;}
+  @media (max-width:960px){ .app-layout{grid-template-columns:1fr;} }
+  .sidebar{position:sticky; top:24px;}
+  @media (max-width:960px){ .sidebar{position:static;} }
+  .step-head{margin-bottom:22px; text-align:center;}
+  .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
+  .step-title{font-family:'Cinzel',serif; font-size:21px; margin:8px 0 6px; color:var(--parchment);}
+  .step-desc{color:var(--parchment-dim); font-size:14px; max-width:600px; margin:0 auto; line-height:1.55;}
+
+
+
+
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:7px;}
+  .field select,.field textarea{width:100%; background:var(--void); border:1px solid var(--line); border-radius:3px; color:var(--parchment); font-family:'EB Garamond',serif; font-size:14.5px; padding:11px 13px; transition:border-color .18s ease;}
+  .field select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer; padding-right:34px;}
+  .field select:hover{border-color:var(--gold-dim);}
+  .field select:focus,.field textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.18);}
+  .field textarea{min-height:110px; resize:vertical; line-height:1.55; font-style:italic;}
+  .field textarea.has-error{border-color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.35);}
+  .inline-hint{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:var(--gold); margin-top:6px; line-height:1.6;}
+  .twist-row{display:flex; align-items:center; gap:14px;}
+  .twist-row input[type="range"]{flex:1; accent-color:var(--gold); cursor:pointer;}
+  .twist-val{flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); min-width:44px; text-align:right;}
+
+
+
+
+  .pill-toggle{display:flex; gap:8px; margin-bottom:10px;}
+  .pill{flex:1; text-align:center; font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.04em; padding:10px 8px; border:1px solid var(--line); border-radius:3px; background:rgba(0,0,0,0.18); color:var(--parchment-dim); cursor:pointer; transition:all .18s ease; text-transform:uppercase;}
+  .pill:hover{border-color:var(--gold-dim); color:var(--parchment);}
+  .pill.selected{border-color:var(--gold); background:rgba(181,101,216,0.12); color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.15);}
+  .concept-gen-block .btn-dice{width:100%; margin-bottom:10px;}
+  .concept-display{border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:3px; padding:12px 14px; background:rgba(0,0,0,0.2); font-style:italic; font-size:14px; line-height:1.6; color:var(--parchment); min-height:54px;}
+  .concept-gen-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px;}
+
+
+
+
+  .group-subheader{font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--amethyst-soft); margin:4px 0 7px;}
+  .choice-grid{display:grid; grid-template-columns:1fr 1fr; gap:7px;}
+  .style-card{border:1px solid var(--line); border-radius:3px; padding:9px 10px; background:rgba(0,0,0,0.15); cursor:pointer; font-family:'EB Garamond',serif; font-size:12px; line-height:1.35; color:var(--parchment-dim); transition:all .18s ease;}
+  .style-card:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .style-card.selected{border-color:var(--gold); background:rgba(181,101,216,0.10); color:var(--gold); box-shadow:0 0 0 2px rgba(181,101,216,0.15);}
+  .style-grid-group{margin-bottom:12px;}
+  .style-grid-group:last-child{margin-bottom:0;}
+
+
+
+
+  .tier-card{border:1px solid var(--line); border-radius:4px; padding:11px 14px; background:rgba(0,0,0,0.15); cursor:pointer; transition:all .18s ease; margin-bottom:8px;}
+  .tier-card:hover{border-color:var(--amethyst-soft);}
+  .tier-card.selected{border-color:var(--gold); background:rgba(181,101,216,0.10); box-shadow:0 0 0 2px rgba(181,101,216,0.15);}
+  .page-count-large{font-family:'Cinzel',serif; font-size:25px; font-weight:700; color:var(--gold); line-height:1.1; letter-spacing:0.02em;}
+  .choice-name{font-family:'Cinzel',serif; font-size:13px; color:var(--parchment); margin-top:3px;}
+  .choice-meta{font-size:12px; color:var(--parchment-dim); font-style:italic; line-height:1.45; margin-top:3px;}
+  .text-render-warning{border:1px solid var(--gold-dim); border-radius:3px; padding:10px 12px; margin-top:8px; font-size:11.5px; line-height:1.65; color:var(--gold-dim); background:rgba(181,101,216,0.08); font-style:italic;}
+
+
+
+
+  .btn-draw{font-family:'Cinzel',serif; font-size:14px; letter-spacing:0.06em; padding:16px 26px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600; width:100%; margin-top:4px;}
+  .btn-draw:hover{filter:brightness(1.08); box-shadow:0 4px 26px rgba(181,101,216,0.22);}
+  .counter-line{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--parchment-dim); text-align:center; margin-top:14px;}
+  .counter-line b{color:var(--gold); font-weight:500;}
+
+
+
+
+  .output-panel{display:flex; flex-direction:column;}
+  .output-head{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+  .output-meta{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--parchment-dim); line-height:1.7;}
+  .output-meta b{color:var(--gold); font-weight:500;}
+  .btn{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase; white-space:nowrap;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim);}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-dice{background:transparent; border-color:var(--amethyst-soft); color:var(--amethyst-soft); font-size:12px; font-family:'Cinzel',serif; letter-spacing:0.05em; padding:12px 20px; border-radius:2px; cursor:pointer; text-transform:uppercase; transition:all .18s ease;}
+  .btn-dice:hover{background:rgba(200,208,224,0.10); color:var(--parchment);}
+  .btn-gold{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-gold:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(181,101,216,0.25);}
+  .btn-gold.copied{filter:none; box-shadow:none;}
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+
+
+
+  .output-empty{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed var(--line); border-radius:4px; padding:70px 30px; text-align:center; color:var(--parchment-dim); font-style:italic; font-size:15px; line-height:1.8;}
+  .output-empty b{color:var(--gold-dim); font-style:normal; font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.06em; display:block; margin-bottom:10px;}
+  .output-page{flex:1 1 auto; min-height:0; background:linear-gradient(180deg, #F4F1FA, var(--parchment)); color:var(--void); border:1px solid var(--gold-dim); border-radius:4px; padding:38px 42px; font-family:'EB Garamond',serif; font-size:15px; line-height:1.72; white-space:pre-wrap; word-wrap:break-word; overflow-y:auto; box-shadow:inset 0 0 70px rgba(181,101,216,0.10), 0 10px 40px rgba(0,0,0,0.35);}
+  .output-page::-webkit-scrollbar{width:10px;}
+  .output-page::-webkit-scrollbar-track{background:rgba(11,7,20,0.08);}
+  .output-page::-webkit-scrollbar-thumb{background:var(--gold-dim); border-radius:5px;}
+
+
+
+
+  .hidden{display:none !important;}
+  footer.note{text-align:center; margin-top:44px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
+
+
+
+
+  .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA STORYBOOK AI — MASTER EDITION BONUS · one complete blueprint, handed to ChatGPT for the full illustrated book ✦</div>
+  <header class="top">
+    <div class="eyebrow">Master Edition Bonus — Blueprint Architecture</div>
+    <h1>Arcana Storybook <span>AI</span></h1>
+    <p class="sub">You supply the story concept — or the app generates one for you. It assembles ONE complete, structured blueprint — title, audience, narrative arc page by page, twists, cover prompts, image guidance — that you paste into ChatGPT, and ChatGPT writes the entire illustrated book from it. Every Generate re-randomizes the blueprint so you never hand ChatGPT the same one twice.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+
+
+
+  <div class="app-layout">
+    <aside class="panel sidebar">
+      <div class="step-head">
+        <div class="step-kicker">The Controls</div>
+        <div class="step-title">Build your blueprint</div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label for="conceptInput">Your Story Concept</label>
+        <div class="pill-toggle">
+          <div class="pill selected" id="pillWrite">Write my own</div>
+          <div class="pill" id="pillGenerate">Generate one for me</div>
+        </div>
+        <div id="writeBlock">
+          <textarea id="conceptInput" placeholder="Any protagonist — human or animal. e.g. A white deer that carries the last light of a dying moon must choose what to sacrifice before winter — or a young witch whose power is bound to a forest slowly dying."></textarea>
+        </div>
+        <div class="concept-gen-block hidden" id="genBlock">
+          <button class="btn btn-dice" id="genConceptBtn">🎲 Generate a concept</button>
+          <div class="concept-display" id="genConceptDisplay">No concept generated yet — roll one to feed the blueprint.</div>
+          <div class="concept-gen-row hidden" id="genConceptRow">
+            <span class="inline-hint" style="margin:0;">Generated concept will be used as-is in the blueprint.</span>
+            <button class="btn btn-ghost" id="newConceptBtn" style="font-size:10.5px; padding:7px 12px;">🎲 New concept</button>
+          </div>
+        </div>
+        <div class="inline-hint hidden" id="hint">⚠ Enter your story concept first — it is the creative core the whole blueprint builds from.</div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label>Visual World</label>
+        <select id="themeSel"></select>
+        <div id="customWorldBlock" class="hidden">
+          <div class="inline-hint" style="margin-top:8px;">Describe your own visual/symbolic world — it replaces the fixed descriptor everywhere in the blueprint</div>
+          <textarea id="customWorldInput" placeholder="e.g. A drowned coastal kingdom where every building is half-submerged and bioluminescent fish light the streets at night"></textarea>
+        </div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label>Illustration Style</label>
+        <div id="styleGrid"></div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label>Book Length</label>
+        <div id="tierGrid"></div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label>Book Trim Size</label>
+        <select id="formatSel"></select>
+      </div>
+
+
+
+
+      <div class="field">
+        <label>Story Text Rendering</label>
+        <div id="textRenderGrid"></div>
+        <div class="text-render-warning hidden" id="textRenderWarning">⚠️ Paragraph-length text rendered by AI image engines is not always accurate — review every page carefully for spelling or garbled-text errors before using in a final product. Nano Banana Pro is currently the most reliable engine for this mode; results on GPT Image and Nano Banana 2 are less consistent for multi-sentence text.</div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label for="twistSlider">Creative Twist Level</label>
+        <div class="twist-row">
+          <input type="range" id="twistSlider" min="1" max="5" step="1" value="3">
+          <span class="twist-val" id="twistVal">3</span>
+        </div>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">Higher = more unexpected narrative twists woven into the story instructions</div>
+      </div>
+
+
+
+
+      <div class="field">
+        <label for="numberingSel">Arcana Numbering System</label>
+        <select id="numberingSel">
+          <option value="modern" selected>Modern (RWS) — Strength beat 8 · Justice beat 11</option>
+          <option value="traditional">Traditional (Marseille) — Justice beat 8 · Strength beat 11</option>
+        </select>
+        <div class="inline-hint" style="font-size:10px; letter-spacing:0.05em;">Swaps beats 8 and 11 of the 22-beat arc. Modern is the standard most readers expect.</div>
+      </div>
+
+
+
+
+      <button class="btn-draw" id="generateBtn">⚡ Assemble Storybook Blueprint</button>
+      <div class="counter-line" id="counter">📖 Blueprints generated: <b>0</b></div>
+    </aside>
+
+
+
+
+    <section class="panel output-panel" id="outputPanel">
+      <div class="output-head">
+        <div class="output-meta" id="blueprintMeta">Blueprint not assembled yet</div>
+        <div class="btn-row">
+          <button class="btn btn-dice" id="regenBtn">🎲 Regenerate (new variation)</button>
+          <button class="btn btn-gold" id="copyBtn">📋 Copy Full Blueprint Prompt</button>
+          <button class="btn btn-ghost" id="exportBtn">💾 Export .txt</button>
+        </div>
+      </div>
+      <div class="output-empty" id="outputEmpty"><b>Your blueprint will appear here</b>Assemble it once and it becomes a single manuscript page you can copy in full — title, page-by-page arc, twists, cover prompts, and image guidance — then paste into ChatGPT to write the book.</div>
+      <pre class="output-page hidden" id="blueprint"></pre>
+    </section>
+  </div>
+  <footer class="note">ARCANA STORYBOOK AI — MASTER EDITION BONUS · 15-section creative brief (incl. Character & World Consistency Bible) · 22 narrative beats · 4 page tiers · 12 visual worlds (incl. Custom World) · 15 illustration styles · concept generator · every generate a fresh variation</footer>
+</div>
+
+
+
+
+<script>
+/* ============ TOAST ============ */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+
+
+
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:110}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.3+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(181,101,216,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+
+
+
+/* ============ HELPERS ============ */
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function nextSeed(){ return Math.random().toString(36).slice(2,6).toUpperCase(); }
+const STOPWORDS = new Set(['a','an','the','and','or','of','for','with','in','on','at','to','is','it','its','their','them','they','where','that','this','every','be','was','been','into','inside','like','then','so','if','but','not','all','any','by','as','from','up','down','out','over','under','again','once','because','until','while','when','after','before','there','those','these','do','does','did','who','what','theyre']);
+function descriptorStem(descriptor, n){
+  return (String(descriptor).match(/[A-Za-z']+/g) || [])
+    .filter(w => w.length > 3 && !STOPWORDS.has(w.toLowerCase()))
+    .slice(0, n);
+}
+function symbolFromTheme(theme){
+  if(theme.label === 'Custom World'){
+    const words = descriptorStem(theme.descriptor, 3).map(w => w.charAt(0).toUpperCase() + w.slice(1));
+    return words.length ? words.join(' ') : 'Custom World';
+  }
+  let s = String(theme.label);
+  while(s !== (s = s.replace(/ (Oracle|Deck|Tarot|Folk)$/, ''))){}
+  return s;
+}
+function getTheme(){
+  const base = THEMES[+themeSel.value];
+  if(base.label === 'Custom World') return { label: base.label, descriptor: customWorldInput.value.trim() };
+  return base;
+}
+
+
+
+
+/* ============ STORY ENGINE DATA (reused from the Arcana Storybook edition) ============ */
+const NARRATIVE_BEATS = [
+  { card:"The Fool", role:"the story begins — a step into the unknown, the call that sets everything in motion", alt:["an ordinary moment breaks open — the first sign that the known world will not hold", "the protagonist sets out carrying more questions than answers, the road already choosing them"] },
+  { card:"The Magician", role:"the protagonist discovers a talent, tool, or gift they can actually wield", alt:["a hidden skill surfaces at exactly the wrong moment and changes the course of the story", "the protagonist takes hold of something that was always theirs but never claimed"] },
+  { card:"The High Priestess", role:"a hidden truth surfaces — the first glimpse behind the veil of the world", alt:["a secret the world has kept begins to show through the seams of daily life", "the protagonist overhears, finds, or remembers something that was meant to stay buried"] },
+  { card:"The Empress", role:"abundance and nurture — the world offers its gifts and the story grows fertile", alt:["a small mercy grows into something that sustains the journey through every hardship to come", "the land itself offers a gift to the protagonist, and accepting it changes the bargain"] },
+  { card:"The Emperor", role:"structure and authority — a rule, law, or power is encountered and must be navigated", alt:["an old order draws a line the protagonist must decide whether to cross", "a law written long ago for other people bends its gaze toward the protagonist"] },
+  { card:"The Hierophant", role:"a teacher or tradition passes down knowledge the protagonist must learn", alt:["a voice from the past speaks through a custodian, a relic, or a half-remembered rite", "the protagonist is shown the old way — and must choose what of it to keep"] },
+  { card:"The Lovers", role:"a bond is tested or chosen — love, alliance, or an alignment of values", alt:["an alliance is struck or broken, and its cost is paid by both sides", "two paths and two people stand before the protagonist; the choosing itself is the story"] },
+  { card:"The Chariot", role:"a hard-won advance — the protagonist pushes through opposition and gains ground", alt:["after exhaustion, a stride of real progress — ground taken that cannot be given back", "will alone carries the protagonist past a gate that force could not open"] },
+  { card:"Strength", role:"gentle mastery — something wild, within or without, is tamed with patience", alt:["the protagonist learns that holding back can hold more power than striking", "a wild thing — a creature, a fear, a part of the self — is met rather than conquered"] },
+  { card:"The Hermit", role:"solitude and insight — a retreat into the dark with only a lantern of truth", alt:["the protagonist withdraws to a quiet place and returns carrying something the world had lost", "in stillness, the story's true question finally stands clearly before them"] },
+  { card:"Wheel of Fortune", role:"fortune turns — fate lifts or drops the protagonist without warning", alt:["luck spins without asking permission — what was gained is lost, and what was lost returns", "the wheel turns in plain sight, and the protagonist must ride it or be dragged"] },
+  { card:"Justice", role:"a reckoning — actions are weighed, a truth is measured, balance is restored or refused", alt:["a debt older than the protagonist comes due, and the payment is a choice", "the scales tip toward a truth no one wanted to be true"] },
+  { card:"The Hanged Man", role:"surrender — a sacrifice of control that grants a new way of seeing", alt:["the protagonist stops fighting the current and finds it was carrying them somewhere", "everything is suspended — and in the stillness, a new angle on the whole story appears"] },
+  { card:"Death", role:"an ending — something essential must be released for the story to continue", alt:["a door closes forever, and what steps through the next one is not quite what was before", "the story asks the protagonist to let go of the thing they were holding up with both hands"] },
+  { card:"Temperance", role:"alchemy — two opposing forces are blended into something new and stable", alt:["opposites that seemed at war learn to share the same cup", "a bitter truth and a sweet hope are folded together into something the story can carry"] },
+  { card:"The Devil", role:"temptation and bondage — the protagonist confronts the chains they have accepted", alt:["the protagonist sees clearly the price of the comfort they have been paying", "a bargain from long ago tightens around the protagonist's wrist"] },
+  { card:"The Tower", role:"the collapse — a false structure falls; the story's darkest hour, set off by a choice", alt:["what was built on a lie comes down, and the protagonist stands in the wreckage changed", "lightning strikes the arrangement everyone believed was safe"] },
+  { card:"The Star", role:"hope after ruin — a quiet renewal and a clear direction forward", alt:["from the ashes, a small light holds still long enough to be followed", "the protagonist is offered mercy — and learns to take it"] },
+  { card:"The Moon", role:"uncertainty — illusion and fear cloud the path just before the end", alt:["the road ahead hides itself — every sign could be promise or warning", "doubt arrives wearing the face of everything the protagonist has lost"] },
+  { card:"The Sun", role:"clarity and joy — the journey's gifts are finally seen in full light", alt:["what was hard to believe finally becomes undeniable, in the warmest moment of the book", "the story's secret is out in the open at last — and it is more beautiful than feared"] },
+  { card:"Judgement", role:"the awakening — past and future reconcile; a call is answered", alt:["everything the protagonist has become answers everything they once were", "the call arrives at last, and the whole story is suddenly legible in its light"] },
+  { card:"The World", role:"completion — the journey is integrated; the protagonist is whole and the world is changed", alt:["the protagonist closes the circle — and opens the next one without knowing it", "the world the protagonist left returns, and it fits them differently now"] }
+];
+
+let numbering = "modern";
+
+function narrativeBeats(){
+  const beats = NARRATIVE_BEATS.map(b => ({ card: b.card, role: b.role, alt: b.alt }));
+  if(numbering === 'traditional'){
+    const s = beats.find(b => b.card === 'Strength');
+    const j = beats.find(b => b.card === 'Justice');
+    if(s && j){
+      const si = beats.indexOf(s);
+      const ji = beats.indexOf(j);
+      beats[si] = j;
+      beats[ji] = s;
+    }
+  }
+  return beats;
+}
+const SUITS = [
+  { name:"Wands", element:"Fire", theme:"passion, ambition, creative drive" },
+  { name:"Cups", element:"Water", theme:"emotion, love, intuition, relationship" },
+  { name:"Swords", element:"Air", theme:"intellect, conflict, truth, communication" },
+  { name:"Pentacles", element:"Earth", theme:"the material world, wealth, craft, the body" }
+];
+const PAGE_TIERS = [
+  { key:"short", label:"Short Tale", pageCount:12, meta:"a focused fable that stays tight and quick" },
+  { key:"classic", label:"Classic Journey", pageCount:22, meta:"the full hero's journey arc, Fool to World" },
+  { key:"extended", label:"Extended Saga", pageCount:34, meta:"the full arc plus elemental interlude pages between beats" },
+  { key:"epic", label:"Epic Chronicle", pageCount:54, meta:"the complete chronicle with interludes interwoven throughout" }
+];
+const THEMES = [
+  { label:"Dark Goddess Oracle", descriptor:"chthonic dark-goddess mythology, lunar shrines, veiled feminine power, underworld gardens" },
+  { label:"Crystal Witch Deck", descriptor:"cottage witchcraft, raw crystal clusters, dried herb bundles, candlelit altars, gemstone geometry" },
+  { label:"Gothic Shadow Tarot", descriptor:"Victorian gothic romance, wrought iron and candlelight, mourning veils, dark rose motifs" },
+  { label:"Botanical Grimoire Oracle", descriptor:"an old apothecary's herbal grimoire, pressed flowers between glass, hand-labeled specimen jars, ink-stained botanical diagrams" },
+  { label:"Deep Current Oracle", descriptor:"a bioluminescent deep-sea world, drowned coral thrones, glowing jellyfish processions, sunken bell-jar cities" },
+  { label:"Bone & Bloom Tarot", descriptor:"memento mori florals, skeletal hands cradling blossoms, anatomical botany, quiet Victorian mourning gardens" },
+  { label:"Storm Witch Tarot", descriptor:"weather-magic and lightning-forged rites, wind-torn cloaks on cliff edges, storm-glass talismans, barometric sigils" },
+  { label:"Wildwood Folk Oracle", descriptor:"old forest folklore, antler-crowned figures, moss-covered stone circles, foxfire lanterns in deep woods" },
+  { label:"Celestial Cartography Oracle", descriptor:"antique star-chart astronomy, brass astrolabes, hand-inked constellation maps, observatory domes at midnight" },
+  { label:"Insect Alchemy Oracle", descriptor:"a cabinet-of-curiosities entomology collection, iridescent beetle wings, pinned moths, alchemical specimen labels" },
+  { label:"Antique Anatomy Tarot", descriptor:"19th-century anatomical engraving crossed with botanical illustration, hand-labeled diagrams, aged medical-plate paper" },
+  { label:"Custom World", descriptor:"" }
+];
+const STORY_STYLES = [
+  { label:"Classic Storybook Painterly", descriptor:"soft painterly children's-storybook rendering with warm light, gentle edges, and timeless nostalgic atmosphere" },
+  { label:"Gilded Manuscript", descriptor:"illuminated medieval manuscript aesthetic with gilded flourishes, ornamental borders, and burnished metallic detail" },
+  { label:"Dark Fantasy Cinematic", descriptor:"cinematic dark-fantasy illustration with dramatic chiaroscuro lighting, rich texture, and epic moody depth" },
+  { label:"Ink Wash Fable", descriptor:"traditional ink-wash fable illustration with loose expressive strokes, soft grey gradients, and folkloric simplicity" },
+  { label:"Art Nouveau Storybook", descriptor:"art nouveau storybook illustration with flowing organic linework, ornamental detail, and a muted gemstone palette" }
+];
+const LUXE_STYLES = [
+  { label:"Chrome Liquid Metal", descriptor:"hyper-reflective liquid chrome rendering, every surface behaves like polished flowing mercury, sharp specular highlights and warped mirror-like reflections of the surrounding scene visible within the metal itself, cool silver-blue tonal range, the subject appears cast or dipped in molten chrome rather than painted" },
+  { label:"Holographic Foil", descriptor:"iridescent holographic foil rendering, color shifts across the spectrum depending on implied viewing angle (shifting pink to cyan to violet across a single surface), fine rainbow diffraction-line texture layered over metallic silver base tones, the entire page surface behaves like a holographic foil finish" },
+  { label:"Embossed Foil-Stamp", descriptor:"deep embossed foil-stamp effect, linework appears physically pressed into the surface with raised metallic edges catching directional light, sculptural drop-shadow depth on every embossed line, gold or silver foil coloring restricted to the embossed linework against a matte dark background" },
+  { label:"Opalescent Pearl", descriptor:"soft opalescent pearl-shell rendering, gentle pastel iridescence (blush pink, pale mint, soft lavender) shifting subtly across smooth rounded forms, luminous milky-white base tones, diffused soft-focus highlights rather than sharp specular ones" },
+  { label:"Neon Mystic", descriptor:"glowing neon-line illustration against a near-black background, thin luminous tube-light linework in saturated electric colors (magenta, cyan, violet) tracing the subject's outline and key symbolic details, soft light-bloom halo around every neon line" },
+  { label:"Bioluminescent Fantasy", descriptor:"organic bioluminescent glow rendering, soft internal light appears to emanate from within the subject's veins, markings, or surface patterns rather than from an external source, saturated glowing blues greens and violets against a dark ambient background" },
+  { label:"Celestial Nebula", descriptor:"deep-space nebula rendering integrated directly into the subject and background alike, swirling cosmic gas-cloud textures in violet magenta and teal, dense fields of fine starlight speckled throughout" },
+  { label:"Double-Exposure Mystic", descriptor:"double-exposure photographic-illustration hybrid, the subject's silhouette is filled with a second overlaid image (a landscape, forest, or starfield) visible through semi-transparent blending, soft light leaks and gentle film-grain texture" },
+  { label:"Opulent Baroque Gemstone", descriptor:"dense opulent baroque ornamentation, deeply sculpted gold relief work, large faceted gemstones inset directly into the composition, rich saturated jewel-toned palette throughout" },
+  { label:"Dark Academia Ink & Gold", descriptor:"dense dark academia illustration, heavy black ink linework and cross-hatching forming the primary structure of the image, sparing but precise gold-leaf accents restricted to key symbolic details, aged manuscript-page color grading" }
+];
+const ALL_STYLES = STORY_STYLES.concat(LUXE_STYLES);
+const BOOK_FORMATS = [
+  { label:"Picture Book — 8.5 × 8.5 in", dims:"8.5 × 8.5 inches", spec:()=>"8.5 × 8.5 inches — a classic square picture-book trim. Single pages run edge-to-edge with full-bleed illustrations and short story text placed in a clear reading area; a generous, giftable format." },
+  { label:"Storybook — 8 × 10 in", dims:"8 × 10 inches", spec:()=>"8 × 10 inches — a traditional vertical storybook trim. Full-page illustrations alternate with text pages, or text sits overlaid in a quiet zone of the illustration; suited to 22–34 page arcs." },
+  { label:"Chapter Book — 6 × 9 in", dims:"6 × 9 inches", spec:()=>"6 × 9 inches — a standard chapter-book trim. Text leads: chapter text pages with occasional full-page and spot illustrations; suited to longer 34–54 page chronicles." }
+];
+
+
+
+
+/* ============ CONCEPT GENERATOR ============ */
+const CONCEPT_PROTAGONISTS = [
+  "a young witch", "an exiled prince", "a forgotten oracle", "a wandering scholar",
+  "a reluctant healer", "an orphaned stargazer", "a disgraced knight", "a solitary lighthouse keeper",
+  "a runaway apprentice", "a grieving widow", "a blind cartographer", "a former soldier",
+  "a child born during an eclipse", "a traveling storyteller",   "a keeper of old debts", "a ferryman who asks every passenger one question",
+  "a midwife to dying things", "a thief with a stolen name", "the last of a forgotten bloodline",
+  "a small girl who speaks to storms", "a boy who can hear the sea singing",
+  "an orphan girl with a key she must never turn", "a farm boy who finds a sword that answers him",
+  "a child born during an eclipse", "a little prince who dreams inside other people's dreams",
+  "a teenage girl cartographer who maps only impossible places", "a young soldier who carries a letter he must deliver",
+  "a young widow who inherits her husband's debts", "a youth with a borrowed name and no face to match",
+  "a young fisherwoman who mends her nets with sea-salt thread", "a runaway apprentice who stole fire for the first time",
+  "a mother who trades memories to feed her children", "a middle-aged carpenter who hears the wood whisper",
+  "a ferryman who has rowed the same river for forty years", "a former queen living quietly as a village baker",
+  "a soldier who has survived every war except the one inside him", "a seamstress who sews pockets into other people's dreams",
+  "a farmer whose field grows one row of something that should not exist", "a town guard who lets the wrong prisoner escape",
+  "a grandmother who remembers the world before the great forgetting", "a graybeard fisherman who has caught the same dream three times",
+  "an elderly weaver who mends torn oaths", "a centenarian keeper of the old lighthouse",
+  "an old monk who has not spoken in forty years", "an aged herbalist who owes a debt to every plant she has ever used",
+  "an ancient midwife who delivered half the village and buried the other half",
+  "a retired knight, white-haired now, who still sleeps with his hand on the hilt",
+  "a great silver stag", "an old barn owl", "a red fox", "a white deer", "a black panther",
+  "a raven", "a swan", "a grey heron", "a young wolf", "a moon-white hare", "a small dragon",
+  "a phoenix rising from ash", "a fox with too many tails", "a kestrel", "a moth that carries starlight",
+  "a small black cat", "a sea serpent", "a griffin cub", "an otter", "a badger",
+  "a wild stallion", "an ancient tortoise", "a mountain lion", "a bat", "a peregrine falcon",
+  "a crane", "a lynx", "a bear cub", "a unicorn foal", "a spider", "a salamander",
+  "a young witch and the white deer that never leaves her side", "a lighthouse keeper and the raven that watches the sea with him",
+  "a fox spirit and the child who can see her true form", "a blind cartographer and the tortoise that carries his maps",
+  "a wandering scholar and the barn owl that reads over her shoulder", "a disgraced knight and the black panther that pardoned him",
+  "an orphaned stargazer and the wolf that found her in the snow", "a runaway apprentice and the small dragon that followed him home",
+  "a traveling storyteller and the heron that arrives whenever a story begins", "a grieving widow and the swan that waits at the river",
+  "the last of a forgotten bloodline and the stag that shares their old name", "a reluctant healer and the moth that carries starlight to her door",
+  "a child born during an eclipse and the moon-white hare born the same hour", "a keeper of old debts and the lynx that collects what is owed"
+];
+const CONCEPT_CONFLICTS = [
+  "discovers a power they never wanted", "must undo a mistake made generations ago",
+  "is bound by a promise they can't keep", "uncovers a truth that threatens everything they love",
+  "is the last one who can stop an old prophecy from repeating", "must choose between duty and desire",
+  "is haunted by a debt owed to something not quite human", "inherits a burden no one warned them about",
+  "finds the map to a place that isn't supposed to exist", "must return something that was never theirs to take",
+  "hears a voice that only speaks the truth they don't want to hear", "is asked to forgive what feels unforgivable",
+  "must choose who gets remembered and who gets forgotten", "wakes up already halfway into someone else's story"
+];
+const CONCEPT_STAKES = [
+  "before an ancient curse consumes their home", "or lose the one person who ever believed in them",
+  "with only a fading memory to guide them", "while the world they know slowly unravels",
+  "before the choice is made for them", "guided only by a symbol they don't yet understand",
+  "before the last door closes for good", "with nothing left to trade but the truth",
+  "while everyone they love forgets they existed", "before winter — or something colder — arrives",
+  "carrying a secret too heavy to set down", "with time bending strangely around them"
+];
+const CONCEPT_SETTINGS = [
+  "in a city built inside the ribs of something long dead",
+  "on an island that only appears at low tide",
+  "in a forest where the trees remember every promise ever broken there",
+  "beneath a sky with two moons and no sun",
+  "in a house that rearranges its rooms after dark",
+  "along a coastline where the sea sometimes gives things back",
+  "in a valley where time moves differently for those who stay too long",
+  "inside a library where the books read the reader back",
+  "in a town that only remembers half of its own history",
+  "at the edge of a map where the ink simply stops"
+];
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function randomOf(arr){ return pick(arr); }
+function assembleConcept(){
+  const patterns = [
+    () => `${cap(randomOf(CONCEPT_PROTAGONISTS))} ${randomOf(CONCEPT_CONFLICTS)}, ${randomOf(CONCEPT_STAKES)}.`,
+    () => `${cap(randomOf(CONCEPT_SETTINGS))}, ${randomOf(CONCEPT_PROTAGONISTS)} ${randomOf(CONCEPT_CONFLICTS)}, ${randomOf(CONCEPT_STAKES)}.`,
+    () => `${cap(randomOf(CONCEPT_PROTAGONISTS))} ${randomOf(CONCEPT_CONFLICTS)} ${randomOf(CONCEPT_SETTINGS)}, ${randomOf(CONCEPT_STAKES)}.`,
+    () => `${cap(randomOf(CONCEPT_PROTAGONISTS))} ${randomOf(CONCEPT_CONFLICTS)}, ${randomOf(CONCEPT_STAKES)}. It unfolds ${randomOf(CONCEPT_SETTINGS)}.`
+  ];
+  return randomOf(patterns)();
+}
+function themeWeave(theme){
+  if(theme.label === 'Custom World') return '';
+  const frags = theme.descriptor.split(',').map(f => f.trim().replace(/^and /, '')).filter(Boolean);
+  return ` It all lives in the world of ${pick(frags)}.`;
+}
+function generateConcept(){
+  return assembleConcept() + themeWeave(getTheme());
+}
+
+
+
+
+/* ============ VARIATION BANKS ============ */
+const TITLE_SECONDS = [
+  "Unraveling", "Forgotten Door", "Last Moon", "Silver Thread", "Hollow Light", "Promise of Winter",
+  "End of the Story", "Unfinished Map", "Lost Hours", "Quiet Bell", "Long Road Home", "Broken Seal",
+  "Vanishing Tides", "Oldest Tree", "Wandering Star", "Hidden Well", "Shattered Compass",
+  "Third Whisper", "Ash Garden", "Borrowed Crown", "Nameless Sea", "Widow's Key", "Falling Ember",
+  "Frozen Hour", "Weeping Stone", "Salt Wind", "Midnight Post", "Empty Throne", "Green Flood",
+  "Second Sunrise", "Unanswered Letter", "Iron Vow", "Paper Bridge", "Cold Lantern"
+];
+const TITLE_EPITHETS = [
+  "That Never Sleeps", "Who Remembers Everything", "That Swallowed the Stars", "Beyond the Last Door",
+  "Under a Borrowed Sky", "That Broke the Old Law", "Made of What Was Left", "With No Name of Its Own",
+  "That Listened Too Long", "Of the Turning Season", "That Held the Whole Sky", "When Winter Forgot"
+];
+const TITLE_NOUNS = [
+  "Lantern", "Moon", "Key", "Crown", "Harbor", "Tide", "Bell", "Compass", "Letter", "Bridge",
+  "Well", "Mirror", "Thorn", "Ember", "Song", "Door", "Garden", "Mask", "Coin", "Cage",
+  "River", "Map", "Hour", "Feather", "Stone", "Candle", "Oath", "Flag", "Snow", "Rain",
+  "Star", "Root", "Glass", "Ash", "Seed", "Anchor", "Moth", "Orchard", "Locket", "Signal"
+];
+const TITLE_ADJ = [
+  "Forgotten", "Silent", "Broken", "Wandering", "Burning", "Hollow", "Weeping", "Golden",
+  "Shattered", "Hidden", "Endless", "Quiet", "Empty", "Drowned", "Withered", "Pale",
+  "Storm-Born", "Borrowed", "Nameless", "Tarnished"
+];
+const TITLE_PLACES = [
+  "the Hollow Forest", "the Last Lighthouse", "the Sunken City", "the Ash Garden", "the Glass Sea",
+  "the Winter Gate", "the Salt Roads", "the Hanging Moons", "the Nameless River", "the Old Observatory",
+  "the Bone Hills", "the Twisted Coast", "the Paper Kingdom", "the Iron Vale", "the Dreaming Fields",
+  "the Candle Market", "the Deep Library", "the Silver Fen", "the Unlit Chapel", "the Cloud Orchards"
+];
+function titleCase(s){ return s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
+function titleProtagonist(concept){
+  const c = (concept || '').toLowerCase();
+  const p = CONCEPT_PROTAGONISTS.find(x => c.includes(x.toLowerCase()));
+  if(!p) return null;
+  let cleaned = p.replace(/^an /, '').replace(/^a /, '').replace(/^the /i, '');
+  const pair = cleaned.split(' and ');
+  if(pair.length > 1) cleaned = pair.slice(0, 2).join(' and ');
+  cleaned = cleaned.split(/ (who|that|with) /)[0];
+  return titleCase(cleaned);
+}
+const TITLE_PATTERNS = [
+  (concept, cardName) => `The ${titleProtagonist(concept) || cardName || 'Wanderer'} Chronicle`,
+  (concept, cardName) => `The ${titleProtagonist(concept) || cardName || 'Wanderer'}'s Journey`,
+  (concept) => `The Ballad of the ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `Where the ${titleProtagonist(concept) || 'Wanderer'} Walks`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} That Was Promised`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} of the ${pick(TITLE_SECONDS)}`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} and the ${pick(TITLE_SECONDS)}`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} ${pick(TITLE_EPITHETS)}`,
+  (concept) => `A Song for the ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `The Tale of the ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `The Last ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `${titleProtagonist(concept) || 'The Wanderer'} and the ${pick(TITLE_NOUNS)}`,
+  (concept, cardName) => cardName ? `Book of the ${cardName}` : `The ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept, cardName) => cardName ? `The Illustrated ${cardName}` : `The ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `The ${pick(TITLE_ADJ)} ${pick(TITLE_NOUNS)}`,
+  (concept) => `The ${pick(TITLE_NOUNS)} of ${pick(TITLE_PLACES)}`,
+  (concept) => `A ${pick(TITLE_NOUNS)} in ${pick(TITLE_PLACES)}`,
+  (concept) => `${pick(TITLE_NOUNS)} and ${pick(TITLE_NOUNS)}`,
+  (concept) => `When the ${pick(TITLE_NOUNS)} Came Back`,
+  (concept) => `The ${pick(TITLE_ADJ)} ${pick(TITLE_NOUNS)} of ${pick(TITLE_PLACES)}`,
+  (concept) => `The ${pick(TITLE_ADJ)} ${pick(TITLE_NOUNS)} That Was Promised`,
+  (concept) => `Letters from ${pick(TITLE_PLACES)}`,
+  (concept) => `The ${pick(TITLE_NOUNS)} Keepers`,
+  (concept) => `The ${pick(TITLE_ADJ)} ${pick(TITLE_NOUNS)} and the ${pick(TITLE_NOUNS)}`,
+  (concept) => `A Year of ${pick(TITLE_NOUNS)} and ${pick(TITLE_NOUNS)}`,
+  (concept) => `The ${pick(TITLE_NOUNS)} at ${pick(TITLE_PLACES)}`,
+  (concept) => `How the ${pick(TITLE_NOUNS)} Was Won`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} and the ${pick(TITLE_ADJ)} ${pick(TITLE_NOUNS)}`,
+  (concept) => `The ${pick(TITLE_ADJ)} Tale of the ${titleProtagonist(concept) || 'Wanderer'}`,
+  (concept) => `The ${titleProtagonist(concept) || 'Wanderer'} and the ${pick(TITLE_NOUNS)}`
+];
+const ANTAGONISTS = [
+  "the Night Ferryman, who takes debts that were never meant to be paid",
+  "a blind oracle who reads futures that have already been sold",
+  "the Keeper of Names, who has forgotten his own",
+  "a hollow queen in a palace of cracked bells",
+  "the last wolf-bishop, preaching hunger as a sacrament",
+  "a merchant prince who buys other people's tomorrows",
+  "the Moon-Feeder, who grows fat on stolen wishes",
+  "a little clockmaker who winds down anyone who slows him down",
+  "the Gardener of Ash, tending a crop that never forgives",
+  "a scholar who has convinced the world it never existed",
+  "the King of Salt, whose touch leaves nothing growing",
+  "a fortune-teller selling endings that come true",
+  "the Cartographer of Lost Roads, who has never been lost once",
+  "a silver lady who keeps hearts in labeled jars",
+  "the Watchman of the Empty Hour, who patrols between midnight and grief",
+  "a boy-king who decreed the stars were out of order",
+  "the Thirst, a hunger wearing a coat",
+  "a widow who mends the fabric of fate with crooked stitches",
+  "the Bellringer who rings for nothing but itself",
+  "a dragon in diplomat's robes, filing claims on every ruin",
+  "the Quiet Ones, a court that speaks only in omissions",
+  "a false friend with a true name and a borrowed smile",
+  "the Debt Collector of Forgotten Favors, ledgers taller than houses",
+  "a sorcerer of small cruelties, who has never done anything grand",
+  "the Mirror-Priestess, who refuses every face she's given",
+  "the Plague of Good Intentions, spreading help that harms"
+];
+const SETTINGS = [
+  "a windswept fishing village clinging to a grey coast",
+  "a mountain town whose roofs are held down by ropes and memory",
+  "a walled city of terraces and pigeon towers",
+  "a river town that moves every spring and settles by autumn",
+  "a farmstead at the edge of a forest that has opinions",
+  "a monastery carved into a cliff that leans toward the sea",
+  "a market crossroads where five kingdoms trade in whispers",
+  "a lighthouse station with one keeper and many storms",
+  "a floating market town moored to the delta",
+  "a village of glasshouses where winter is farmed",
+  "an island of salt marshes and standing stones",
+  "a border town that changes flags with the wind",
+  "a mining town beneath hills that breathe",
+  "a caravan town that never stays in one story",
+  "a township built inside the ribs of a dead giant",
+  "a wool town where the sheep outnumber the years"
+];
+const SEASONS = ["deep winter", "thawing spring", "high summer", "early autumn", "a long rain season", "a dry harvest season", "first frost", "mud season"];
+const TIMES = ["dawn", "morning", "noon", "a golden afternoon", "dusk", "nightfall", "the small hours", "a moonless night"];
+const PAGE_MOODS = ["quiet and watchful", "festive and crowded", "lonely and vast", "charged with tension", "soft and dreamlike", "sharp with urgency", "melancholy and slow", "bright with false cheer"];
+const BLURB_HOOKS = [
+  "But every promise has a price, and this one is still counting.",
+  "The only way out is the way no one has ever walked.",
+  "And the world has been waiting for exactly this mistake.",
+  "Some doors, once opened, remember your name.",
+  "But the road home has a toll that isn't paid in coin.",
+  "What finds them at the end is older than the world itself.",
+  "And every story needs someone brave enough to tell it wrong.",
+  "But the tale was never about the ending — it was about who walks out of it.",
+  "And the sky is about to start answering back.",
+  "But some fires are lit to be survived, not to give warmth.",
+  "The last page has already been written. It is not kind.",
+  "And in the end, only the journey keeps the promise."
+];
+const BLURB_PATTERNS = [
+  (p, pl, w) => `In ${w}, promises are kept — or the world remembers. ${p} is about to break the oldest one, and the consequences will follow like weather.`,
+  (p, pl, w) => `The people of ${w} have a story they tell by lantern light, and ${pl} is walking straight into it. What was once a tale is about to become a debt.`,
+  (p, pl, w) => `${p} never asked to be part of ${w}'s quietest secret. But the secret has been waiting — and it knows the way home.`,
+  (p, pl, w) => `Every map of ${w} has a blank place where the truth is hidden. ${p} is the only one who can find it — and the only one who shouldn't.`,
+  (p, pl, w) => `There are rules in ${w} that no one writes down and everyone obeys. ${p} was never good at rules.`,
+  (p, pl, w) => `The oldest stories of ${w} end the same way: with someone who stayed when everyone else turned away. This time, it's ${pl}'s turn.`,
+  (p, pl, w) => `In ${w}, gifts and curses wear the same face. ${p} will have to learn the difference before the year is out.`,
+  (p, pl, w) => `The wise of ${w} keep three doors closed. ${p} has just knocked on the fourth.`,
+  (p, pl, w) => `${p} has heard the old songs of ${w} all their life. Now they must sing one — whether they know the words or not.`,
+  (p, pl, w) => `Everyone in ${w} knows that some doors are painted for a reason. ${p} is about to find out what the paint was hiding.`,
+  (p, pl, w) => `The bargain was struck long before ${pl} was born. The price is coming due — and the collectors of ${w} always get paid.`,
+  (p, pl, w) => `${p} wanted one small thing, and the world of ${w} wanted one small thing back. The trade has begun.`,
+  (p, pl, w) => `In ${w}, the weather keeps a ledger, and the tides keep their own counsel. ${p} is about to become a line in both.`,
+  (p, pl, w) => `The quietest street in ${w} leads somewhere no map admits. ${p} is going to be the first to ask where.`,
+  (p, pl, w) => `There is a question that ${w} refuses to answer. ${p} has been chosen to ask it anyway.`
+];
+function buildBlurb(concept, theme){
+  const upper = `The ${titleProtagonist(concept) || 'Young Wanderer'}`;
+  const lower = upper.replace(/^The /, 'the ');
+  const w = symbolFromTheme(theme) || 'this world';
+  return `${pick(BLURB_PATTERNS)(upper, lower, w)} ${pick(BLURB_HOOKS)}`;
+}
+const CREATIVE_TWISTS = [
+  "Weave in a recurring symbolic animal companion who appears differently at each major turning point.",
+  "Include a prophecy or omen introduced early that is only fully understood in the book's final pages.",
+  "Give the protagonist a small, meaningful object at the start that changes or transforms by the story's end.",
+  "Introduce a mirror-image or shadow-self character who reflects the protagonist's fears.",
+  "Have the setting itself change visibly as the story progresses, mirroring the protagonist's inner journey.",
+  "Include a moment where the protagonist must choose between two people or paths, with no clearly 'right' answer.",
+  "Add a secondary character who seems minor early on but becomes essential at the climax.",
+  "Let the story's darkest moment (the Tower beat) be caused by the protagonist's own choice, not outside forces.",
+  "Give the antagonist an understandable, almost sympathetic reason — the villain should feel shaped by the same world's rules as the protagonist.",
+  "Include a scene told partly through a secondary character's eyes, briefly shifting perspective around the midpoint.",
+  "End an early chapter on a question the reader will not have answered until the final pages.",
+  "Let a minor background detail from the opening illustration return, transformed, in the closing scene.",
+  "Introduce a rule of the world early on, then have the climax quietly break it.",
+  "Have the protagonist carry a belief that is gently proven wrong — and show their growth in letting it go.",
+  "Add a recurring motif (a song, a number, a color, an object) that grows more meaningful every time it reappears."
+];
+const AUDIENCE_LINES = [
+  "Ideal for readers of illustrated fantasy fiction, tarot and mythology enthusiasts, and collectors of richly illustrated printable books.",
+  "Suited to young-adult and adult readers drawn to symbolic, archetypal storytelling in the tradition of illustrated fable and myth.",
+  "A fit for readers who enjoy atmospheric, image-driven storytelling — as comfortable as a gift book as it is a personal keepsake.",
+  "For readers who love deeply atmospheric storybooks where the artwork carries as much of the narrative as the words do.",
+  "A natural fit for gift-givers, library collections, and anyone who keeps their favorite illustrated books close at hand.",
+  "Appeals to readers discovering symbolic storytelling for the first time and to adults revisiting the tales that shaped them.",
+  "For cozy, quiet evenings: readers who want a story that unfolds slowly, one full-page illustration at a time.",
+  "Perfect for those who believe a book should feel like an object — something to hold, gift, and keep on a shelf for years.",
+  "Drawn to myth-adjacent worlds and folk-tale logic, where every image and every sentence carries a second meaning.",
+  "Readers who loved the picture books of their childhood and are looking for that same magic, written for grown hands."
+];
+
+
+
+
+/* ============ FORM WIRING ============ */
+const $ = id => document.getElementById(id);
+const conceptInput = $('conceptInput'), themeSel = $('themeSel'), formatSel = $('formatSel'),
+  twistSlider = $('twistSlider'), twistVal = $('twistVal'), numberingSel = $('numberingSel'),
+  hint = $('hint'), counter = $('counter'), blueprintEl = $('blueprint'),
+  outputEmpty = $('outputEmpty'), blueprintMeta = $('blueprintMeta'),
+  pillWrite = $('pillWrite'), pillGenerate = $('pillGenerate'),
+  writeBlock = $('writeBlock'), genBlock = $('genBlock'),
+  genConceptBtn = $('genConceptBtn'), genConceptDisplay = $('genConceptDisplay'),
+  genConceptRow = $('genConceptRow'), newConceptBtn = $('newConceptBtn'),
+  styleGrid = $('styleGrid'), tierGrid = $('tierGrid'),
+  textRenderGrid = $('textRenderGrid'), textRenderWarning = $('textRenderWarning'),
+  customWorldBlock = $('customWorldBlock'), customWorldInput = $('customWorldInput'),
+  sidebarEl = document.querySelector('.sidebar'), outputPanel = $('outputPanel');
+
+
+
+
+function populateSelect(sel, items){
+  sel.innerHTML = items.map((it, i)=>`<option value="${i}">${it.label}</option>`).join('');
+  sel.value = '0';
+}
+populateSelect(themeSel, THEMES);
+populateSelect(formatSel, BOOK_FORMATS);
+
+
+
+
+function renderCustomWorld(){
+  const isCustom = +themeSel.value === THEMES.length - 1;
+  customWorldBlock.classList.toggle('hidden', !isCustom);
+  hint.classList.add('hidden');
+  customWorldInput.classList.remove('has-error');
+}
+themeSel.addEventListener('change', renderCustomWorld);
+
+
+
+
+/* ============ CONCEPT MODE TOGGLE ============ */
+let conceptMode = 'write';
+let generatedConcept = '';
+
+
+
+
+function renderConceptMode(){
+  pillWrite.classList.toggle('selected', conceptMode === 'write');
+  pillGenerate.classList.toggle('selected', conceptMode === 'generate');
+  writeBlock.classList.toggle('hidden', conceptMode !== 'write');
+  genBlock.classList.toggle('hidden', conceptMode !== 'generate');
+  hint.classList.add('hidden');
+  conceptInput.classList.remove('has-error');
+}
+pillWrite.addEventListener('click', ()=>{ conceptMode = 'write'; renderConceptMode(); });
+pillGenerate.addEventListener('click', ()=>{ conceptMode = 'generate'; renderConceptMode(); });
+
+
+
+
+function getConcept(){
+  return conceptMode === 'write' ? conceptInput.value.trim() : generatedConcept;
+}
+
+
+
+
+function handleGenConcept(){
+  generatedConcept = generateConcept();
+  genConceptDisplay.textContent = generatedConcept;
+  genConceptRow.classList.remove('hidden');
+  showToast("Concept generated — it now feeds the blueprint");
+}
+genConceptBtn.addEventListener('click', handleGenConcept);
+newConceptBtn.addEventListener('click', handleGenConcept);
+
+
+
+
+/* ============ STYLE & TIER CHOICE CARDS ============ */
+let selectedStyle = 0;
+let selectedTier = 1;
+
+
+
+
+function renderStyleGrid(){
+  const storyCards = STORY_STYLES.map((s, i)=>
+    `<div class="style-card${i === selectedStyle ? ' selected' : ''}" data-style="${i}" title="${s.descriptor}">${s.label}</div>`
+  ).join('');
+  const luxeCards = LUXE_STYLES.map((s, i)=>
+    `<div class="style-card${(i + STORY_STYLES.length) === selectedStyle ? ' selected' : ''}" data-style="${i + STORY_STYLES.length}" title="${s.descriptor}">${s.label}</div>`
+  ).join('');
+  styleGrid.innerHTML =
+    `<div class="style-grid-group"><div class="group-subheader">Storybook Styles</div><div class="choice-grid">${storyCards}</div></div>` +
+    `<div class="style-grid-group"><div class="group-subheader">Luxe Styles</div><div class="choice-grid">${luxeCards}</div></div>`;
+  styleGrid.querySelectorAll('.style-card').forEach(card=>{
+    card.addEventListener('click', ()=>{ selectedStyle = +card.dataset.style; renderStyleGrid(); });
+  });
+}
+
+
+
+
+function renderTierGrid(){
+  tierGrid.innerHTML = PAGE_TIERS.map((t, i)=>
+    `<div class="tier-card${i === selectedTier ? ' selected' : ''}" data-tier="${t.key}">
+      <div class="page-count-large">${t.pageCount} Pages</div>
+      <div class="choice-name">${t.label}</div>
+      <div class="choice-meta">${t.meta}</div>
+    </div>`
+  ).join('');
+  tierGrid.querySelectorAll('.tier-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      selectedTier = PAGE_TIERS.findIndex(t => t.key === card.dataset.tier);
+      renderTierGrid();
+    });
+  });
+}
+
+
+
+
+function renderTwistVal(){
+  twistVal.textContent = twistSlider.value;
+}
+twistSlider.addEventListener('input', renderTwistVal);
+numberingSel.addEventListener('change', () => { numbering = numberingSel.value; });
+
+
+
+
+const TEXT_RENDER_MODE = {
+  separate: { label:"Keep Text Separate (Recommended)", meta:"story text delivered separately, add it yourself during layout — zero risk of garbled text" },
+  "ai-render": { label:"AI-Render Text In Image", meta:"the image engine attempts to paint the story text directly onto the page — faster, but may misspell or garble longer passages" }
+};
+const TEXT_PLACEMENT = "designated clean text area";
+let textRenderMode = 'separate';
+function renderTextRenderGrid(){
+  textRenderGrid.innerHTML =
+    `<div class="choice-grid">` +
+    Object.entries(TEXT_RENDER_MODE).map(([key, m])=>
+      `<div class="style-card${key === textRenderMode ? ' selected' : ''}" data-render="${key}">
+        <div class="choice-name">${m.label}</div>
+        <div class="choice-meta">${m.meta}</div>
+      </div>`
+    ).join('') + `</div>`;
+  textRenderGrid.querySelectorAll('.style-card').forEach(card=>{
+    card.addEventListener('click', ()=>{ textRenderMode = card.dataset.render; renderTextRenderGrid(); });
+  });
+  textRenderWarning.classList.toggle('hidden', textRenderMode !== 'ai-render');
+}
+renderTextRenderGrid();
+renderConceptMode();
+renderStyleGrid();
+renderTierGrid();
+renderTwistVal();
+renderCustomWorld();
+
+
+
+
+/* ============ BEAT LIST BUILDER (per page tier) ============ */
+function spacedSample(arr, n){
+  const out = [];
+  for(let i = 0; i < n; i++){
+    out.push(arr[Math.round((arr.length - 1) * i / (n - 1))]);
+  }
+  return out;
+}
+
+
+
+
+function buildBeatList(tierKey){
+  const tier = PAGE_TIERS.find(t => t.key === tierKey);
+  const beats = narrativeBeats().map(b => ({ kind:'beat', card:b.card, role: pick([b.role, ...(b.alt || [])]) }));
+  if(tier.key === 'short') return spacedSample(beats, 12);
+  if(tier.key === 'classic') return beats;
+  const interludeCount = tier.key === 'extended' ? 12 : 32;
+  const gaps = beats.length + 1;
+  const slotCounts = new Array(gaps).fill(0);
+  for(let i = 0; i < interludeCount; i++){
+    slotCounts[Math.min(gaps - 1, Math.floor(i * gaps / interludeCount))]++;
+  }
+  const out = [];
+  let interludeIdx = 0;
+  for(let g = 0; g <= beats.length; g++){
+    if(g > 0) out.push(beats[g - 1]);
+    for(let k = 0; k < slotCounts[g]; k++){
+      const suit = SUITS[interludeIdx % SUITS.length];
+      interludeIdx++;
+      out.push({ kind:'interlude', card:`${suit.name} Interlude — ${suit.element}`, role:`an atmospheric interlude of ${suit.theme}; word-light and world-deepening, no new plot events` });
+    }
+  }
+  return out;
+}
+
+
+
+
+/* ============ BLUEPRINT ASSEMBLY ============ */
+let lastBlueprint = '';
+let variationSeed = '';
+
+
+
+
+/* ============ SEO KEYWORD GENERATOR ============ */
+const KEYWORD_MOODS = ["dark fantasy", "mystical", "archetypal", "symbolic journey", "gothic illustrated", "hero's journey", "richly illustrated", "collector's edition", "whimsical fable", "atmospheric storytelling", "enchanted picture book", "timeless fairy tale", "storybook for adults", "literary fantasy fable", "mythological tale", "enchanted keepsake", "bedtime reading adventure"];
+
+
+
+
+function keywordStem(theme){
+  if(theme.label !== 'Custom World') return theme.label.toLowerCase();
+  const words = descriptorStem(theme.descriptor, 3).map(w => w.toLowerCase()).join(' ');
+  return words || 'custom world';
+}
+const KEYWORD_EXTRAS = [
+  "animal companion stories", "storybook animals", "human and animal characters", "cozy fantasy gift book",
+  "symbolic bedtime story", "mythical creatures book", "illustrated animal fable", "enchanted forest tale",
+  "fairytale for adults", "whimsical illustrated book", "animal protagonist story", "folk tale picture book",
+  "gothic fairy tale", "dark fantasy fable", "whimsical dark fantasy", "classic storybook style",
+  "watercolor storybook", "anthropomorphic animal art", "portrait-rich picture book", "village folklore tale"
+];
+function buildKeywords(theme){
+  const picks = shuffle(KEYWORD_MOODS).slice(0, 4);
+  const stem = keywordStem(theme);
+  const extras = shuffle(KEYWORD_EXTRAS).slice(0, 3);
+  return [
+    `${stem} illustrated storybook`,
+    `printable illustrated book ${picks[0]}`,
+    `${picks[1]} storybook printable`,
+    `illustrated fable ${picks[2]}`,
+    `${stem} printable book`,
+    `${picks[3]} illustrated tale`,
+    `archetypal storybook art`,
+    ...extras
+  ];
+}
+
+
+
+
+/* ============ THREE-ACT STRUCTURE ============ */
+const ACT_1_DESCRIPTION = "Establishes the protagonist's ordinary world, the call to adventure, and the first steps into the unknown, ending with the protagonist committed to the journey.";
+const ACT_2_DESCRIPTION = "The protagonist faces escalating tests, makes a defining choice, and confronts the story's darkest moment.";
+const ACT_3_DESCRIPTION = "The protagonist moves through renewal and clarity toward a resolved, whole ending.";
+const ACT_1_VARIANTS = [
+  ACT_1_DESCRIPTION,
+  "Opens in the protagonist's ordinary world, lets the first crack appear in it, and closes on a point of no return the protagonist cannot un-see.",
+  "Shows the protagonist's daily world and the quiet ache inside it, introduces the first ripple that becomes the call, and ends with a step that cannot be taken back."
+];
+const ACT_2_VARIANTS = [
+  ACT_2_DESCRIPTION,
+  "Raises the stakes through a series of trials, forces the protagonist's defining choice, and lands on the story's darkest hour — a collapse set off by that choice.",
+  "The protagonist tests their limits, loses something they cannot replace, and reaches the ruin of the old arrangement — with the whole story's weight resting on what happens next."
+];
+const ACT_3_VARIANTS = [
+  ACT_3_DESCRIPTION,
+  "Carries the protagonist through renewal, a quiet reconciliation of past and present, and a final return that closes the journey whole.",
+  "The last trials are paid in light rather than blood, every promise resolves, and the protagonist returns to a world that now fits them differently."
+];
+
+
+
+
+function buildThreeActs(beats){
+  const total = beats.length;
+  const third = Math.round(total / 3);
+  const end1 = third;
+  const end2 = third * 2;
+  return [
+    { name:"Act 1 — The Call", start:1, end:end1, desc:pick(ACT_1_VARIANTS) },
+    { name:"Act 2 — The Trial", start:end1 + 1, end:end2, desc:pick(ACT_2_VARIANTS) },
+    { name:"Act 3 — The Return", start:end2 + 1, end:total, desc:pick(ACT_3_VARIANTS) }
+  ];
+}
+
+
+
+
+/* ============ TONE BANK (style guide) ============ */
+const TONE_BANK = [
+  "atmospheric and literary, evocative without being overwrought",
+  "warm and mythic, accessible but never childish",
+  "darkly lyrical, restrained rather than explicit",
+  "quietly magical, intimate and sensory",
+  "soft-spoken and sorrowful, with gentle hope tucked into every closing beat",
+  "playful and fable-like, with a quiet thread of strangeness underneath",
+  "dignified and ceremonial, as though the story were being told at a rite or a vigil",
+  "fresh and wonder-struck, the voice of someone discovering the world for the first time"
+];
+
+
+
+
+/* ============ CHARACTER & WORLD CONSISTENCY BIBLE ============ */
+const CHAR_HAIR = ["long dark hair often loosely braided", "short silver-white hair", "wild curling copper hair", "closely-cropped black hair", "long hair the color of raven feathers, usually tied back", "pale blonde hair with a single streak of a darker color", "shaved sides with longer hair swept back", "hair white as bone, kept in a single long plait", "hair the deep red-brown of wet earth, always escaping its tie", "thick grey hair cropped short and practical", "hair of ash-blonde, fine as spun thread", "black hair that holds the moon in it when the light is right"];
+const CHAR_EYES = ["sharp amber eyes", "pale grey eyes that seem to catch light oddly", "deep violet eyes", "one eye brown, one eye a pale unnatural blue", "dark, deeply set eyes", "eyes the color of storm clouds", "eyes of deep warm brown, creased at the corners", "sea-green eyes that read the weather before it comes", "hazel eyes that change with the light", "eyes so pale they look almost white in shadow", "gold-flecked brown eyes that miss nothing", "eyes the colour of old copper"];
+const CHAR_COMPLEXION = ["skin sun-darkened and marked by years outdoors", "pale skin that never seems to take color, even in summer", "skin lined and weathered by salt wind", "warm brown skin with a fine scatter of freckles", "complexion worn to leather by cold and travel", "skin the colour of river sand, faintly sunburned across the nose", "smooth dark skin that catches lamplight like water", "a face tanned unevenly, darker around the eyes and wrists"];
+const CHAR_FACE = ["a face that gives nothing away", "sharp features, quick to amusement", "a round, open face", "hollow cheeks and a high brow", "a broad face with deep-set eyes and a heavy jaw", "fine-boned features, easily misread as fragile", "a narrow face with a mouth that smiles only when it means it", "a lined, weathered face that has stopped counting its seasons"];
+const CHAR_BUILD = ["tall and deliberate in movement", "small and quick, always slightly restless", "broad-shouldered with an old scar visible on one hand", "slight and often half-hidden in oversized layered clothing", "weathered, clearly used to hard travel", "unnervingly still when not moving", "wiry and lean, built for long roads and short rations", "soft-bodied and strong in the shoulders, built for lifting not fighting", "tall and stooped, as though perpetually walking under a low door", "compact and sturdy, the kind of build that outlasts others"];
+const CHAR_GAIT = ["moves with a quiet, deliberate step", "walks with a slight limp from an old wound", "never hurries, yet always arrives first", "fidgets when thinking, especially with her own sleeves", "stands perfectly still when listening, like a heron at the water's edge", "walks with the rolling stride of someone long at sea", "carries a slight tension in the shoulders that never fully relaxes", "moves as though the ground is familiar to it"];
+const CHAR_VOICE = ["a low voice that carries anyway", "a voice gone rough from years of singing or silence", "speaks rarely, and every word lands", "a warm voice with an accent no one can place", "a voice that softens when it lies and hardens when it tells the truth", "speaks in short sentences, as though words were rationed", "a clear, unhurried voice that makes people lean in", "laughs easily, and the laugh is louder than the voice"];
+const CHAR_CLOTHING = ["a long weathered cloak the color of dried blood", "layered traveling clothes in muted earth tones with one bright accent scarf", "a simple dark tunic with a single ornate clasp at the shoulder", "robes marked with faded symbolic embroidery", "practical leather and worn boots, clearly built for travel", "a coat with too many pockets, each holding something small and specific", "clothes patched so often that the patches have patches", "a heavy woolen shawl over a plain working dress", "fine clothes gone shabby, worn by someone who remembers better ones", "a laborer's smock under a scholar's old cloak", "a uniform faded past any insignia, kept clean out of pride", "clothing that never quite fits, borrowed or handed down"];
+const CHAR_DISTINGUISHING = ["a small scar above one eyebrow", "a tattoo of a symbol relevant to the story, visible on one hand or wrist", "an old, well-loved pendant never removed", "calloused hands that suggest a specific trade or skill", "a slightly crooked nose from an old injury", "an unusual streak of grey in otherwise dark hair", "a missing tooth that shows when they smile", "fingers stained with ink, dye, or earth — never quite clean", "a habit of touching a small ring when thinking", "a faint birthmark shaped like a leaf on the neck"];
+const CHAR_CARRIED_OBJECT = ["a weathered leather satchel that seems heavier than it should be", "a small carved wooden object, clearly significant, kept close at all times", "a battered journal with a broken clasp", "a single glove, the mate long lost", "a coin worn smooth from handling", "a small caged lantern that never quite goes out", "a knife kept sharp not for use but for habit", "a bundle of letters tied with string, the ink half-faded", "an empty cup carried everywhere, waiting to be filled", "a stone from a river they refuse to name"];
+const CHAR_SPECIES = [
+  "great silver stag", "barn owl", "red fox", "white deer", "black panther", "raven",
+  "swan", "grey heron", "young wolf", "moon-white hare", "small dragon", "phoenix",
+  "kestrel", "moth", "small black cat", "sea serpent", "griffin cub", "otter", "badger",
+  "wild stallion", "ancient tortoise", "mountain lion", "bat", "peregrine falcon",
+  "crane", "lynx", "bear cub", "unicorn foal", "spider", "salamander"
+];
+const CHAR_PELT = [
+  "a coat of silver-grey that seems older than it looks", "feathers the deep gold-brown of old oak bark",
+  "fur the colour of embers and autumn leaves", "a hide of moonlit white that never quite reflects the light",
+  "a pelt so black it seems to drink the darkness around it", "feathers blue-black with an oil-slick sheen",
+  "soft white feathers, the kind that hold the cold", "grey plumage veined like river-stone",
+  "fur of wolf-grey with a paler throat", "fur white as new snow, with one dark ear",
+  "scales the colour of rusted copper and ash", "plumage that shifts from gold to ember as the light changes",
+  "a coat of charcoal dusted with silver", "small neat feathers speckled like bark and shadow",
+  "fur of the blackest black with a faint violet sheen", "scales that ripple like dark water",
+  "a coat of coarse gold with darker points", "soft brown fur with a pale belly",
+  "a hide of iron-grey and weathered bronze", "a shell of deep green scarred by many winters",
+  "fur of tawny gold with darker paws", "a velvet-dark pelt with a shimmer of blue",
+  "feathers of slate and storm", "a coat of pale grey, nearly white", "a coat of russet and smoke",
+  "fur of charcoal with a silver rump", "a shaggy coat the colour of wet earth",
+  "a coat of silver-white that glows faintly at dusk", "jointed legs and a body patterned like a mask",
+  "skin of glossy black with amber speckles"
+];
+const CHAR_BEAST_EYES = ["eyes like molten amber", "eyes that glow faintly in shadow", "pale moon-grey eyes", "eyes the colour of old gold", "one pale eye and one dark one", "eyes like chips of dark glass", "eyes that catch the light like wet stone", "eyes the colour of storm clouds"];
+const CHAR_BEAST_MARKING = ["a small scar across one ear", "a single white mark on the chest", "one feather forever out of place", "a notch missing from the left ear", "a pale patch over the heart", "an unusual speckling of gold in the coat", "a tuft of pale fur at the nape", "a pattern on the brow that reads as a symbol"];
+const CHAR_BEAST_OBJECT = ["a small brass bell on a worn leather collar", "a tiny charm tied into its fur or feathers", "a leather satchel slung across its back", "a single blue thread tied around one leg", "a cracked wooden pendant on a cord", "a weathered tag bearing a symbol no one can read", "a small jar of dried herbs strapped to its side", "a worn iron ring looped through a collar"];
+const CHAR_BEAST_MANNER = ["moves like it owns the silence", "is never quite still, even when standing", "watches everything at once, head low and patient", "has a gait that makes no sound at all", "holds its gaze a heartbeat longer than is comfortable", "treats every threshold as a decision", "sleeps lightly and always facing the door", "has the stillness of something that has been hunted and learned"];
+const CHAR_BEAST_SCENT = ["smells of cold rivers and old leaves", "carries the scent of woodsmoke from somewhere far away", "smells of rain on dry earth", "gives off a faint warmth like a banked fire", "smells of salt and deep water", "smells of honey and something older beneath it"];
+const COMPANION_SPECIES = ["fox","barn owl","black cat","raven","hare","moth","heron","young wolf","salamander","kestrel","crane","firefly","sparrow","stoat","tortoise","dove","ferret","lynx","jackdaw","field mouse","otter","badger"];
+const COMPANION_TRAIT = ["with one ear torn in an old fight","with fur the color of embers","with feathers that hold the cold","with a ring of pale fur at its throat","with eyes the color of old gold","with a gait that makes no sound at all","with a small scar across its nose","with a tuft of pale fur at its nape","with a limp it never complains about","with a marking that reads as a symbol","with feathers blue-black and an oil-slick sheen","with one pale eye and one dark one","with a habit of vanishing exactly when danger arrives","with a coat of silver-grey that never quite reflects the light"];
+const COMPANION_BOND = ["that never leaves their side","that answers only to its own private name","that follows them at a careful distance","that sleeps at the foot of their bed","that appears at every turning point","that was found as an orphan and never left","that understands more than it lets on","that chose them, against all reason","that has outlived three of their promises","that keeps its own counsel but always returns"];
+function buildCompanion(){
+  return `a ${pick(COMPANION_SPECIES)} ${pick(COMPANION_TRAIT)}, ${pick(COMPANION_BOND)}`;
+}
+const COUNTER_AGE = ["a quiet girl","a small boy","a teenage girl","a young woman","a young man","a middle-aged woman","a middle-aged man","an old woman","an old man","a grandmother","a grandfather","a girl of nine","a boy of eleven"];
+const COUNTER_ROLE = ["who brings it food and never speaks of it","who leaves the lamp on every night","who claims they have met before","who carries a jar of fireflies","who knows its true name","who chose not to draw the bow","who draws only the places they have seen","who leaves a thread of gold on the path","who found it as a cub and never let it go","who says the world owes it a debt","who talks to it in a language no one else speaks","who once carried it out of a fire","who follows it at a careful distance","who refuses its coin","who leaves bread at the edge of the woods","who wears its color without knowing why"];
+const COUNTER_APPEARANCE = ["with silver hair kept in a long plait","with hands stained dark from work","with a voice that softens when it tells the truth","with a coat patched in a dozen colors","with a slow, deliberate way of moving","with eyes that miss nothing","with a crooked smile and honest hands","with a limp from an old kindness"];
+function buildHumanCounter(){
+  return `${pick(COUNTER_AGE)} ${pick(COUNTER_ROLE)}, ${pick(COUNTER_APPEARANCE)}`;
+}
+const CAST_AGE = ["a boy of seven","a girl of eight","a boy of ten","a girl of nine","a boy of twelve","a girl of twelve","a boy of fourteen","a girl of fifteen","a teenage boy","a teenage girl","a young woman","a young man","a woman in her forties","a man in his forties","a middle-aged woman","a middle-aged man","an old woman","an old man","a grandmother","a grandfather","a stooped old woman","a spry old man"];
+const CAST_ROLE = ["who keeps the village ledger","who sharpens knives she never uses","who hums the same half-song on every crossing","who follows the protagonist at a careful distance","who knows where every debt sleeps","who feeds stray cats and dead languages","who lies badly and means well","who laughs at exactly the wrong moments","who reads everything out loud to himself","who once crossed the sea on a ship with no name","who carries a jar of fireflies","who has not spoken since the war","who knows everyone's story but her own","who plays with a wooden sword","who carries a child's toy in a soldier's pocket","who mends clothes by lamplight","who talks to the bees, and they answer","who knows every shortcut in the town","who tends the horses and writes letters he never sends","who collects feathers and names them","who mends shoes and gossip alike","who keeps a garden of plants with no known use"];
+const CAST_VISUAL = ["with a skinned knee and a stubborn temper","with a birthmark shaped like a leaf on the neck","with hands stained with ink, dye, or earth","with a missing tooth that shows when they smile","with hair the color of wet earth","with a habit of touching a small ring when thinking","with a face that gives nothing away","with a slightly crooked nose from an old injury","with a scar above one eyebrow","with fingers stained dark from a trade no one names","with a pale streak in otherwise dark hair","with a child's serious face and adult's eyes","with a laugh that comes from deep in the chest","with a soft voice that people lean in to hear","with calloused hands and clean nails","with a thread of grey in a young face"];
+const CAST_CLOTHING = ["dressed in patched working clothes","in fine clothes gone shabby","in a heavy woolen shawl over a plain dress","in a laborer's smock under an old scholar's cloak","in a uniform faded past any insignia, kept clean out of pride","in a coat with too many pockets","in clothes that never quite fit, borrowed or handed down","in practical leather and worn boots","in a long apron that has outlived two owners","in a bright scarf that argues with the rest of the outfit","in a worn cloak pinned with a brooch of unknown metal","in clean, simple clothes that smell of woodsmoke"];
+const CAST_MANNER = ["who moves with a quiet, deliberate step","who never hurries, yet always arrives first","who speaks rarely, and every word lands","who fidgets when thinking","who laughs easily and often","who stands perfectly still when listening","who walks with a slight limp from an old wound","who carries a slight tension in the shoulders that never relaxes","who is always counting something under their breath","who looks at the protagonist a heartbeat too long","who drops their eyes when the truth comes close","who gestures with their whole body when they speak"];
+function buildCastMember(){
+  return `${pick(CAST_AGE)} ${pick(CAST_ROLE)}, ${pick(CAST_VISUAL)}, ${pick(CAST_CLOTHING)} and ${pick(CAST_MANNER)}`;
+}
+const HUMAN_TOKENS = ["witch","prince","princess","queen","king","oracle","scholar","healer","stargazer","knight","keeper","apprentice","widow","cartographer","soldier","child","storyteller","midwife","thief","bloodline","girl","boy","woman","man","son","daughter","maiden","mother","father","hermit","mage","monk","nun","hunter","priest","healer","elder","villager","traveler","traveller","sailor","bard","minstrel","shepherd","ferryman","blacksmith","merchant","king","emperor","queen","lady","lord","mother","father","sister","brother","aunt","uncle","grandmother","grandfather"];
+const AGE_CHILD_TOKENS = ["girl","boy","child","orphan","small","little","seven","eight","nine","ten"];
+const AGE_YOUTH_TOKENS = ["young","teenage","youth","apprentice","runaway"];
+const AGE_ELDER_TOKENS = ["old","elderly","ancient","graybeard","greybeard","grandmother","grandfather","centenarian","aged","weathered"];
+const AGE_CHILD_DETAILS = [
+  "still small, with the gravity of someone who has had to grow up fast",
+  "young enough that the world still tries to shelter them — and they let it, for now",
+  "small-boned and watchful, older inside than out",
+  "a child in size but not in attention, missing nothing around them"
+];
+const AGE_YOUTH_DETAILS = [
+  "young, with the sharp hunger of someone whose whole story is still ahead",
+  "barely past childhood, carrying the first real weight of the world",
+  "in the bright, brittle years between being a child and being a weapon",
+  "young and unbroken yet, the world still novel enough to be dangerous"
+];
+const AGE_ADULT_DETAILS = [
+  "in the full strength of adulthood, neither young nor old",
+  "middle-aged and practical, with little patience left for mysteries",
+  "in their prime, moving with the ease of someone who has not yet been broken",
+  "an adult worn smooth by ordinary years, holding more than they show"
+];
+const AGE_ELDER_DETAILS = [
+  "old and unashamed of it — the years sit on them like a well-worn coat",
+  "deeply lined, with hands that have held more than they let on",
+  "slow of step, quick of eye, with the stillness of someone who has outlived every hurry",
+  "age has taken their speed and given them back something quieter in exchange"
+];
+function ageDetail(concept){
+  const c = concept.toLowerCase();
+  const protagonist = CONCEPT_PROTAGONISTS.find(p => c.includes(p.toLowerCase()));
+  const scan = (protagonist || c).toLowerCase();
+  if(AGE_CHILD_TOKENS.some(t => scan.includes(t))) return pick(AGE_CHILD_DETAILS);
+  if(AGE_ELDER_TOKENS.some(t => scan.includes(t))) return pick(AGE_ELDER_DETAILS);
+  if(AGE_YOUTH_TOKENS.some(t => scan.includes(t))) return pick(AGE_YOUTH_DETAILS);
+  return pick(AGE_ADULT_DETAILS);
+}
+function isNonhumanProtagonist(concept){
+  const c = concept.toLowerCase();
+  return BEAST_TOKENS.some(t => c.includes(t));
+}
+function isPairedProtagonist(concept){
+  const c = concept.toLowerCase();
+  return HUMAN_TOKENS.some(t => c.includes(t)) && BEAST_TOKENS.some(t => c.includes(t));
+}
+const BEAST_TOKENS = ["stag","deer","owl","fox","panther","raven","swan","heron","wolf","hare","dragon","phoenix","kestrel","moth","cat","serpent","griffin","otter","badger","stallion","tortoise","lion","bat","falcon","crane","lynx","bear","unicorn","spider","salamander","crow","snake","frog","toad","whale","horse","dog","rabbit","goat","boar","koi","dolphin","seal","eagle","peacock","hummingbird","jellyfish","octopus","butterfly","vulture","mantis","beetle","tiger","cub","foal","hatchling","wyrm","basilisk","kraken","pegasus","mermaid","harbor seal","arctic wolf","white tiger","bald eagle"];
+function isNonhumanProtagonist(concept){
+  const c = concept.toLowerCase();
+  return BEAST_TOKENS.some(t => c.includes(t));
+}
+
+function bibleMotifs(theme){
+  const frags = theme.descriptor.split(',').map(f => f.trim().replace(/^and /, '')).filter(Boolean);
+  if(frags.length >= 2) return shuffle(frags).slice(0, 3).join('; ');
+  if(theme.descriptor){
+    const stem = descriptorStem(theme.descriptor, 3).join(' ');
+    return [stem, ...frags].filter(Boolean).join('; ');
+  }
+  return "the story's defining symbols and their environment";
+}
+function buildCharacterBible(concept, theme, style){
+  const motifText = bibleMotifs(theme);
+  const paired = isPairedProtagonist(concept);
+  const nonHuman = isNonhumanProtagonist(concept);
+  const humanAppearance = `${pick(CHAR_HAIR)}, ${pick(CHAR_EYES)}, ${pick(CHAR_COMPLEXION)}, ${pick(CHAR_FACE)}, ${pick(CHAR_BUILD)}. They are ${ageDetail(concept)}. ${cap(pick(CHAR_GAIT))}. ${cap(pick(CHAR_VOICE))}. Wears ${pick(CHAR_CLOTHING)}, with ${pick(CHAR_DISTINGUISHING)} as a consistent identifying detail. Carries ${pick(CHAR_CARRIED_OBJECT)}.`;
+  const beastAppearance = `A ${pick(CHAR_SPECIES)} with ${pick(CHAR_PELT)} and ${pick(CHAR_BEAST_EYES)}. ${cap(pick(CHAR_BEAST_MARKING))} as a consistent identifying detail. Carries ${pick(CHAR_BEAST_OBJECT)}. ${cap(pick(CHAR_BEAST_MANNER))}. It ${pick(CHAR_BEAST_SCENT)}.`;
+  const castLine = `Supporting cast (recurring, kept exactly consistent wherever they appear): ${buildCastMember()} and ${buildCastMember()}.`;
+  let appearance;
+  if(paired){
+    appearance = `The story has two bound protagonists, shown together on every page, both kept exactly consistent:\nThe human: ${humanAppearance}\nThe animal: ${beastAppearance}`;
+  }else if(nonHuman){
+    appearance = `${beastAppearance}\nA human figure is bound to the story and appears alongside the protagonist throughout, kept consistent on every page: ${buildHumanCounter()}.`;
+  }else{
+    appearance = `${humanAppearance}\nAccompanied by an animal companion, always present and always consistent on every page: ${buildCompanion()}.`;
+  }
+  return `CHARACTER & WORLD CONSISTENCY BIBLE
+
+Protagonist appearance (use this exact description on every page, unchanged, unless the story concept explicitly requires a described transformation):
+${appearance}
+
+${castLine}
+
+World & palette consistency:
+Every page shares the same visual world — ${theme.descriptor} — rendered in ${style.descriptor}. Recurring visual motifs to repeat across pages where relevant: ${motifText}.
+
+Instruction: this exact Character & World Bible block must be referenced at the start of every single page's image-generation prompt throughout this book, to prevent the protagonist's appearance or the book's visual world from drifting across pages.`;
+}
+
+
+
+
+function assembleBlueprint(){
+  const concept = getConcept();
+  const theme = getTheme();
+  const style = ALL_STYLES[selectedStyle];
+  const tier = PAGE_TIERS[selectedTier];
+  const format = BOOK_FORMATS[+formatSel.value];
+  const twistLevel = +twistSlider.value;
+  const beats = buildBeatList(tier.key);
+  const cardName = symbolFromTheme(theme);
+  const title = pick(TITLE_PATTERNS)(concept, cardName);
+  const audience = pick(AUDIENCE_LINES);
+  const twists = shuffle(CREATIVE_TWISTS).slice(0, twistLevel);
+  variationSeed = nextSeed();
+
+
+
+
+  const pageBracket = textRenderMode === 'ai-render'
+    ? `[Image prompt must open with the Character & World Bible description above, verbatim, and must render this page's exact story text within the ${TEXT_PLACEMENT}, spelled correctly with no alterations, before adding this page's specific scene detail.]`
+    : `[Image prompt must open with the Character & World Bible description above, verbatim, and must reserve the ${TEXT_PLACEMENT} exactly as specified — no story text rendered in the image — before adding this page's specific scene detail.]`;
+  const pageLines = beats.map((b, i) => `Page ${i + 1} — ${b.card}: ${b.role}. Scene: ${pick(PAGE_MOODS)}, ${pick(SEASONS)}, ${pick(TIMES)}. ${pageBracket}`).join('\n');
+  const keywords = buildKeywords(theme);
+  const acts = buildThreeActs(beats);
+  const tone = pick(TONE_BANK);
+  const characterBible = buildCharacterBible(concept, theme, style);
+  const shortEditionCount = Math.round(tier.pageCount * 0.6);
+
+
+
+
+  const sections = [];
+  sections.push(`1. BOOK TITLE\n${title}`);
+  sections.push(`2. RECOMMENDED AUDIENCE\n${audience}`);
+  sections.push(`3. BACK-COVER BLURB\n${buildBlurb(concept, theme)}`);
+  sections.push(`4. SEO KEYWORDS FOR LISTING THIS BOOK\n${[...new Set(keywords)].join(', ')}`);
+  sections.push(`5. THE STORY CONCEPT (verbatim)\n"${concept}"`);
+  sections.push(`6. PRIMARY SETTING & CENTRAL OBSTACLE\nPrimary setting — keep consistent on every page and the cover: ${pick(SETTINGS)}.\nSeason of the story: ${pick(SEASONS)}. Opening time of day: ${pick(TIMES)}.\nCentral obstacle / antagonist — kept consistent throughout the book: ${pick(ANTAGONISTS)}.`);
+  sections.push(`7. VISUAL WORLD & ILLUSTRATION STYLE\nVisual world — keep on every page and the cover: ${theme.descriptor}.\nIllustration style — keep on every page and the cover: ${style.descriptor}.\nHold both consistent across the entire book: the same lighting logic, palette logic, and line quality in every illustration prompt, including the cover.`);
+  sections.push(`8. CHARACTER & WORLD CONSISTENCY BIBLE\n${characterBible}`);
+  sections.push(`9. BOOK STRUCTURE — THREE ACTS\n${acts.map(a => `${a.name} (pages ${a.start}–${a.end}): ${a.desc}`).join('\n')}`);
+  const textRenderNote = textRenderMode === 'ai-render'
+    ? 'Story text sequencing: write each page\'s story text (part a) FIRST, then generate that page\'s image prompt (part b) immediately after, quoting the page\'s story text verbatim inside the prompt. Each page\'s image-prompt instruction must read: Render the exact story text for this page — quoted below — directly within the designated clean text area of the composition, in elegant, legible typography consistent with the book\'s visual style. The text must be spelled exactly as written, with no additions, omissions, or duplicated text: "{this page\'s story text}". Do not paraphrase, shorten, or reword the quoted text under any circumstances.\nEach page\'s image prompt must open with the Character & World Bible description from section 8 above, verbatim, before adding that page\'s specific scene detail, so the protagonist\'s appearance never drifts across pages.'
+    : 'Each page\'s image prompt must open with the Character & World Bible description from section 8 above, verbatim, before adding that page\'s specific scene detail, so the protagonist\'s appearance never drifts across pages. The illustration must reserve the designated clean text area exactly as specified and must NOT render the story text itself inside the image — each page\'s story text (part a) is delivered separately and is added to the page afterward in layout software.';
+  sections.push(`10. NARRATIVE ARC — ${tier.label} (${tier.pageCount} pages)\nFor each numbered page below, write (a) 2-4 sentences of story text that advances the concept above through that page's narrative role, and (b) a detailed image-generation prompt for that page's illustration, consistent with the visual style and world described above, composed as a full-bleed storybook page (not a bordered card), matching the trim size specified below.\nWrite every image-generation prompt as a natural-language paragraph description (not parameter-based shorthand), so it can be used directly with any AI image tool — ChatGPT/GPT Image, Nano Banana Pro, Nano Banana 2, or similar.\n${textRenderNote}\n${pageLines}`);
+  sections.push(`11. COVER SPECIFICATION\nFront Cover: A vertical ${format.dims} full-illustration front cover. Visual style: ${style.descriptor}. Central image: the protagonist or the story's defining symbolic image, drawn from the opening moment of the concept described above. The protagonist depicted on this cover must match the Character & World Consistency Bible description exactly. Exact title text to render: "${title}". The title must be legible, elegantly integrated into the composition (not simply overlaid), using lettering consistent with the ${theme.label}'s visual world. Keep a minimum 0.25 inch safe margin on all sides with no essential content near the trim edge. Do NOT include barcodes, real photographs, generic stock-image elements, or small dense text blocks.\nBack Cover: A complementary, symbolic/ornamental design in the same visual style and palette as the front cover — no central character illustration, instead an emblematic motif drawn from the story's core symbolism (mirroring how the book's uniform visual identity should feel cohesive front-to-back). Leave a clearly reserved, uncluttered text area sized for the back-cover blurb generated above — do not render the blurb text directly in the image; it will be placed afterward in layout software.\nSpine: Text specification only (not an image prompt) — the book title and a short author-line placeholder, sized appropriately for the selected trim size's spine width. Note this is typically finalized in layout software once final page count is confirmed, since spine width depends on total page count and paper stock.`);
+  sections.push(`12. CONTENT & LAYOUT STYLE GUIDE\nTone: ${tone}.\nTypography direction: pair an elegant serif for narrative body text with a more decorative display font for the title and any chapter/act headers, consistent with the ${theme.label}'s visual world. Keep body text passages short (2-4 sentences per page) to leave generous room for the illustration.\nConsistency rules: every interior page should feel like it belongs to the same object — maintain the same illustration style, palette, and protagonist appearance throughout. If useful for the final layout, each page may include a small footer reading "${title} — Page {page number}" for consistency across the finished book.`);
+  sections.push(`13. CREATIVE TWISTS TO WEAVE IN\n${twists.map(t => `✨ TWIST: ${t}`).join('\n')}`);
+  sections.push(`14. BOOK TRIM SIZE & FORMAT\n${format.spec()}`);
+  sections.push(`15. DELIVERABLE FORMAT REQUEST\nPresent the finished output as: (1) the book title and blurb, (2) the front/back/spine cover prompts, (3) then every page in order, each showing its story text followed by its full image-generation prompt, clearly numbered and labeled, ready to be copied individually into an AI image generator.`);
+  sections.push(`16. PRODUCT VERSION SUGGESTIONS\nShort Edition (${shortEditionCount} pages): A condensed version using only Act 1 and Act 3 beats — the call to adventure and the resolution, skipping the middle trial — for a faster, lighter read.\nStandard Edition (${tier.pageCount} pages): The complete book as specified above.\nExpanded Edition (adds 10-15 pages): Includes an additional front-matter page (a short 'world' or symbolism guide explaining the visual/thematic world to the reader), a few extra interlude pages, and a closing 'reader's reflection' page inviting the reader to connect the story's arc to their own life — fitting given this book's archetypal, Tarot-inspired structure.`);
+
+
+
+
+  lastBlueprint = `ARCANA STORYBOOK AI — MASTER BLUEPRINT\nVariation seed: ◈ ${variationSeed}\n\n${sections.join('\n\n')}`;
+  return lastBlueprint;
+}
+
+
+
+
+/* ============ RENDER ============ */
+function renderBlueprint(){
+  blueprintEl.textContent = lastBlueprint;
+  blueprintEl.classList.remove('hidden');
+  outputEmpty.classList.add('hidden');
+  const tier = PAGE_TIERS[selectedTier];
+  blueprintMeta.innerHTML = `Blueprint ready — seed <b>◈ ${variationSeed}</b> · <b>${tier.pageCount}</b> pages · <b>${tier.label}</b>`;
+  matchOutputHeight();
+}
+
+
+
+
+function matchOutputHeight(){
+  if (innerWidth <= 960){ outputPanel.style.minHeight = ''; return; }
+  outputPanel.style.minHeight = Math.max(sidebarEl.offsetHeight, 320) + 'px';
+}
+addEventListener('resize', matchOutputHeight);
+
+
+
+
+function updateCounter(){
+  counter.innerHTML = `📖 Blueprints generated: <b>${blueprintCount}</b>`;
+}
+
+
+
+
+let blueprintCount = 0;
+
+
+
+
+/* ============ VALIDATION & ACTIONS ============ */
+function validateConcept(){
+  const theme = getTheme();
+  const customEmpty = theme.label === 'Custom World' && theme.descriptor.length === 0;
+  const concept = getConcept();
+  const ok = concept.length > 0 && !customEmpty;
+  if(customEmpty){
+    hint.textContent = '⚠ Describe your custom visual/symbolic world first — it replaces the fixed visual-world descriptor in the blueprint.';
+    customWorldInput.classList.toggle('has-error', true);
+  }else{
+    customWorldInput.classList.remove('has-error');
+    hint.textContent = conceptMode === 'generate'
+      ? '⚠ Generate a concept first — then assemble the blueprint.'
+      : '⚠ Enter your story concept first — it is the creative core the whole blueprint builds from.';
+  }
+  hint.classList.toggle('hidden', ok);
+  conceptInput.classList.toggle('has-error', !ok && conceptMode === 'write' && !customEmpty);
+  return ok;
+}
+conceptInput.addEventListener('input', ()=>{ hint.classList.add('hidden'); conceptInput.classList.remove('has-error'); });
+customWorldInput.addEventListener('input', ()=>{ hint.classList.add('hidden'); customWorldInput.classList.remove('has-error'); });
+
+
+
+
+function focusBlocker(){
+  const theme = getTheme();
+  if(theme.label === 'Custom World' && theme.descriptor.length === 0) customWorldInput.focus();
+  else if(conceptMode === 'write') conceptInput.focus();
+}
+
+
+
+function handleGenerate(){
+  if(!validateConcept()){
+    focusBlocker();
+    return;
+  }
+  assembleBlueprint();
+  blueprintCount++;
+  renderBlueprint();
+  updateCounter();
+  showToast("Blueprint assembled — copy it and hand it to ChatGPT");
+}
+
+
+
+
+function handleRegenerate(){
+  if(!validateConcept()){
+    focusBlocker();
+    return;
+  }
+  assembleBlueprint();
+  blueprintCount++;
+  renderBlueprint();
+  updateCounter();
+  showToast("New variation assembled with the same concept and settings");
+}
+
+
+
+
+document.getElementById('generateBtn').addEventListener('click', handleGenerate);
+document.getElementById('regenBtn').addEventListener('click', handleRegenerate);
+
+
+
+
+/* ============ COPY & EXPORT ============ */
+function handleCopy(){
+  if(!lastBlueprint) return;
+  navigator.clipboard.writeText(lastBlueprint).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = "Copied ✓";
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = "📋 Copy Full Blueprint Prompt"; btn.classList.remove('copied'); }, 1600);
+  });
+}
+
+
+
+
+function download(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+function handleExport(){
+  if(!lastBlueprint) return;
+  download('arcana-storybook-blueprint.txt', lastBlueprint, 'text/plain');
+  showToast("Blueprint exported as .txt");
+}
+
+
+
+
+document.getElementById('copyBtn').addEventListener('click', handleCopy);
+document.getElementById('exportBtn').addEventListener('click', handleExport);
+</script>
+</body>
+</html>
