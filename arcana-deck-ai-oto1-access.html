@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +55,7 @@
   .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:620px;}
 
   /* CHOICE CARDS */
-  .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:12px;}
+  .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px;}
   .choice-card{border:1px solid var(--line); border-radius:3px; padding:16px 14px; background:rgba(0,0,0,0.15); cursor:pointer; transition:all .18s ease; text-align:left; position:relative;}
   .choice-card:hover{border-color:var(--amethyst-soft); background:rgba(183,140,214,0.08);}
   .choice-card.selected{border-color:var(--gold); background:rgba(200,212,220,0.09);}
@@ -79,6 +78,8 @@
   textarea:focus,input[type=text]:focus{outline:none; border-color:var(--gold);}
   textarea{min-height:110px; line-height:1.6;}
   .hint{font-size:12.5px; color:var(--parchment-dim); margin-top:7px; font-style:italic;}
+  select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:12px 14px; border-radius:3px; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer;}
+  select:focus{outline:none; border-color:var(--gold);}
 
   /* PALETTE */
   .palette-gen-box{border:1px solid var(--line); border-radius:4px; padding:16px; margin-top:12px; background:rgba(0,0,0,0.15);}
@@ -347,6 +348,14 @@
           </div>
         </div>
         <div id="tarotFields">
+          <div class="field" style="margin-bottom:16px;">
+            <label class="field-label" for="numberingSel">Card Numbering System</label>
+            <select id="numberingSel">
+              <option value="modern" selected>Modern (RWS) — Strength VIII · Justice XI</option>
+              <option value="traditional">Traditional (Marseille) — Justice VIII · Strength XI</option>
+            </select>
+            <div class="hint">Only cards 8 and 11 differ between the two systems; the other twenty are identical. Strength at 8 / Justice at 11 is the modern standard most readers expect.</div>
+          </div>
           <div class="hint" style="margin-bottom:18px;">All 22 Major Arcana are mapped with traditional symbolism. Enable subtitles above for unique poetic variations on each card name.</div>
         </div>
         <div class="btn-row">
@@ -399,14 +408,8 @@ const LUXE_PALETTE_GENERATOR={colorFamilies:[{name:"Argent Chrome",colors:["#0A0
 /* ============ STYLE FAMILY HELPERS ============ */
 function isLuxeStyle(styleKey){return !!LUXE_STYLES[styleKey];}
 function isBaseStyle(styleKey){return !!STYLES[styleKey];}
-function getActivePaletteGenerator(){
-  if(state.style && isLuxeStyle(state.style)) return LUXE_PALETTE_GENERATOR;
-  return PALETTE_GENERATOR;
-}
-function getActiveVariantsBank(){
-  if(state.style && isLuxeStyle(state.style)) return LUXE_VARIANTS;
-  return VARIANTS;
-}
+function getActivePaletteGenerator(){if(state.style&&isLuxeStyle(state.style))return LUXE_PALETTE_GENERATOR;return PALETTE_GENERATOR;}
+function getActiveVariantsBank(){if(state.style&&isLuxeStyle(state.style))return LUXE_VARIANTS;return VARIANTS;}
 
 /* ============ COMPOSITION SEEDS ============ */
 const COMPOSITION_SEEDS={cameraAngles:["eye-level, straight-on composition with subject centered","slightly low angle looking up, giving the subject quiet grandeur","high angle looking slightly down, as if from a balcony or throne","Dutch tilt at approximately 5 degrees for subtle unease","extreme close-up on hands or symbolic object, face partially out of frame","wide composition showing full figure in an environmental context","bird's-eye view looking directly down at the scene","worm's-eye view from ground level looking up dramatically","over-the-shoulder perspective as if we are following the subject","subject at the far left third of frame, negative space to the right","subject at the lower third, vast sky or architecture above","central symmetry with mirror-like balance on both sides"],subjectPoses:["standing in quiet contemplation, hands clasped or resting","mid-stride, caught in motion with fabric trailing behind","seated in a throne-like posture, one hand extended in offering","kneeling before a symbol or altar, head bowed or raised","arms outstretched in a gesture of invocation or surrender","turning back to look over one shoulder, caught between coming and going","hands holding a single symbolic object, cradled like something precious","one hand on heart, the other reaching outward toward the viewer","dancing or spinning, hair and garments in motion","standing at a threshold — doorway, arch, or edge — about to cross","reclining in a dreamlike state, surrounded by symbolic elements","facing away from the viewer, looking toward a distant horizon"],focalElements:["a single glowing object held in the subject's hands","an animal companion at the subject's side — wolf, owl, serpent, or stag","a crescent moon hanging low and impossibly large in the background","a fractured mirror or shattered object mid-air, frozen in time","water — either calm reflecting pool or turbulent waves — as a major element","roots or vines emerging from the ground and wrapping around the scene","a doorway, arch, or portal that opens onto another world","falling petals, embers, snow, or ash drifting through the scene","a clock, sundial, or hourglass with symbolic time","stars visible through a break in storm clouds above","a single flower or plant growing through stone or bone","chains — some broken, some intact — draped across the composition"],colorAccents:["a single pop of bright silver against an otherwise muted palette","the central subject rendered in cool tones while the background is dark","a gradient from deep shadow at the edges to luminous light at the center","monochromatic treatment with one color family dominating 80% of the image","complementary color contrast between the subject's clothing and the background","a rim light in the accent color separating the subject from the dark background","muted, desaturated tones throughout with the only saturated color on the focal point"]};
@@ -419,16 +422,25 @@ const SUBJECT_TYPES={"human-figure":{label:"Human Figure",meta:"a person as the 
 /* ============ TAROT DATA ============ */
 const MAJOR_ARCANA=[["0","The Fool","a young wanderer stepping toward a cliff edge with a small bundle and a white rose, a loyal dog at their heel, dawn light ahead","new beginnings, innocence, a leap of faith"],["I","The Magician","a robed figure at an altar with all four elemental tools raised, an infinity symbol above their head, one hand pointing to sky one to earth","willpower, manifestation, mastery of tools"],["II","The High Priestess","a veiled seated figure between two pillars of light and shadow, a crescent moon at her feet, a scroll of hidden knowledge in her lap","intuition, mystery, the subconscious"],["III","The Empress","a crowned figure enthroned in an abundant garden, wheat fields and flowing water around her, a shield bearing a venus symbol","abundance, fertility, nurturing creation"],["IV","The Emperor","a stern armored ruler enthroned on stone carved with ram heads, a barren mountain kingdom behind him, an ankh sceptre in hand","authority, structure, stable dominion"],["V","The Hierophant","a robed high priest seated between two pillars, two acolytes kneeling before him, a triple crown and crossed keys","tradition, doctrine, sacred teaching"],["VI","The Lovers","two figures standing beneath a radiant angel, a tree of flames behind one and a tree of fruit behind the other, a mountain path between them","union, choice, alignment of values"],["VII","The Chariot","an armored figure standing in a stone chariot pulled by two opposing sphinxes, a starry canopy above, a city fading behind","willpower, drive, triumph through control"],["VIII","Strength","a serene figure gently closing the jaws of a lion, an infinity symbol above her head, a garland of flowers at her waist","inner courage, gentle mastery, patience"],["IX","The Hermit","a cloaked elder standing on a snowy peak holding a lantern with a single star inside, a staff in the other hand, looking backward toward the path climbed","introspection, solitary wisdom, inner light"],["X","Wheel of Fortune","a great wheel suspended in a stormy sky, sphinx and serpent and jackal-figure at its rim, alchemical symbols around the hub","cycles, fate turning, change beyond control"],["XI","Justice","a crowned figure enthroned between two grey pillars, a raised sword in one hand and balanced scales in the other, a straight unwavering gaze","truth, balance, cause and consequence"],["XII","The Hanged Man","a figure suspended upside down by one foot from a living tree, a calm luminous halo around the head, hands bound loosely behind the back","surrender, suspended perspective, sacrifice"],["XIII","Death","a skeletal armored rider on a pale horse crossing a river at dawn, a black banner bearing a white rose, a fallen king and a rising sun beyond","transformation, ending into renewal, release"],["XIV","Temperance","a winged figure pouring water between two cups across a stream, one foot on land one in water, a golden path leading toward distant mountains","alchemy, balance, patient blending"],["XV","The Devil","a horned chained figure enthroned above two bound smaller figures, an inverted pentagram above, torches burning low","bondage, temptation, illusion of chains"],["XVI","The Tower","a tall stone tower struck by lightning, its crown ablaze and crumbling, two figures falling from the parapet against a dark stormy sky","sudden upheaval, collapse of false structure, revelation"],["XVII","The Star","a kneeling nude figure pouring water from two vessels beneath a sky of eight radiant stars, one foot on land one in a quiet pool","hope, renewal, quiet faith after ruin"],["XVIII","The Moon","a pale full moon with a troubled face over a winding path between two towers, a wolf and a dog howling, a crayfish emerging from a pool","uncertainty, subconscious fear, illusion and instinct"],["XIX","The Sun","a joyful child on a white horse beneath a radiant sun with a face, sunflowers along a low wall, a banner streaming behind","joy, vitality, clarity after darkness"],["XX","Judgement","robed figures rising from open graves with arms outstretched, an angel sounding a trumpet above snow-capped mountains","awakening, reckoning, a call answered"],["XXI","The World","a dancing figure wreathed in a laurel oval, four winged creatures in each corner of the composition, ribbons trailing around the wreath","completion, wholeness, integration of the journey"]];
 
+function majorArcana(){
+  const list=MAJOR_ARCANA.map(e=>e.slice());
+  if(state.numbering==='traditional'){
+    const s=list.find(e=>e[1]==='Strength');
+    const j=list.find(e=>e[1]==='Justice');
+    if(s&&j){const tmp=s[0];s[0]=j[0];j[0]=tmp;}
+  }
+  return list;
+}
+
 /* ============ THEMES ============ */
 const THEMES={"dark-goddess":{label:"Dark Goddess Oracle",descriptor:"chthonic dark-goddess mythology, lunar shrines, veiled feminine power, underworld gardens",palette:"#1B1030, #4A1E33, #C9A961, #E8DCC8",frame:"ornate-gilded"},"crystal-witch":{label:"Crystal Witch Deck",descriptor:"cottage witchcraft, raw crystal clusters, dried herb bundles, candlelit altars, gemstone geometry",palette:"#2B1B3D, #4A2E5C, #7FC8C4, #E8B4D9",frame:"thorned-vine"},"gothic-shadow":{label:"Gothic Shadow Tarot",descriptor:"Victorian gothic romance, wrought iron and candlelight, mourning veils, dark rose motifs",palette:"#0D0B12, #2B1220, #8B2A3A, #C9A961",frame:"thorned-vine"},"botanical-grimoire":{label:"Botanical Grimoire Oracle",descriptor:"an old apothecary's herbal grimoire, pressed flowers between glass, hand-labeled specimen jars, ink-stained botanical diagrams",palette:"#2A2E1F, #5C6B3D, #C9A961, #EDE4D3",frame:"pressed-botanical"}};
 
-/* ============ STYLES ============ */
+/* ============ STYLES (base 14) ============ */
 const STYLES={"watercolor-botanical":{label:"Vintage Watercolor Botanical",descriptor:"vintage watercolor illustration with soft pigment bleed and pressed-botanical detail"},"art-nouveau":{label:"Art Nouveau Gilded",descriptor:"art nouveau linework with flowing organic curves and gold-leaf ornamental detail"},"gothic-engraving":{label:"Gothic Ink Engraving",descriptor:"gothic ink engraving with dense crosshatching and high woodcut-style contrast"},"dark-fantasy-paint":{label:"Dark Fantasy Painterly",descriptor:"dark fantasy oil-painterly rendering with dramatic chiaroscuro lighting"},"victorian-scientific":{label:"Victorian Scientific Illustration",descriptor:"19th-century naturalist scientific plate illustration, precise line detail on aged paper"},"art-deco":{label:"Art Deco Geometric",descriptor:"art deco geometric illustration with symmetrical stepped forms and metallic linework"},"ukiyo-e":{label:"Ukiyo-e Woodblock",descriptor:"Japanese ukiyo-e woodblock print style with flat color fields and elegant outline"},"airbrush-dream":{label:"Dreamy Airbrush Pastel",descriptor:"dreamy soft-focus airbrush illustration with pastel gradient blending"},"cinematic-gothic-fantasy":{label:"Cinematic Gothic Fantasy",descriptor:"cinematic dark fantasy painting with full narrative scene composition — not a simple centered portrait but a complete environmental scene with real background depth (castles, forests, or architecture visible behind the subject), dramatic moonlit lighting anchored by a large luminous full moon in the sky, richly detailed armor, fabric, and jewelry rendering with painterly realism, atmospheric depth created through layered fog and silhouetted background elements"},"celestial-nouveau":{label:"Celestial Nouveau",descriptor:"Art Nouveau illustration in a sacred-icon register, a large luminous circular halo or aureole in gold behind the subject, the subject rendered in a contemplative or devotional pose (hands clasped in prayer, eyes closed, or gazing upward/skyward), intricate gold linework floral ornamentation intertwining around and behind the figure in symmetrical Mucha-style patterns, a jewel-toned desaturated palette (deep teal, burgundy, aged gold, muted cream), this style applies equally well to human figures and to animal totems (stag, raven, wolf) treated with the same iconographic reverence and halo framing"},"neo-noir-occult":{label:"Neo-Noir Occult",descriptor:"modern flat-lit graphic poster illustration, bold saturated single-color rim lighting against near-black backgrounds, clean confident silhouette-driven composition reminiscent of contemporary editorial poster design, minimal but precise linework, high contrast between deep shadow and one dominant accent hue"},"vaporwave-mystic":{label:"Vaporwave Mystic",descriptor:"retro-futuristic vaporwave illustration, soft pastel gradient skies fading between pink violet and cyan, faint receding grid-line horizon, chrome-reflective ornamental accents on symbolic objects, a nostalgic Y2K-digital sheen applied to occult iconography"},"cyber-grimoire":{label:"Cyber Grimoire",descriptor:"occult iconography fused with a modern tech aesthetic, fine glowing circuit-line patterns woven into traditional ornamental borders and symbols, deep near-black backgrounds with crisp electric-blue or violet edge lighting, a sense of ancient symbolism rendered through a contemporary digital lens"},"monochrome-fantasy-bestiary":{label:"Monochrome Fantasy Bestiary",descriptor:"high-detail monochrome fantasy illustration in near-black, white, and silver tones, the subject rendered with extremely fine engraving-like linework capturing fur, feather, or scale texture in dense realistic detail, a single selective accent color allowed to appear only on the subject itself (such as warm orange on a koi or cool blue on a sea creature) while everything else stays strictly grayscale, an ornate silver Art Nouveau frame with small decorative medallions at the top corners, optionally a luminous circular halo or arch behind the subject's head for added presence, dramatic high-contrast lighting against a near-black background"}};
 
-/* ============ LUXE STYLES ============ */
+/* ============ LUXE STYLES (10 additional) ============ */
 const LUXE_STYLES={"chrome-liquid-metal":{group:"Metallic & Reflective",label:"Chrome Liquid Metal",descriptor:"hyper-reflective liquid chrome rendering, every surface behaves like polished flowing mercury, sharp specular highlights and warped mirror-like reflections of the surrounding scene visible within the metal itself, cool silver-blue tonal range, the subject appears cast or dipped in molten chrome rather than painted"},"holographic-foil":{group:"Metallic & Reflective",label:"Holographic Foil",descriptor:"iridescent holographic foil rendering, color shifts across the spectrum depending on implied viewing angle (shifting pink to cyan to violet across a single surface), fine rainbow diffraction-line texture layered over metallic silver base tones, the entire card surface behaves like a holographic trading-card foil finish"},"embossed-foil-stamp":{group:"Metallic & Reflective",label:"Embossed Foil-Stamp",descriptor:"deep embossed foil-stamp effect, linework appears physically pressed into the surface with raised metallic edges catching directional light, sculptural drop-shadow depth on every embossed line, gold or silver foil coloring restricted to the embossed linework against a matte dark background"},"opalescent-pearl":{group:"Metallic & Reflective",label:"Opalescent Pearl",descriptor:"soft opalescent pearl-shell rendering, gentle pastel iridescence (blush pink, pale mint, soft lavender) shifting subtly across smooth rounded forms, luminous milky-white base tones, diffused soft-focus highlights rather than sharp specular ones, an overall impression of mother-of-pearl rather than metal"},"neon-mystic":{group:"Luminous & Cosmic",label:"Neon Mystic",descriptor:"glowing neon-line illustration against a near-black background, thin luminous tube-light linework in saturated electric colors (magenta, cyan, violet) tracing the subject's outline and key symbolic details, soft light-bloom halo around every neon line, otherwise unlit areas stay in deep shadow for maximum contrast"},"bioluminescent-fantasy":{group:"Luminous & Cosmic",label:"Bioluminescent Fantasy",descriptor:"organic bioluminescent glow rendering, soft internal light appears to emanate from within the subject's veins, markings, or surface patterns rather than from an external source, saturated glowing blues greens and violets against a dark ambient background, a sense of living light rather than reflected light"},"celestial-nebula":{group:"Luminous & Cosmic",label:"Celestial Nebula",descriptor:"deep-space nebula rendering integrated directly into the subject and background alike, swirling cosmic gas-cloud textures in violet magenta and teal, dense fields of fine starlight speckled throughout, the boundary between subject and cosmic background intentionally soft and semi-translucent in places"},"double-exposure-mystic":{group:"Luminous & Cosmic",label:"Double-Exposure Mystic",descriptor:"double-exposure photographic-illustration hybrid, the subject's silhouette is filled with a second overlaid image (a landscape, forest, or starfield) visible through semi-transparent blending, soft light leaks and gentle film-grain texture throughout, a dreamlike layered composition rather than a single flat illustration"},"opulent-baroque-gemstone":{group:"Opulent & Ornate",label:"Opulent Baroque Gemstone",descriptor:"dense opulent baroque ornamentation, deeply sculpted gold relief work covering every available surface, large faceted gemstones (ruby, sapphire, emerald) inset directly into the ornamental framework and regalia, rich saturated jewel-toned palette throughout, an overall impression of maximalist wealth and ceremonial excess"},"dark-academia-ink-gold":{group:"Opulent & Ornate",label:"Dark Academia Ink & Gold",descriptor:"dense dark academia illustration, heavy black ink linework and cross-hatching forming the primary structure of the image, sparing but precise gold-leaf accents restricted to key symbolic details (a clasp, a border line, a single ornamental flourish), aged manuscript-page color grading, a scholarly antique-library atmosphere throughout"}};
 
-// All styles lookup
 function getAllStyles(){return{...STYLES,...LUXE_STYLES};}
 function getStyleLabel(key){const all=getAllStyles();return all[key]?.label||key;}
 function styleDescriptor(){const all=getAllStyles();return all[state.style]?.descriptor||"";}
@@ -455,14 +467,11 @@ const LUXE_VARIANTS={lighting:["sharp specular highlights raking across every re
 function pickV(){const bank=getActiveVariantsBank();return{lighting:randomOf(bank.lighting),atmosphere:randomOf(bank.atmosphere),texture:randomOf(bank.texture),mood:randomOf(bank.mood)};}
 
 /* ============ STATE ============ */
-const state={deckType:null,theme:null,style:null,palette:"",paletteName:"",frame:null,subjectType:"mixed-auto",typography:null,format:null,engine:null,oracleCards:[],useSubtitles:true,currentStep:1};
+const state={deckType:null,theme:null,style:null,palette:"",paletteName:"",frame:null,subjectType:"mixed-auto",typography:null,format:null,engine:null,oracleCards:[],useSubtitles:true,numbering:"modern",currentStep:1};
 let generatedDeck=[],currentSubtitles=[];
 
 /* ============ RENDER CHOICE GRIDS ============ */
-function renderThemeChoices(){
-  document.getElementById('themeChoices').innerHTML=Object.entries(THEMES).map(([k,t])=>`<div class="choice-card ${state.theme===k?'selected':''}" data-theme="${k}"><div class="choice-name">${t.label}</div><div class="choice-meta">${t.descriptor.split(',').slice(0,2).join(',')}</div></div>`).join('');
-  document.querySelectorAll('#themeChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#themeChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.theme=c.dataset.theme;document.getElementById('toStep3').disabled=false;});});
-}
+function renderThemeChoices(){document.getElementById('themeChoices').innerHTML=Object.entries(THEMES).map(([k,t])=>`<div class="choice-card ${state.theme===k?'selected':''}" data-theme="${k}"><div class="choice-name">${t.label}</div><div class="choice-meta">${t.descriptor.split(',').slice(0,2).join(',')}</div></div>`).join('');document.querySelectorAll('#themeChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#themeChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.theme=c.dataset.theme;document.getElementById('toStep3').disabled=false;});});}
 
 function renderStyleChoices(){
   const container=document.getElementById('styleChoicesContainer');
@@ -496,25 +505,13 @@ function renderStyleChoices(){
   });
 }
 
-function renderFrameChoices(){
-  document.getElementById('frameChoices').innerHTML=Object.entries(FRAMES).map(([k,o])=>`<div class="choice-card ${state.frame===k?'selected':''}" data-frame="${k}"><div class="choice-name">${o.label}</div><div class="choice-meta">${o.descriptor.slice(0,60)}${o.descriptor.length>60?'…':''}</div></div>`).join('');
-  document.querySelectorAll('#frameChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#frameChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.frame=c.dataset.frame;checkStep3Ready();});});
-}
+function renderFrameChoices(){document.getElementById('frameChoices').innerHTML=Object.entries(FRAMES).map(([k,o])=>`<div class="choice-card ${state.frame===k?'selected':''}" data-frame="${k}"><div class="choice-name">${o.label}</div><div class="choice-meta">${o.descriptor.slice(0,60)}${o.descriptor.length>60?'…':''}</div></div>`).join('');document.querySelectorAll('#frameChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#frameChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.frame=c.dataset.frame;checkStep3Ready();});});}
 
-function renderSubjectChoices(){
-  document.getElementById('subjectChoices').innerHTML=Object.entries(SUBJECT_TYPES).map(([k,s])=>`<div class="choice-card ${state.subjectType===k?'selected':''}" data-subject="${k}"><div class="choice-name">${s.label}</div><div class="choice-meta">${s.meta}</div></div>`).join('');
-  document.querySelectorAll('#subjectChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#subjectChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.subjectType=c.dataset.subject;checkStep3Ready();});});
-}
+function renderSubjectChoices(){document.getElementById('subjectChoices').innerHTML=Object.entries(SUBJECT_TYPES).map(([k,s])=>`<div class="choice-card ${state.subjectType===k?'selected':''}" data-subject="${k}"><div class="choice-name">${s.label}</div><div class="choice-meta">${s.meta}</div></div>`).join('');document.querySelectorAll('#subjectChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#subjectChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.subjectType=c.dataset.subject;checkStep3Ready();});});}
 
-function renderTypoChoices(){
-  document.getElementById('typoChoices').innerHTML=Object.entries(TYPOGRAPHY).map(([k,d])=>`<div class="choice-card ${state.typography===k?'selected':''}" data-typo="${k}"><div class="choice-name">${d.split(' ').slice(0,3).join(' ').replace(/^\w/,c=>c.toUpperCase())}</div><div class="choice-meta">${d.slice(0,60)}...</div></div>`).join('');
-  document.querySelectorAll('#typoChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#typoChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.typography=c.dataset.typo;checkStep3Ready();});});
-}
+function renderTypoChoices(){document.getElementById('typoChoices').innerHTML=Object.entries(TYPOGRAPHY).map(([k,d])=>`<div class="choice-card ${state.typography===k?'selected':''}" data-typo="${k}"><div class="choice-name">${d.split(' ').slice(0,3).join(' ').replace(/^\w/,c=>c.toUpperCase())}</div><div class="choice-meta">${d.slice(0,60)}...</div></div>`).join('');document.querySelectorAll('#typoChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#typoChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.typography=c.dataset.typo;checkStep3Ready();});});}
 
-function renderFormatChoices(){
-  document.getElementById('formatChoices').innerHTML=Object.entries(FORMATS).map(([k,f])=>`<div class="choice-card ${state.format===k?'selected':''}" data-format="${k}"><div class="choice-name">${f.label}</div><div class="choice-meta">${f.meta}</div></div>`).join('');
-  document.querySelectorAll('#formatChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#formatChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.format=c.dataset.format;checkStep3Ready();});});
-}
+function renderFormatChoices(){document.getElementById('formatChoices').innerHTML=Object.entries(FORMATS).map(([k,f])=>`<div class="choice-card ${state.format===k?'selected':''}" data-format="${k}"><div class="choice-name">${f.label}</div><div class="choice-meta">${f.meta}</div></div>`).join('');document.querySelectorAll('#formatChoices .choice-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('#formatChoices .choice-card').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');state.format=c.dataset.format;checkStep3Ready();});});}
 
 renderThemeChoices();renderFrameChoices();renderSubjectChoices();renderTypoChoices();renderFormatChoices();
 
@@ -539,7 +536,7 @@ function goStep4(){
   state.currentStep=4;document.querySelectorAll('.step-panel').forEach(p=>p.classList.add('hidden'));document.getElementById('results').classList.add('hidden');document.getElementById('step-4').classList.remove('hidden');renderRail(4);
   const t4=document.getElementById('step4Title'),d4=document.getElementById('step4Desc'),st=document.getElementById('tarotSubtitleToggle');
   if(state.deckType==='oracle'){document.getElementById('oracleFields').classList.remove('hidden');document.getElementById('tarotFields').classList.add('hidden');st.classList.add('hidden');t4.textContent="Define your Oracle cards";d4.textContent="Cards are auto-generated — edit names, regenerate individually, or add more.";if(state.oracleCards.length===0)initOracle();else renderOracle();}
-  else{document.getElementById('oracleFields').classList.add('hidden');document.getElementById('tarotFields').classList.remove('hidden');st.classList.remove('hidden');document.getElementById('useSubtitles').checked=state.useSubtitles;t4.textContent="Major Arcana — structure locked in";d4.textContent="All 22 cards are mapped with traditional symbolism. Toggle subtitles for unique poetic variations.";}
+  else{document.getElementById('oracleFields').classList.add('hidden');document.getElementById('tarotFields').classList.remove('hidden');st.classList.remove('hidden');document.getElementById('useSubtitles').checked=state.useSubtitles;document.getElementById('numberingSel').value=state.numbering;t4.textContent="Major Arcana — structure locked in";d4.textContent="All 22 cards are mapped with traditional symbolism. Toggle subtitles for unique poetic variations.";}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>goStep(parseInt(b.dataset.back))));
@@ -552,14 +549,7 @@ document.getElementById('toStep2').addEventListener('click',()=>goStep(2));
 document.getElementById('toStep3').addEventListener('click',()=>{if(!state.palette)generateAndSetPalette();const fk=THEMES[state.theme].frame;if(!state.frame)state.frame=fk;checkStep3Ready();goStep(3);});
 
 /* ============ PALETTE ============ */
-function generateAndSetPalette(){
-  const gen=getActivePaletteGenerator();
-  const generated=gen.generatePalette();
-  state.palette=generated.colors.join(', ');
-  state.paletteName=generated.name;
-  const pi=document.getElementById('paletteInput');if(pi)pi.value=state.palette;
-  renderPalettePreview(generated);
-}
+function generateAndSetPalette(){const gen=getActivePaletteGenerator();const generated=gen.generatePalette();state.palette=generated.colors.join(', ');state.paletteName=generated.name;const pi=document.getElementById('paletteInput');if(pi)pi.value=state.palette;renderPalettePreview(generated);}
 function renderPalettePreview(o){const pv=document.getElementById('palettePreview');if(!pv)return;pv.innerHTML=o.colors.map(h=>`<div><div class="palette-swatch" style="background:${h}" title="${h}"></div><div class="palette-name">${h}</div></div>`).join('');const nl=document.getElementById('paletteNameLabel');if(nl)nl.textContent=`"${o.name}"`;}
 document.getElementById('regeneratePaletteBtn').addEventListener('click',()=>{generateAndSetPalette();checkStep3Ready();});
 document.getElementById('paletteInput').addEventListener('input',e=>{state.palette=e.target.value.trim();state.paletteName="Custom";const hx=state.palette.split(',').map(s=>s.trim()).filter(s=>/^#([0-9a-f]{3}){1,2}$/i.test(s));if(hx.length>0)renderPalettePreview({name:"Custom",colors:hx});checkStep3Ready();});
@@ -569,6 +559,7 @@ document.querySelectorAll('#engineChoices .pill').forEach(p=>{p.addEventListener
 function checkStep3Ready(){const baseReady=state.style&&state.palette&&state.palette.length>3&&state.frame&&state.typography&&state.format&&state.engine;const subjectReady=state.deckType==='oracle'?!!state.subjectType:true;document.getElementById('toStep4').disabled=!(baseReady&&subjectReady);}
 document.getElementById('toStep4').addEventListener('click',goStep4);
 document.getElementById('useSubtitles').addEventListener('change',e=>{state.useSubtitles=e.target.checked;});
+document.getElementById('numberingSel').addEventListener('change',e=>{state.numbering=e.target.value;});
 
 /* ============ ORACLE ============ */
 function initOracle(){state.oracleCards=[];for(let i=0;i<5;i++)state.oracleCards.push({name:CARD_NAME_GENERATOR.generateName(),keyword:CARD_NAME_GENERATOR.generateKeyword()});renderOracle();}
@@ -601,7 +592,7 @@ function buildBack(v,comp){
 
 function generateDeck(){
   generatedDeck=[];generatedDeck.push({badge:"BK",name:"Card Back",arcana:"Entire deck",isBack:true,textInfo:null,subtitle:null,prompt:buildBack(pickV(),pickComp())});
-  if(state.deckType==='tarot-major'){MAJOR_ARCANA.forEach(([num,name,sym,mean])=>{const v=pickV(),comp=pickComp(),sub=state.useSubtitles?SUBTITLE_GENERATOR.generate():null;currentSubtitles.push(sub);generatedDeck.push({badge:num,name:name,arcana:"Major Arcana",subtitle:sub,textInfo:{title:name,numeral:num,keyword:mean},prompt:buildFront(name,sym,mean,v,comp,sub)});});}
+  if(state.deckType==='tarot-major'){majorArcana().forEach(([num,name,sym,mean])=>{const v=pickV(),comp=pickComp(),sub=state.useSubtitles?SUBTITLE_GENERATOR.generate():null;currentSubtitles.push(sub);generatedDeck.push({badge:num,name:name,arcana:"Major Arcana",subtitle:sub,textInfo:{title:name,numeral:num,keyword:mean},prompt:buildFront(name,sym,mean,v,comp,sub)});});}
   else{state.oracleCards.forEach((c,i)=>{const v=pickV(),comp=pickComp();const si=state.subjectType?SUBJECT_TYPES[state.subjectType].build():SUBJECT_TYPES['human-figure'].build();generatedDeck.push({badge:(i+1),name:c.name,arcana:"Oracle Card",subtitle:null,textInfo:{title:c.name,numeral:String(i+1),keyword:c.keyword||""},prompt:buildFront(c.name,`an original oracle card illustration embodying the concept "${c.name}" — ${si}`,c.keyword||'',v,comp,null)});});}
   renderResults();
 }
@@ -614,29 +605,18 @@ function renderResults(){
 }
 function toggleCard(i){document.getElementById('card-'+i).classList.toggle('open');}
 function copyPrompt(i,b){navigator.clipboard.writeText(generatedDeck[i].prompt).then(()=>{b.textContent="Copied ✓";b.classList.add('copied');setTimeout(()=>{b.textContent="Copy prompt";b.classList.remove('copied');},1600);});}
-function regenCard(i){const v=pickV(),comp=pickComp();if(i===0){generatedDeck[i].prompt=buildBack(v,comp);}else if(state.deckType==='tarot-major'){const[,name,sym,mean]=MAJOR_ARCANA[i-1];const sub=state.useSubtitles?SUBTITLE_GENERATOR.generate():null;generatedDeck[i].subtitle=sub;generatedDeck[i].prompt=buildFront(name,sym,mean,v,comp,sub);}else{const c=state.oracleCards[i-1];const si=state.subjectType?SUBJECT_TYPES[state.subjectType].build():SUBJECT_TYPES['human-figure'].build();generatedDeck[i].prompt=buildFront(c.name,`an original oracle card illustration embodying the concept "${c.name}" — ${si}`,c.keyword||'',v,comp,null);}const wo=document.getElementById('card-'+i).classList.contains('open');renderResults();if(wo)document.getElementById('card-'+i).classList.add('open');}
+function regenCard(i){const v=pickV(),comp=pickComp();if(i===0){generatedDeck[i].prompt=buildBack(v,comp);}else if(state.deckType==='tarot-major'){const[,name,sym,mean]=majorArcana()[i-1];const sub=state.useSubtitles?SUBTITLE_GENERATOR.generate():null;generatedDeck[i].subtitle=sub;generatedDeck[i].prompt=buildFront(name,sym,mean,v,comp,sub);}else{const c=state.oracleCards[i-1];const si=state.subjectType?SUBJECT_TYPES[state.subjectType].build():SUBJECT_TYPES['human-figure'].build();generatedDeck[i].prompt=buildFront(c.name,`an original oracle card illustration embodying the concept "${c.name}" — ${si}`,c.keyword||'',v,comp,null);}const wo=document.getElementById('card-'+i).classList.contains('open');renderResults();if(wo)document.getElementById('card-'+i).classList.add('open');}
 
 /* ============ BUTTONS ============ */
 document.getElementById('regenAllBtn').addEventListener('click',()=>{generateAndSetPalette();if(state.deckType==='oracle'){state.oracleCards=state.oracleCards.map(()=>({name:CARD_NAME_GENERATOR.generateName(),keyword:CARD_NAME_GENERATOR.generateKeyword()}));}generateDeck();showToast("All cards regenerated!");});
 document.getElementById('backToEditBtn').addEventListener('click',()=>{goStep4();showToast("Returned to editor");});
-document.getElementById('newDeckBtn').addEventListener('click',()=>{const se=state.engine;Object.assign(state,{deckType:null,theme:null,style:null,palette:"",paletteName:"",frame:null,subjectType:"mixed-auto",typography:null,format:null,engine:se,oracleCards:[],useSubtitles:true,currentStep:1});generatedDeck=[];goStep(1);document.getElementById('toStep2').disabled=true;document.getElementById('toStep3').disabled=true;document.getElementById('toStep4').disabled=true;showToast("New deck started!");});
+document.getElementById('newDeckBtn').addEventListener('click',()=>{const se=state.engine;Object.assign(state,{deckType:null,theme:null,style:null,palette:"",paletteName:"",frame:null,subjectType:"mixed-auto",typography:null,format:null,engine:se,oracleCards:[],useSubtitles:true,numbering:"modern",currentStep:1});generatedDeck=[];goStep(1);document.getElementById('toStep2').disabled=true;document.getElementById('toStep3').disabled=true;document.getElementById('toStep4').disabled=true;showToast("New deck started!");});
 document.getElementById('copyAllBtn').addEventListener('click',()=>{const all=generatedDeck.map(c=>`=== ${c.name}${c.subtitle?' — '+c.subtitle:''} ===\n${c.prompt}`).join('\n\n---\n\n');navigator.clipboard.writeText(all).then(()=>{const b=document.getElementById('copyAllBtn');b.textContent="Copied ✓";setTimeout(()=>b.textContent="Copy all",1600);});});
 function download(fn,ct,tp){const bl=new Blob([ct],{type:tp});const u=URL.createObjectURL(bl);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);}
 document.getElementById('exportTxtBtn').addEventListener('click',()=>{const all=generatedDeck.map(c=>{const ot=!c.isBack?`\nTitle: ${c.textInfo.title}${c.textInfo.numeral?' | Numeral: '+c.textInfo.numeral:''}${c.textInfo.keyword?' | Keyword: '+c.textInfo.keyword:''}${c.subtitle?' | Subtitle: '+c.subtitle:''}\n`:'';return`=== ${c.name}${c.subtitle?' — '+c.subtitle:''} (${c.arcana}) ===${ot}\n${c.prompt}`;}).join('\n\n---\n\n');download('arcana-deck-ai-luxe-prompts.txt',all,'text/plain');});
 
 /* ============ SIDE MENU LOGIC ============ */
-(function(){
-  const toggle=document.getElementById('sideMenuToggle');
-  const overlay=document.getElementById('sideOverlay');
-  const menu=document.getElementById('sideMenu');
-  const closeBtn=document.getElementById('sideClose');
-  function openMenu(){toggle.classList.add('menu-open');overlay.classList.add('open');menu.classList.add('open');document.body.style.overflow='hidden';}
-  function closeMenu(){toggle.classList.remove('menu-open');overlay.classList.remove('open');menu.classList.remove('open');document.body.style.overflow='';}
-  toggle.addEventListener('click',()=>menu.classList.contains('open')?closeMenu():openMenu());
-  closeBtn.addEventListener('click',closeMenu);
-  overlay.addEventListener('click',closeMenu);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
-})();
+(function(){const toggle=document.getElementById('sideMenuToggle');const overlay=document.getElementById('sideOverlay');const menu=document.getElementById('sideMenu');const closeBtn=document.getElementById('sideClose');function openMenu(){toggle.classList.add('menu-open');overlay.classList.add('open');menu.classList.add('open');document.body.style.overflow='hidden';}function closeMenu(){toggle.classList.remove('menu-open');overlay.classList.remove('open');menu.classList.remove('open');document.body.style.overflow='';}toggle.addEventListener('click',()=>menu.classList.contains('open')?closeMenu():openMenu());closeBtn.addEventListener('click',closeMenu);overlay.addEventListener('click',closeMenu);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});})();
 </script>
 </body>
 </html>
