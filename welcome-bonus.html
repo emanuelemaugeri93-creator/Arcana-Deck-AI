@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Next Product Idea Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A140F; --panel:#132420; --panel-2:#1C332C;
+    --gold:#C97D4E; --gold-dim:#8F5934; --amethyst:#3D9970; --amethyst-soft:#5FBF93;
+    --parchment:#E8EFE6; --parchment-dim:#9BAFA0; --blood:#B0466E;
+    --line:rgba(201,125,78,0.22); --ok:#7FB88A;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:radial-gradient(ellipse at 20% -10%, rgba(61,153,112,0.25), transparent 55%),radial-gradient(ellipse at 85% 10%, rgba(201,125,78,0.14), transparent 45%),var(--void); color:var(--parchment); font-family:'EB Garamond', serif; min-height:100vh; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold); color:var(--void);}
+  .stars{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
+  .wrap{position:relative; z-index:1; max-width:960px; margin:0 auto; padding:40px 24px 100px;}
+  .bonus-banner{max-width:960px; margin:0 auto 28px; background:linear-gradient(90deg, rgba(61,153,112,0.14), rgba(201,125,78,0.10)); border:1px solid var(--line); border-radius:3px; padding:12px 20px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--gold);}
+  header.top{text-align:center; margin-bottom:36px;}
+  .eyebrow{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:12px;}
+  h1{font-family:'Cinzel Decorative','Cinzel',serif; font-weight:700; font-size:clamp(28px,4.5vw,44px); margin:0 0 10px;}
+  h1 span{color:var(--gold);}
+  .sub{font-size:15.5px; color:var(--parchment-dim); max-width:620px; margin:0 auto; font-style:italic;}
+  .sigil-divider{width:100px; height:1px; margin:22px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
+  .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:9px; background:var(--void); padding:0 10px;}
+
+  .accordion{border:1px solid var(--line); border-radius:4px; margin-bottom:24px; background:linear-gradient(180deg, var(--panel), var(--panel-2)); overflow:hidden;}
+  .accordion-head{display:flex; justify-content:space-between; align-items:center; padding:16px 22px; cursor:pointer;}
+  .accordion-head:hover{background:rgba(201,125,78,0.06);}
+  .accordion-title{font-family:'Cinzel',serif; font-size:15px; color:var(--gold); display:flex; align-items:center; gap:10px;}
+  .accordion-chev{color:var(--parchment-dim); font-size:12px; transition:transform .2s ease;}
+  .accordion.open .accordion-chev{transform:rotate(90deg);}
+  .accordion-body{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+  .accordion.open .accordion-body{max-height:1200px;}
+  .accordion-content{padding:0 22px 22px;}
+  .use-step{display:flex; gap:14px; margin-bottom:14px;}
+  .use-num{flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:1px solid var(--gold-dim); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold);}
+  .use-text{font-size:14.5px; color:var(--parchment-dim); line-height:1.6; padding-top:2px;}
+  .use-text b{color:var(--parchment); font-weight:600;}
+
+  .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:32px; position:relative; margin-bottom:20px; text-align:center;}
+  .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
+  .panel::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .panel::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .field{margin-bottom:20px; text-align:left;}
+  .field-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px; display:block;}
+  select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:11px 14px; border-radius:3px; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C97D4E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;}
+  select:focus{outline:none; border-color:var(--gold);}
+  .btn{font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.05em; padding:16px 40px; border-radius:2px; cursor:pointer; border:1px solid transparent; transition:all .18s ease; text-transform:uppercase;}
+  .btn-primary{background:linear-gradient(180deg, var(--gold), var(--gold-dim)); color:var(--void); font-weight:600;}
+  .btn-primary:hover{filter:brightness(1.08); box-shadow:0 4px 22px rgba(201,125,78,0.3);}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--parchment-dim); font-size:11px; padding:8px 16px;}
+  .btn-ghost:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+  .btn-mini{font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 12px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer;}
+  .btn-mini:hover{border-color:var(--amethyst-soft); color:var(--parchment);}
+
+  .result-card{display:none; text-align:left; margin-top:28px; padding-top:26px; border-top:1px solid var(--line);}
+  .result-card.show{display:block;}
+  .idea-header{display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;}
+  .idea-title{font-family:'Cinzel Decorative','Cinzel',serif; font-size:26px; color:var(--gold); text-align:center;}
+  .tag-pill{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.05em; padding:4px 10px; border-radius:12px; border:1px solid var(--line); text-transform:uppercase;}
+  .tag-rising{color:var(--amethyst-soft); border-color:var(--amethyst-soft);}
+  .tag-evergreen{color:var(--gold); border-color:var(--gold);}
+  .tag-seasonal{color:var(--blood); border-color:var(--blood);}
+  .tag-comp-low{color:var(--ok); border-color:var(--ok);}
+  .tag-comp-medium{color:var(--gold-dim); border-color:var(--gold-dim);}
+  .tag-comp-high{color:var(--blood); border-color:var(--blood);}
+  .idea-tagline{font-size:16px; color:var(--parchment-dim); font-style:italic; text-align:center; margin-bottom:24px;}
+  
+  .spec-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;}
+  @media(max-width:640px){.spec-grid{grid-template-columns:1fr;}}
+  .spec-item{background:rgba(0,0,0,0.22); border:1px solid var(--line); border-radius:3px; padding:14px 16px; position:relative;}
+  .spec-label{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:5px;}
+  .spec-value{font-size:15px; color:var(--parchment);}
+  
+  .keywords-box{background:rgba(0,0,0,0.22); border:1px solid var(--line); border-radius:3px; padding:14px 16px; margin-bottom:16px;}
+  .keyword-tag{display:inline-block; background:rgba(61,153,112,0.15); color:var(--amethyst-soft); font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px; border-radius:10px; margin:2px; border:1px solid rgba(61,153,112,0.3);}
+  
+  .upsell-box{background:rgba(201,125,78,0.08); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:2px; padding:16px 18px; margin-bottom:16px;}
+  .upsell-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:block;}
+  .upsell-box .val{font-size:14px; color:var(--parchment-dim); line-height:1.6;}
+  
+  .reroll-row{text-align:center; margin-bottom:16px;}
+  .rationale-box{background:rgba(61,153,112,0.07); border:1px solid var(--line); border-left:3px solid var(--amethyst); border-radius:2px; padding:16px 18px; font-size:14.5px; line-height:1.7; color:var(--parchment-dim); margin-bottom:22px;}
+  .rationale-box .lbl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amethyst-soft); margin-bottom:6px; display:block;}
+  .toolbar{display:flex; justify-content:center; gap:10px; margin-top:10px; flex-wrap:wrap;}
+  .copy-btn{font-family:'JetBrains Mono',monospace; font-size:11px; padding:8px 16px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--parchment-dim); cursor:pointer;}
+  .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
+
+  .saved-panel{display:none;}
+  .saved-panel.show{display:block;}
+  .saved-item{display:flex; justify-content:space-between; align-items:center; gap:10px; background:rgba(0,0,0,0.2); border:1px solid var(--line); border-radius:3px; padding:12px 16px; margin-bottom:8px;}
+  .saved-item .name{font-family:'Cinzel',serif; font-size:14px; color:var(--parchment);}
+  .saved-item .meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); margin-top:2px;}
+</style>
+</head>
+<body>
+<canvas class="stars"></canvas>
+<div class="wrap">
+  <div class="bonus-banner">✦ ARCANA DECK AI — WELCOME BONUS · unlimited next-product ideas for your growing shop ✦</div>
+  <header class="top">
+    <div class="eyebrow">Product Ideation Engine</div>
+    <h1>Arcana <span>Next Product</span> Idea Generator</h1>
+    <p class="sub">Already sold your first deck? Draw your next product idea — niche, format, audience, pricing, keywords, upsell path, and real market reasoning.</p>
+    <div class="sigil-divider"></div>
+  </header>
+
+  <div class="accordion" id="howToAccordion">
+    <div class="accordion-head" onclick="toggleAccordion()">
+      <div class="accordion-title">📖 How to use this tool</div>
+      <div class="accordion-chev">▶</div>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content">
+        <div class="use-step"><div class="use-num">1</div><div class="use-text"><b>Narrow the draw (optional).</b> Filter by format type, or leave it on "Surprise Me" for a fully random pull.</div></div>
+        <div class="use-step"><div class="use-num">2</div><div class="use-text"><b>Draw an idea.</b> You'll get a niche angle, format, audience, pricing, SEO keywords, upsell suggestions, and real market reasoning.</div></div>
+        <div class="use-step"><div class="use-num">3</div><div class="use-text"><b>Not sold on the audience or price?</b> Use the small "reroll" buttons to try new options without losing the core idea.</div></div>
+        <div class="use-step"><div class="use-num">4</div><div class="use-text"><b>Save the ones worth considering.</b> Build a shortlist instead of committing to the first draw — save as many as you like, then export the full list.</div></div>
+        <div class="use-step"><div class="use-num">5</div><div class="use-text"><b>Take it into Arcana Deck AI.</b> This tool tells you <i>what</i> to build next — the deck generator handles <i>how</i>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="panel">
+    <div class="field">
+      <label class="field-label">Narrow the draw (optional)</label>
+      <select id="filterSelect">
+        <option value="any">Surprise Me — anything</option>
+        <option value="oracle">Oracle Deck ideas only</option>
+        <option value="tarot">Tarot-structured deck ideas only</option>
+        <option value="coloring">Coloring/printable ideas only</option>
+        <option value="bundle">Bundle/collection ideas only</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="drawBtn">✦ Draw My Next Product Idea</button>
+
+    <div class="result-card" id="resultCard">
+      <div class="idea-header">
+        <div class="idea-title" id="ideaTitle"></div>
+      </div>
+      <div class="idea-header" style="margin-bottom:14px;">
+        <span class="tag-pill" id="trendTag"></span>
+        <span class="tag-pill" id="compTag"></span>
+      </div>
+      <div class="idea-tagline" id="ideaTagline"></div>
+
+      <div class="spec-grid">
+        <div class="spec-item">
+          <div class="spec-label">Format</div>
+          <div class="spec-value" id="specFormat"></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Best Sold As</div>
+          <div class="spec-value" id="specSellAs"></div>
+        </div>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <div class="spec-label">Target Audience</div>
+          <div class="spec-value" id="specAudience"></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Suggested Price Range</div>
+          <div class="spec-value" id="specPrice"></div>
+        </div>
+      </div>
+      
+      <div class="keywords-box">
+        <div class="spec-label">SEO Keywords</div>
+        <div id="keywordsContainer"></div>
+      </div>
+      
+      <div class="upsell-box">
+        <span class="lbl">Natural Upsell Path</span>
+        <div class="val" id="upsellPath"></div>
+      </div>
+
+      <div class="reroll-row">
+        <button class="btn-mini" id="rerollAudienceBtn">🎲 Reroll audience</button>
+        <button class="btn-mini" id="rerollPriceBtn">🎲 Reroll price</button>
+        <button class="btn-mini" id="rerollUpsellBtn">🎲 Reroll upsell</button>
+      </div>
+
+      <div class="rationale-box">
+        <span class="lbl">Why this could work</span>
+        <span id="rationaleText"></span>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-ghost" id="anotherBtn">🎲 Draw another idea</button>
+        <button class="copy-btn" id="copyBtn">Copy this idea</button>
+        <button class="copy-btn" id="saveBtn">💾 Save to my list</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel saved-panel" id="savedPanel" style="text-align:left;">
+    <div class="field-label" style="margin-bottom:14px; text-align:center;">My Saved Ideas (<span id="savedCount">0</span>)</div>
+    <div id="savedList"></div>
+    <div class="toolbar">
+      <button class="btn-ghost btn" id="exportSavedBtn" style="padding:10px 20px;">Export all saved ideas (.txt)</button>
+      <button class="btn-ghost btn" id="clearSavedBtn" style="padding:10px 20px;">Clear list</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
+  function resize(){ c.width = innerWidth; c.height = innerHeight; } resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:90}, () => ({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*1.2+0.2, a: Math.random(), s: Math.random()*0.015+0.003 }));
+  function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(61,153,112,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
+})();
+
+function toggleAccordion(){ document.getElementById('howToAccordion').classList.toggle('open'); }
+function randomOf(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+/* ============ ULTRA-REALISTIC NICHE IDEA BANK (75+ IDEAS) ============ */
+const NICHE_IDEAS = [
+  // === ORACLE DECKS - Highly specific, beautiful niches ===
+  { name:"Midnight Botanical Oracle", tagline:"Poisonous plants and night-blooming flowers as guidance", type:"oracle", trend:"rising", comp:"low", keywords:["dark botanical deck","poison plant oracle","night flower cards","gothic garden deck","moon garden oracle"] },
+  { name:"Tea Leaf Reading Deck", tagline:"Tasseography-inspired cards for cozy ritual guidance", type:"oracle", trend:"evergreen", comp:"low", keywords:["tea leaf deck","tasseography cards","tea magic oracle","cozy divination","tea reading deck"] },
+  { name:"Coastal Grandmother Oracle", tagline:"Nancy Meyers aesthetic meets gentle life guidance", type:"oracle", trend:"rising", comp:"low", keywords:["coastal grandmother deck","coastal aesthetic cards","beach house oracle","summer living deck","seaside guidance"] },
+  { name:"Cottagecore Herbal Oracle", tagline:"Whimsical cottage garden wisdom cards", type:"oracle", trend:"rising", comp:"medium", keywords:["cottagecore deck","herbal oracle","garden witch cards","cozy cottage cards","homestead guidance"] },
+  { name:"Van Life & Wanderer's Oracle", tagline:"Guidance for nomadic souls and road travelers", type:"oracle", trend:"rising", comp:"low", keywords:["van life deck","travel oracle","nomad cards","road trip guidance","wanderer deck"] },
+  { name:"Book Lover's Oracle", tagline:"Literary-themed guidance for readers and writers", type:"oracle", trend:"evergreen", comp:"low", keywords:["book lover deck","literary oracle","writer guidance cards","reading themed deck","bibliophile cards"] },
+  { name:"Mushroom & Forest Oracle", tagline:"Woodland wisdom through fungi and forest imagery", type:"oracle", trend:"rising", comp:"low", keywords:["mushroom deck","forest oracle","woodland cards","fungi art deck","forest magic oracle"] },
+  { name:"Beekeeper's Oracle", tagline:"Honeybee wisdom and hive-mind guidance", type:"oracle", trend:"rising", comp:"low", keywords:["bee oracle","beekeeper deck","honey cards","pollinator guidance","hive wisdom deck"] },
+  { name:"Vintage Circus Oracle", tagline:"Whimsical, slightly dark carnival-themed guidance", type:"oracle", trend:"rising", comp:"low", keywords:["circus deck","carnival oracle","vintage circus cards","carnival art deck","sideshow oracle"] },
+  { name:"Deep Sea Oracle", tagline:"Abyssal ocean creatures as metaphors for inner depth", type:"oracle", trend:"rising", comp:"low", keywords:["deep sea deck","ocean creature oracle","abyss cards","marine life deck","underwater guidance"] },
+  { name:"Constellation & Star Oracle", tagline:"Star-map inspired cards for celestial navigation of life", type:"oracle", trend:"evergreen", comp:"medium", keywords:["constellation deck","star oracle","celestial cards","night sky guidance","astronomy oracle"] },
+  { name:"Victorian Flower Language Oracle", tagline:"Floriography-based cards using historical flower meanings", type:"oracle", trend:"rising", comp:"low", keywords:["flower language deck","victorian oracle","floriography cards","vintage flower deck","botanical meaning cards"] },
+  { name:"Tarot de Marseille Restoration", tagline:"Classic Marseille imagery with modern printing quality", type:"tarot", trend:"evergreen", comp:"medium", keywords:["tarot de marseille","traditional tarot","french tarot deck","restored tarot","classic tarot cards"] },
+  { name:"Art Nouveau Tarot", tagline:"Mucha-inspired flowing lines and organic forms", type:"tarot", trend:"rising", comp:"low", keywords:["art nouveau tarot","mucha deck","flowing line tarot","decorative tarot","organic art deck"] },
+  { name:"Cyberpunk Tarot", tagline:"Neon-lit, dystopian future Major Arcana", type:"tarot", trend:"rising", comp:"low", keywords:["cyberpunk tarot","neon deck","futuristic tarot","dystopian cards","tech oracle"] },
+  { name:"Fairy Tale Tarot", tagline:"Grimm-inspired archetypes through classic story imagery", type:"tarot", trend:"evergreen", comp:"medium", keywords:["fairy tale tarot","grimm deck","storybook tarot","folklore cards","enchanted oracle"] },
+  { name:"Art Deco Tarot", tagline:"Geometric 1920s glamour meets Tarot structure", type:"tarot", trend:"rising", comp:"low", keywords:["art deco tarot","1920s deck","geometric tarot","gatsby cards","vintage glamour deck"] },
+  { name:"Woodcut Tarot", tagline:"Black and white lino-cut style illustrations", type:"tarot", trend:"rising", comp:"low", keywords:["woodcut tarot","linocut deck","black white tarot","printmaking cards","carved art deck"] },
+  { name:"Japanese Ukiyo-e Tarot", tagline:"Traditional woodblock print aesthetic Tarot", type:"tarot", trend:"rising", comp:"low", keywords:["ukiyo-e tarot","japanese tarot","woodblock deck","edo period cards","asian art oracle"] },
+  { name:"Stained Glass Tarot", tagline:"Cathedral window-inspired luminous cards", type:"tarot", trend:"rising", comp:"low", keywords:["stained glass tarot","cathedral deck","luminous cards","gothic window tarot","light art oracle"] },
+  
+  // === COLORING - Beautiful, specific themes ===
+  { name:"Enchanted Forest Coloring Book", tagline:"Intricate woodland scenes with hidden creatures", type:"coloring", trend:"evergreen", comp:"medium", keywords:["enchanted forest coloring","woodland coloring book","fairy forest pages","magical trees coloring","hidden creatures art"] },
+  { name:"Celestial Mandala Coloring", tagline:"Star and moon mandalas for meditative coloring", type:"coloring", trend:"evergreen", comp:"medium", keywords:["celestial mandala","star coloring pages","moon mandala coloring","cosmic art therapy","meditation coloring"] },
+  { name:"Victorian Mourning Coloring Book", tagline:"Historical mourning imagery - memento mori, weeping willows", type:"coloring", trend:"rising", comp:"low", keywords:["victorian mourning coloring","memento mori pages","gothic history coloring","mourning art book","historical dark coloring"] },
+  { name:"Botanical Witch's Garden Coloring", tagline:"Magical herbs and witch garden illustrations", type:"coloring", trend:"rising", comp:"low", keywords:["witch garden coloring","magical herbs pages","botanical witch art","potion garden coloring","spell book pages"] },
+  { name:"Art Nouveau Patterns Coloring", tagline:"Flowing decorative patterns from the Belle Époque", type:"coloring", trend:"evergreen", comp:"low", keywords:["art nouveau coloring","decorative pattern pages","belle epoque art","flowing design coloring","ornamental pages"] },
+  { name:"Dark Fairy Tales Coloring", tagline:"Grimm and Andersen illustrations for adults", type:"coloring", trend:"rising", comp:"low", keywords:["dark fairy tale coloring","grimm coloring book","gothic story pages","adult fairy coloring","dark whimsy art"] },
+  { name:"Ocean Depths Coloring", tagline:"Underwater scenes from coral reefs to abyssal trenches", type:"coloring", trend:"rising", comp:"low", keywords:["ocean coloring","underwater pages","coral reef art","deep sea coloring","marine life book"] },
+  { name:"Tarot Card Coloring Book", tagline:"Color your own Major Arcana illustrations", type:"coloring", trend:"rising", comp:"low", keywords:["tarot coloring book","color your own tarot","major arcana pages","tarot art therapy","divination coloring"] },
+  
+  // === BUNDLES - Cohesive, valuable collections ===
+  { name:"Wheel of the Year Complete Set", tagline:"Eight mini-decks for each sabbat celebration", type:"bundle", trend:"seasonal", comp:"low", keywords:["wheel of year set","sabbat deck collection","pagan calendar bundle","seasonal oracle set","eight sabbats deck"] },
+  { name:"Beginner Witch Starter Kit", tagline:"Basic oracle deck, herb guide, and moon phase chart", type:"bundle", trend:"rising", comp:"medium", keywords:["beginner witch kit","starter wiccan set","new witch bundle","pagan starter pack","witchcraft basics kit"] },
+  { name:"Self-Care Ritual Bundle", tagline:"Affirmation deck, journal prompts, and meditation guide", type:"bundle", trend:"evergreen", comp:"medium", keywords:["self care bundle","ritual kit","meditation set","wellness deck bundle","mindfulness collection"] },
+  { name:"Shadow Work Complete Toolkit", tagline:"Tarot deck, workbook, and guided journal", type:"bundle", trend:"rising", comp:"low", keywords:["shadow work bundle","healing toolkit","inner work set","therapy deck bundle","self discovery kit"] },
+  { name:"Astrology Lover's Collection", tagline:"Zodiac deck, birth chart guide, and constellation art", type:"bundle", trend:"evergreen", comp:"medium", keywords:["astrology bundle","zodiac collection","birth chart kit","star sign deck set","astrology gift set"] },
+  { name:"Moon Ritual Monthly Subscription", tagline:"Monthly mini-deck and ritual guide for moon phases", type:"bundle", trend:"rising", comp:"low", keywords:["moon subscription","ritual box","monthly oracle","moon phase kit","lunar subscription box"] },
+  
+  // === MORE ULTRA-SPECIFIC ORACLES ===
+  { name:"Menopause & Crone Oracle", tagline:"Empowering guidance for the menopause journey", type:"oracle", trend:"rising", comp:"low", keywords:["menopause deck","crone oracle","midlife guidance","wise woman cards","hormone journey deck"] },
+  { name:"Autism & Neurodivergent Oracle", tagline:"By and for neurodivergent individuals seeking self-understanding", type:"oracle", trend:"rising", comp:"low", keywords:["autism deck","neurodivergent oracle","sensory cards","spoon theory deck","different mind guidance"] },
+  { name:"Sober Curious Oracle", tagline:"Supportive cards for exploring an alcohol-free life", type:"oracle", trend:"rising", comp:"low", keywords:["sober deck","alcohol free oracle","mindful drinking cards","sobriety support deck","sober curious guidance"] },
+  { name:"Chronically Ill & Thriving Oracle", tagline:"Strength and resilience cards for chronic illness warriors", type:"oracle", trend:"rising", comp:"low", keywords:["chronic illness deck","spoonie oracle","invisible illness cards","pain warrior deck","thriving with illness"] },
+  { name:"Pet Loss & Rainbow Bridge Oracle", tagline:"Gentle grief support for beloved animal companions", type:"oracle", trend:"evergreen", comp:"low", keywords:["pet loss deck","rainbow bridge cards","animal grief oracle","pet memorial deck","furry friend cards"] },
+  { name:"Divorced & Rising Oracle", tagline:"Empowerment cards for post-divorce rebuilding", type:"oracle", trend:"rising", comp:"low", keywords:["divorce deck","new chapter oracle","rebuilding cards","single again guidance","fresh start deck"] },
+  { name:"Teacher's Oracle", tagline:"Guidance and encouragement for educators", type:"oracle", trend:"rising", comp:"low", keywords:["teacher deck","educator oracle","classroom guidance","teaching support cards","burnout prevention deck"] },
+  { name:"Nurse & Healthcare Oracle", tagline:"Support cards for healthcare workers", type:"oracle", trend:"rising", comp:"low", keywords:["nurse deck","healthcare oracle","medical worker cards","compassion fatigue deck","healer guidance"] },
+  { name:"First Responder Oracle", tagline:"Strength cards for firefighters, EMTs, and police", type:"oracle", trend:"rising", comp:"low", keywords:["first responder deck","EMT oracle","firefighter cards","trauma support deck","hero guidance"] },
+  { name:"Military Spouse Oracle", tagline:"Support for the unique challenges of military life", type:"oracle", trend:"rising", comp:"low", keywords:["military spouse deck","deployment cards","military family oracle","PCS guidance","service family deck"] },
+  { name:"Empty Nest Oracle", tagline:"Rediscovering yourself after children leave home", type:"oracle", trend:"rising", comp:"low", keywords:["empty nest deck","new chapter oracle","midlife rediscovery","parent transition cards","self rediscovery deck"] },
+  { name:"Retirement & Renewal Oracle", tagline:"Guidance for the next great chapter", type:"oracle", trend:"rising", comp:"low", keywords:["retirement deck","renewal oracle","new purpose cards","post career guidance","third act deck"] },
+  { name:"Caregiver's Oracle", tagline:"Support for those caring for aging parents or ill family", type:"oracle", trend:"rising", comp:"low", keywords:["caregiver deck","support oracle","compassion fatigue cards","family caregiver guidance","burnout prevention deck"] },
+  { name:"Survivor's Oracle", tagline:"Empowerment cards for trauma survivors", type:"oracle", trend:"rising", comp:"low", keywords:["survivor deck","trauma healing oracle","PTSD support cards","empowerment deck","healing journey guidance"] },
+  { name:"Immigrant & New Beginnings Oracle", tagline:"Guidance for those building life in a new country", type:"oracle", trend:"rising", comp:"low", keywords:["immigrant deck","new country oracle","diaspora cards","belonging guidance","new home deck"] },
+  { name:"Queer Joy Oracle", tagline:"Celebratory cards for LGBTQ+ pride and affirmation", type:"oracle", trend:"rising", comp:"low", keywords:["queer deck","LGBTQ oracle","pride cards","joy affirmation deck","community celebration cards"] },
+  { name:"Trans & Nonbinary Oracle", tagline:"Affirming guidance for gender diverse individuals", type:"oracle", trend:"rising", comp:"low", keywords:["trans deck","nonbinary oracle","gender affirmation cards","identity deck","authentic self guidance"] },
+  { name:"Disability Pride Oracle", tagline:"Empowering cards celebrating disability identity", type:"oracle", trend:"rising", comp:"low", keywords:["disability deck","pride oracle","accessibility cards","disabled joy deck","inclusion guidance"] },
+  { name:"Recovery Warrior Oracle", tagline:"Strength cards for eating disorder recovery", type:"oracle", trend:"rising", comp:"low", keywords:["ED recovery deck","healing oracle","body peace cards","recovery warrior deck","self compassion guidance"] },
+  { name:"Hospice & End of Life Oracle", tagline:"Gentle support for those in hospice care and their families", type:"oracle", trend:"rising", comp:"low", keywords:["hospice deck","end of life oracle","gentle transition cards","farewell guidance","peaceful passing deck"] },
+  { name:"Adoptee's Oracle", tagline:"Identity and belonging cards for adopted individuals", type:"oracle", trend:"rising", comp:"low", keywords:["adoption deck","identity oracle","belonging cards","found family deck","origin story guidance"] },
+  { name:"Single Parent Oracle", tagline:"Strength and grace for solo parenting journeys", type:"oracle", trend:"rising", comp:"low", keywords:["single parent deck","solo mom oracle","solo dad cards","parenting support deck","doing it alone guidance"] },
+  { name:"Neurodivergent Parenting Oracle", tagline:"Support for parents of neurodivergent children", type:"oracle", trend:"rising", comp:"low", keywords:["neurodivergent parenting","ADHD parent deck","autism parent oracle","special needs support","understanding child cards"] },
+  { name:"Grandparent's Oracle", tagline:"Joy and wisdom for the grandparenting years", type:"oracle", trend:"rising", comp:"low", keywords:["grandparent deck","grandma oracle","grandpa cards","family elder guidance","legacy deck"] }
+];
+
+const AUDIENCES = [
+  "Etsy shoppers searching for highly specific life-stage support",
+  "Gift buyers seeking meaningful presents for difficult transitions",
+  "Collectors who appreciate unique, artistic deck themes",
+  "Therapy and counseling clients looking for supportive tools",
+  "Social media communities (TikTok, Instagram) sharing niche interests",
+  "Online support groups for specific life challenges",
+  "Mindfulness and meditation practitioners seeking ritual objects",
+  "Adult coloring enthusiasts seeking sophisticated, themed artwork",
+  "Book and literature lovers who appreciate themed merchandise",
+  "Home decor enthusiasts looking for beautiful, functional art",
+  "Spiritual seekers exploring alternative guidance methods",
+  "People going through major life transitions seeking comfort",
+  "Gift-givers looking for presents that say 'I see you'",
+  "Collectors of beautiful, artisanal paper goods",
+  "Members of online communities for specific identities and experiences"
+];
+
+const SELL_AS = [
+  "a standalone Etsy listing with professional lifestyle photography",
+  "a limited edition seasonal release with numbered prints",
+  "a digital download available immediately after purchase",
+  "a bundle paired with complementary existing products",
+  "a subscription box or monthly club offering",
+  "a print-on-demand option through Amazon KDP",
+  "a premium edition with gilded edges and special packaging",
+  "a workshop or course companion product",
+  "a Patreon or membership exclusive offering",
+  "a wholesale option for boutique retail shops"
+];
+
+const PRICE_RANGES = [
+  "$5 – $9 (digital download)",
+  "$9 – $14 (standard deck)",
+  "$12 – $19 (premium deck)",
+  "$15 – $24 (deluxe edition)",
+  "$18 – $29 (complete set)",
+  "$25 – $39 (premium bundle)",
+  "$30 – $49 (collector's edition)",
+  "$7 – $12 (coloring book)",
+  "$10 – $18 (bundle starter)",
+  "$40 – $75 (luxury gift set)"
+];
+
+const UPSELL_PATHS = [
+  "Digital download → printed version → deluxe edition with gilded edges → matching journal and accessories",
+  "Single deck → companion guidebook → complete learning system → workshop enrollment",
+  "Mini deck → full 78-card deck → collector's box set → subscription for future additions",
+  "Coloring pages → complete coloring book → matching oracle deck → art print collection",
+  "Starter kit → expanded bundle → premium all-inclusive set → membership community",
+  "Seasonal special → year-round collection → matching merchandise → subscription box",
+  "Basic version → advanced version → master collection → certification course",
+  "Individual cards → complete set → storage box with guide → gift wrapping service",
+  "Digital product → print-on-demand → limited signed prints → original artwork auction",
+  "Single theme → series collection → complete universe bundle → fan community access"
+];
+
+const RATIONALE_OPENERS = [
+  "This angle connects with buyers because",
+  "The market opportunity is significant since",
+  "This fills a genuine gap in the market because",
+  "The commercial potential is strong here since",
+  "This resonates with a growing audience because",
+  "The timing is right for this idea since",
+  "This addresses an underserved need because",
+  "The emotional connection is powerful since"
+];
+
+const RATIONALE_MIDDLES = [
+  "it speaks directly to a specific life experience that buyers are actively seeking support for",
+  "the niche is narrow enough to stand out in Etsy search but broad enough to sustain sales",
+  "it taps into trending conversations on social media that are driving real purchase intent",
+  "the audience is underserved and actively searching for representation in spiritual products",
+  "it can launch as a low-risk digital product before investing in physical production",
+  "the theme lends itself to stunning visuals that drive Etsy click-through rates",
+  "it naturally pairs with gift-giving occasions and milestone moments",
+  "the specificity makes it easy to write SEO titles and tags that match real search queries",
+  "it builds on emotional needs that generic products don't address",
+  "the format allows for testing demand before scaling to more expensive versions",
+  "it creates opportunities for repeat purchases through collections and series",
+  "the aesthetic appeal is strong enough to attract impulse buyers browsing Etsy"
+];
+
+const TREND_LABELS = { rising:"↗ Rising", evergreen:"● Evergreen", seasonal:"◐ Seasonal" };
+const COMP_LABELS = { low:"Low Competition (est.)", medium:"Medium Competition (est.)", high:"High Competition (est.)" };
+
+/* ============ SAVED LIST STATE ============ */
+let savedIdeas = [];
+let currentDraw = null;
+
+function draw(){
+  const filter = document.getElementById('filterSelect').value;
+  let pool = NICHE_IDEAS;
+  if(filter !== 'any') pool = NICHE_IDEAS.filter(i => i.type === filter);
+  const idea = randomOf(pool);
+  
+  const keywords = shuffleArray(idea.keywords).slice(0, 5);
+  
+  currentDraw = {
+    idea,
+    keywords,
+    audience: randomOf(AUDIENCES),
+    sellAs: randomOf(SELL_AS),
+    price: randomOf(PRICE_RANGES),
+    upsell: randomOf(UPSELL_PATHS),
+    rationale: `${randomOf(RATIONALE_OPENERS)} ${randomOf(RATIONALE_MIDDLES)}.`
+  };
+  renderDraw();
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function renderDraw(){
+  const { idea, keywords, audience, sellAs, price, upsell, rationale } = currentDraw;
+  document.getElementById('ideaTitle').textContent = idea.name;
+  document.getElementById('ideaTagline').textContent = idea.tagline;
+  document.getElementById('trendTag').textContent = TREND_LABELS[idea.trend];
+  document.getElementById('trendTag').className = 'tag-pill tag-' + idea.trend;
+  document.getElementById('compTag').textContent = COMP_LABELS[idea.comp];
+  document.getElementById('compTag').className = 'tag-pill tag-comp-' + idea.comp;
+  document.getElementById('specFormat').textContent = idea.type === 'tarot' ? 'Tarot-structured deck' : idea.type === 'oracle' ? 'Custom Oracle deck' : idea.type === 'coloring' ? 'Printable coloring set' : 'Multi-product bundle';
+  document.getElementById('specAudience').textContent = audience;
+  document.getElementById('specPrice').textContent = price;
+  document.getElementById('specSellAs').textContent = sellAs;
+  
+  document.getElementById('keywordsContainer').innerHTML = keywords.map(k => 
+    `<span class="keyword-tag">${escapeHtml(k)}</span>`
+  ).join(' ');
+  
+  document.getElementById('upsellPath').textContent = upsell;
+  document.getElementById('rationaleText').textContent = rationale;
+  document.getElementById('resultCard').classList.add('show');
+}
+
+document.getElementById('drawBtn').addEventListener('click', draw);
+document.getElementById('anotherBtn').addEventListener('click', draw);
+
+document.getElementById('rerollAudienceBtn').addEventListener('click', ()=>{
+  currentDraw.audience = randomOf(AUDIENCES);
+  document.getElementById('specAudience').textContent = currentDraw.audience;
+});
+
+document.getElementById('rerollPriceBtn').addEventListener('click', ()=>{
+  currentDraw.price = randomOf(PRICE_RANGES);
+  document.getElementById('specPrice').textContent = currentDraw.price;
+});
+
+document.getElementById('rerollUpsellBtn').addEventListener('click', ()=>{
+  currentDraw.upsell = randomOf(UPSELL_PATHS);
+  document.getElementById('upsellPath').textContent = currentDraw.upsell;
+});
+
+document.getElementById('copyBtn').addEventListener('click', (e)=>{
+  const { idea, keywords, audience, sellAs, price, upsell, rationale } = currentDraw;
+  const text = `${idea.name}\n${idea.tagline}\n\nTrend: ${TREND_LABELS[idea.trend]} | Competition: ${COMP_LABELS[idea.comp]}\nFormat: ${document.getElementById('specFormat').textContent}\nTarget Audience: ${audience}\nSuggested Price: ${price}\nBest Sold As: ${sellAs}\nSEO Keywords: ${keywords.join(', ')}\nUpsell Path: ${upsell}\n\nWhy this could work: ${rationale}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    e.target.textContent = "Copied ✓"; e.target.classList.add('copied');
+    setTimeout(()=>{ e.target.textContent="Copy this idea"; e.target.classList.remove('copied'); }, 1600);
+  });
+});
+
+/* ============ SAVE LIST ============ */
+function renderSavedList(){
+  const panel = document.getElementById('savedPanel');
+  const listEl = document.getElementById('savedList');
+  document.getElementById('savedCount').textContent = savedIdeas.length;
+  if(savedIdeas.length === 0){
+    panel.classList.remove('show');
+    return;
+  }
+  panel.classList.add('show');
+  listEl.innerHTML = savedIdeas.map((d,i) => `
+    <div class="saved-item">
+      <div>
+        <div class="name">${escapeHtml(d.idea.name)}</div>
+        <div class="meta">${TREND_LABELS[d.idea.trend]} · ${COMP_LABELS[d.idea.comp]} · ${escapeHtml(d.price)}</div>
+      </div>
+      <button class="btn-mini" onclick="removeSaved(${i})">Remove</button>
+    </div>
+  `).join('');
+}
+function removeSaved(i){ savedIdeas.splice(i,1); renderSavedList(); }
+
+document.getElementById('saveBtn').addEventListener('click', (e)=>{
+  if(!currentDraw) return;
+  savedIdeas.push(JSON.parse(JSON.stringify(currentDraw)));
+  renderSavedList();
+  e.target.textContent = "Saved ✓";
+  setTimeout(()=>{ e.target.textContent = "💾 Save to my list"; }, 1400);
+});
+
+document.getElementById('clearSavedBtn').addEventListener('click', ()=>{
+  savedIdeas = [];
+  renderSavedList();
+});
+
+document.getElementById('exportSavedBtn').addEventListener('click', ()=>{
+  if(savedIdeas.length === 0) return;
+  const content = savedIdeas.map((d,i) => {
+    const { idea, keywords, audience, sellAs, price, upsell, rationale } = d;
+    return `${i+1}. ${idea.name}\n${idea.tagline}\nTrend: ${TREND_LABELS[idea.trend]} | Competition: ${COMP_LABELS[idea.comp]}\nTarget Audience: ${audience}\nSuggested Price: ${price}\nBest Sold As: ${sellAs}\nSEO Keywords: ${keywords.join(', ')}\nUpsell Path: ${upsell}\nWhy this could work: ${rationale}`;
+  }).join('\n\n---\n\n');
+  const blob = new Blob([`=== My Saved Product Ideas ===\n\n${content}`], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'my-saved-product-ideas.txt'; a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
