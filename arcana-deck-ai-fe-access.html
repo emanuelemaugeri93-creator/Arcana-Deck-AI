@@ -27,9 +27,6 @@
   .sigil-divider{width:120px; height:1px; margin:26px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); position:relative;}
   .sigil-divider::before{content:"◆"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--gold); font-size:10px; background:var(--void); padding:0 10px;}
 
-
-
-
   /* LAYOUT & RAIL */
   .layout{display:grid; grid-template-columns:220px 1fr; gap:36px; align-items:start;}
   @media (max-width:860px){ .layout{grid-template-columns:1fr;} .rail{display:none;} }
@@ -47,9 +44,6 @@
   .rail-title{font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.04em; color:var(--parchment); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .rail-arcana{font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--parchment-dim); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
-
-
-
   /* PANELS */
   .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:4px; padding:34px; position:relative;}
   .panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:1px solid var(--gold-dim); opacity:0.6;}
@@ -59,9 +53,6 @@
   .step-kicker{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;}
   .step-title{font-family:'Cinzel',serif; font-size:23px; margin:8px 0 6px; color:var(--parchment);}
   .step-desc{color:var(--parchment-dim); font-size:14.5px; max-width:620px;}
-
-
-
 
   /* CHOICE CARDS */
   .grid-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px;}
@@ -73,9 +64,6 @@
   .choice-name{font-family:'Cinzel',serif; font-size:13.5px; color:var(--parchment); margin-bottom:4px; line-height:1.3;}
   .choice-meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-dim); line-height:1.5;}
 
-
-
-
   /* FORM ELEMENTS */
   .field{margin-bottom:22px;}
   .field-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:10px; display:block;}
@@ -86,9 +74,6 @@
   select{width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--parchment); font-family:'EB Garamond',serif; font-size:15px; padding:12px 14px; border-radius:3px; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--gold) 50%),linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%; background-size:5px 5px; background-repeat:no-repeat; cursor:pointer;}
   select:focus{outline:none; border-color:var(--gold);}
 
-
-
-
   /* PALETTE */
   .palette-gen-box{border:1px solid var(--line); border-radius:4px; padding:16px; margin-top:12px; background:rgba(0,0,0,0.15);}
   .palette-gen-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
@@ -98,9 +83,6 @@
   .btn-palette{font-family:'JetBrains Mono',monospace; font-size:11px; padding:10px 18px; border-radius:3px; border:1px solid var(--amethyst-soft); background:transparent; color:var(--amethyst-soft); cursor:pointer; transition:all .18s ease;}
   .btn-palette:hover{background:rgba(122,92,158,0.15); color:var(--parchment);}
   .palette-label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold-dim); letter-spacing:0.05em;}
-
-
-
 
   /* BUTTONS */
   .btn-row{display:flex; gap:14px; margin-top:30px; align-items:center; flex-wrap:wrap;}
@@ -119,16 +101,10 @@
   .pill{border:1px solid var(--line); padding:10px 16px; border-radius:20px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--parchment-dim);}
   .pill.selected{border-color:var(--gold); color:var(--gold); background:rgba(201,169,97,0.08);}
 
-
-
-
   /* SUBTITLE TOGGLE */
   .subtitle-toggle{margin-top:12px; margin-bottom:16px; display:flex; align-items:center; gap:10px;}
   .subtitle-toggle input[type=checkbox]{accent-color:var(--gold); width:16px; height:16px; cursor:pointer;}
   .subtitle-toggle label{font-family:'EB Garamond',serif; font-size:14px; color:var(--parchment-dim); cursor:pointer;}
-
-
-
 
   /* ORACLE CARD LIST */
   .card-gen-container{border:1px solid var(--line); border-radius:4px; padding:20px; margin-bottom:16px; background:rgba(0,0,0,0.2); position:relative;}
@@ -138,15 +114,14 @@
   .card-name-input:focus{outline:none; border-color:var(--gold);}
   .card-keyword-input{flex:1; background:rgba(0,0,0,0.3); border:1px solid var(--line); color:var(--parchment-dim); font-family:'EB Garamond',serif; font-size:14px; padding:8px 12px; border-radius:3px; font-style:italic; min-width:0;}
   .card-keyword-input:focus{outline:none; border-color:var(--amethyst-soft);}
+  .card-meaning-line{margin-top:10px; padding:10px 14px; background:rgba(122,92,158,0.08); border-left:2px solid var(--amethyst-soft); border-radius:2px; font-size:13px; line-height:1.6; color:var(--parchment-dim);}
+  .card-meaning-line b{color:var(--amethyst-soft); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; margin-right:6px;}
   .btn-regen-card{font-family:'JetBrains Mono',monospace; font-size:11px; padding:8px 14px; border-radius:2px; border:1px solid var(--amethyst-soft); background:transparent; color:var(--amethyst-soft); cursor:pointer; transition:all .18s ease; flex:0 0 auto;}
   .btn-regen-card:hover{background:rgba(122,92,158,0.12); color:var(--parchment);}
   .btn-remove-card{font-family:'JetBrains Mono',monospace; font-size:11px; padding:8px 14px; border-radius:2px; border:1px solid var(--blood); background:transparent; color:var(--blood); cursor:pointer; transition:all .18s ease; flex:0 0 auto;}
   .btn-remove-card:hover{background:rgba(139,42,58,0.12);}
   .gen-actions{display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; align-items:center;}
   .card-count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--parchment-dim); margin-left:auto;}
-
-
-
 
   /* RESULTS */
   .results-toolbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:22px; padding-bottom:18px; border-bottom:1px solid var(--line);}
@@ -175,16 +150,10 @@
   .copy-btn:hover{border-color:var(--gold); color:var(--gold);}
   .copy-btn.copied{border-color:var(--ok); color:var(--ok);}
 
-
-
-
   /* UTILITY */
   .hidden{display:none !important;}
   footer.note{text-align:center; margin-top:56px; font-size:12px; color:var(--parchment-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;}
   .fe-tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:var(--amethyst-soft); border:1px solid var(--amethyst-soft); border-radius:10px; padding:2px 9px; margin-left:8px; vertical-align:middle;}
-
-
-
 
   /* TOAST */
   .toast{position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--panel-2); border:1px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px; z-index:100; opacity:0; transition:opacity .3s ease; pointer-events:none;}
@@ -285,9 +254,6 @@
     <div class="sigil-divider"></div>
   </header>
 
-
-
-
   <div class="layout">
     <nav class="rail" id="rail"></nav>
     <main>
@@ -307,9 +273,6 @@
         </div>
       </section>
 
-
-
-
       <!-- STEP 2 -->
       <section class="panel step-panel hidden" id="step-2">
         <div class="step-head">
@@ -323,9 +286,6 @@
           <button class="btn btn-primary" id="toStep3" disabled>Continue →</button>
         </div>
       </section>
-
-
-
 
       <!-- STEP 3 -->
       <section class="panel step-panel hidden" id="step-3">
@@ -357,15 +317,11 @@
           <div class="grid-cards" id="frameChoices" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));"></div>
         </div>
         
-        <!-- NEW SUBJECT CHOICES FIELD ADDED HERE -->
         <div class="field">
           <label class="field-label">Subject type <span style="font-size:10px; color:var(--amethyst-soft);">— Oracle decks only, randomized per card</span></label>
           <div class="grid-cards" id="subjectChoices" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));"></div>
           <div class="hint">Major Arcana always uses traditional human-figure symbolism — this setting has no effect for that deck type. Categories with multiple options (animal, creature, object, landscape) pick a new specific subject at random for every card and every regeneration.</div>
         </div>
-
-
-
 
         <div class="field">
           <label class="field-label">Typography style</label>
@@ -389,9 +345,6 @@
         </div>
       </section>
 
-
-
-
       <!-- STEP 4 -->
       <section class="panel step-panel hidden" id="step-4">
         <div class="step-head">
@@ -407,7 +360,7 @@
           <div class="field">
             <label class="field-label">Your Oracle Cards</label>
             <div id="oracleCardList"></div>
-            <div class="hint" style="margin-top:12px;">Each card name is AI-generated and fully editable. Click 🎲 to regenerate individual card names.</div>
+            <div class="hint" style="margin-top:12px;">Each card name is AI-generated and fully editable. Click 🎲 to regenerate individual card names. Meaning and Guidance are included with each card — fully editable and included in your export.</div>
           </div>
           <div class="gen-actions">
             <button class="btn btn-dice btn-small" id="addOracleCard">+ Add Card</button>
@@ -432,9 +385,6 @@
         </div>
       </section>
 
-
-
-
       <!-- RESULTS -->
       <section class="panel hidden" id="results">
         <div class="results-toolbar">
@@ -454,9 +404,6 @@
   <footer class="note">ARCANA DECK AI — UNLIMITED EDITION · navigate freely · regenerate infinitely</footer>
 </div>
 
-
-
-
 <script>
 /* ============ TOAST NOTIFICATION ============ */
 function showToast(msg){
@@ -467,9 +414,6 @@ function showToast(msg){
   t._timeout = setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-
-
-
 /* ============ STARFIELD ============ */
 (function(){
   const c = document.querySelector('.stars'); const ctx = c.getContext('2d');
@@ -478,125 +422,207 @@ function showToast(msg){
   function tick(){ ctx.clearRect(0,0,c.width,c.height); stars.forEach(st=>{ st.a += st.s; const op=(Math.sin(st.a)+1)/2*0.7+0.1; ctx.beginPath(); ctx.fillStyle=`rgba(201,169,97,${op})`; ctx.arc(st.x, st.y, st.r, 0, 7); ctx.fill(); }); requestAnimationFrame(tick); } tick();
 })();
 
-
-
-
 /* ============ HELPER ============ */
 function randomOf(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
+/* ============================================================
+   ORACLE TEXT ENGINE v2
+   ============================================================ */
+const MEANING_CORES = [
+  { core: "Beginnings", keywords: ["First steps", "Innocence", "Potential"],
+    meaning: (name) => `${name} appears at the true start of something — before doubt has learned its name. You do not need to see the whole path, only the next step.`,
+    guidance: "Take one small, imperfect first step within the next 24 hours. Do not wait to feel ready." },
+  { core: "Release", keywords: ["Letting go", "Surrender", "Freedom"],
+    meaning: (name) => `Something you are still holding has already ended, and ${name} asks you to notice what it costs to keep carrying it.`,
+    guidance: "Name one thing that is over — a habit, a role, a resentment — and consciously set it down today." },
+  { core: "Boundaries", keywords: ["Self-respect", "Clear limits", "Protection"],
+    meaning: (name) => `${name} is permission to say no without apology. A line has been crossed too many times, and your discomfort is the evidence.`,
+    guidance: "Choose one request, habit, or person you will decline this week — clearly and kindly." },
+  { core: "Intuition", keywords: ["Inner knowing", "Signals", "Trust"],
+    meaning: (name) => `You already know the answer this situation needs. ${name} points back to your first quiet impression — the one you talked yourself out of.`,
+    guidance: "Before asking anyone else's opinion, write down your own gut answer." },
+  { core: "Courage", keywords: ["Bravery", "Action", "Fear faced"],
+    meaning: (name) => `The fear will not shrink before you move; it shrinks because you move. ${name} marks a moment where action matters more than confidence.`,
+    guidance: "Do the frightening thing badly, on purpose. Done and imperfect beats perfect and postponed." },
+  { core: "Rest", keywords: ["Pause", "Recovery", "Permission"],
+    meaning: (name) => `You are not behind — you are depleted, and those are different problems with different solutions. ${name} says stopping is the productive choice now.`,
+    guidance: "Schedule one real pause in the next 48 hours: no input, no output, no guilt." },
+  { core: "Grief", keywords: ["Loss", "Honouring", "Tenderness"],
+    meaning: (name) => `Something has been lost and it deserves to be mourned properly, not rushed past. ${name} reminds you that unfelt grief does not disappear — it waits.`,
+    guidance: "Give the loss a small ritual: light a candle, say the name, write the unsent letter." },
+  { core: "Joy", keywords: ["Delight", "Lightness", "Celebration"],
+    meaning: (name) => `Joy is not the reward at the end of the work — it is fuel you are allowed to use now. ${name} asks what you have been postponing pleasure for.`,
+    guidance: "Do one thing today purely because it delights you, with no productive excuse attached." },
+  { core: "Abundance", keywords: ["Receiving", "Enoughness", "Flow"],
+    meaning: (name) => `${name} is about receiving, not achieving — and receiving is a skill you may have been refusing to practise.`,
+    guidance: "The next time something is offered — help, praise, a gift — accept it without deflecting." },
+  { core: "Patience", keywords: ["Timing", "Ripening", "Process"],
+    meaning: (name) => `This situation is not stuck; it is ripening. ${name} warns that forcing it now would spoil what time is quietly perfecting.`,
+    guidance: "Identify what you are tempted to force, and give it one full cycle — a week, a moon — untouched." },
+  { core: "Truth", keywords: ["Honesty", "Clarity", "The real story"],
+    meaning: (name) => `A polite fiction has been running this situation, and it has become more expensive than the truth. ${name} asks for the real sentence.`,
+    guidance: "Say the true sentence — the one you keep editing — to the person who needs it, even if that person is you." },
+  { core: "Shadow", keywords: ["Hidden motives", "Denial", "Integration"],
+    meaning: (name) => `The trait irritating you most in others right now is a mirror, not a coincidence. ${name} shows what you refuse to own in yourself.`,
+    guidance: "Write down the three qualities you judge hardest this week, then ask where each one lives in you." },
+  { core: "Protection", keywords: ["Safety", "Warding", "Sacred space"],
+    meaning: (name) => `Your energy is a budget, and something has been overspending it. ${name} is maintenance, not paranoia.`,
+    guidance: "Remove one recurring drain this week — a feed, a commitment, a conversation you keep having." },
+  { core: "Change", keywords: ["Transition", "Threshold", "Movement"],
+    meaning: (name) => `The change you have been negotiating with is already underway. ${name} says the only choice left is whether you walk or get carried.`,
+    guidance: "Stop rehearsing the decision. Set the date, tell one person, make it real." },
+  { core: "Trust", keywords: ["Faith", "Leaning in", "Support"],
+    meaning: (name) => `You have been carrying alone something that was designed to be shared. ${name} names the moment self-reliance quietly became isolation.`,
+    guidance: "Ask one specific person for one specific help this week — and let them actually do it." },
+  { core: "Passion", keywords: ["Desire", "Fire", "Devotion"],
+    meaning: (name) => `A genuine fire has been damped down to make others comfortable, and the cost is your vitality. ${name} returns the matches.`,
+    guidance: "Give your real enthusiasm thirty uninterrupted minutes today — out loud and unapologetic." },
+  { core: "Solitude", keywords: ["Quiet", "Inner council", "Alone time"],
+    meaning: (name) => `The answer you keep asking others for only surfaces in quiet. ${name} is not loneliness — it is where your own voice finally gets a turn.`,
+    guidance: "Take one hour alone without a screen, and let your mind finish its own sentences." },
+  { core: "Community", keywords: ["Belonging", "Witness", "Shared load"],
+    meaning: (name) => `You were not meant to do this season alone. ${name} reminds you that your people cannot find you while you keep performing "fine".`,
+    guidance: "Tell one trusted person how things actually are — unedited, in one honest conversation." },
+  { core: "Creativity", keywords: ["Making", "Expression", "Play"],
+    meaning: (name) => `Something in you wants to be made, not managed. ${name} names the real block: an audience you invented and keep performing for.`,
+    guidance: "Make one small thing badly on purpose — a page, a sketch, a voice note — and show no one." },
+  { core: "Healing", keywords: ["Mending", "Integration", "Slow repair"],
+    meaning: (name) => `Healing is happening at the speed of roots, not deadlines. ${name} asks you to stop digging up the seed to check on it.`,
+    guidance: "Notice one thing that hurts less than it did a year ago, and let that be evidence." },
+  { core: "Forgiveness", keywords: ["Unbinding", "Mercy", "Release of debt"],
+    meaning: (name) => `Forgiveness is not approval — it is cutting the rope between your present and their past. ${name} shows who is really paying the debt you keep collecting.`,
+    guidance: "Write down what they owe you, in full — then decide what you are willing to stop collecting." },
+  { core: "Clarity", keywords: ["Focus", "The real question", "Simplicity"],
+    meaning: (name) => `The confusion is not a lack of options; it is too many questions stacked on the real one. ${name} clears the stack.`,
+    guidance: "Finish this sentence in writing: 'The real question is…' — then answer only that." },
+  { core: "Strength", keywords: ["Endurance", "Quiet power", "Resolve"],
+    meaning: (name) => `This is not a battle to win but a weight to carry well. ${name} honours the slow, unglamorous strength that actually matters.`,
+    guidance: "Identify the one thing you must simply keep doing, and protect the habit that lets you do it." },
+  { core: "Rebirth", keywords: ["Renewal", "Second life", "Emergence"],
+    meaning: (name) => `An old version of you has completed its purpose. ${name} reframes the discomfort: it is the shell cracking, not a failure.`,
+    guidance: "Name the identity you are outgrowing — then take one action today as the person you are becoming." },
+  { core: "Gratitude", keywords: ["Appreciation", "Counting", "Enough"],
+    meaning: (name) => `Attention is the currency of contentment, and yours has been invested entirely in what is missing. ${name} is an audit, not a scolding.`,
+    guidance: "List five specific things that worked this week — names and moments, not categories." },
+  { core: "Voice", keywords: ["Expression", "Being heard", "Saying it"],
+    meaning: (name) => `Something true has gone unsaid for so long it has started to feel unspeakable. ${name} insists it is not — and that the silence costs more than the words.`,
+    guidance: "Say the unsaid thing in its simplest form: one sentence, no preamble, no softening." },
+  { core: "Roots", keywords: ["Foundation", "Ancestry", "Belonging"],
+    meaning: (name) => `You have been building upward without checking the ground. ${name} sends you back to what originally held you.`,
+    guidance: "Reconnect with one root this week — a place, a person, or a practice you grew from." },
+  { core: "Cycles", keywords: ["Seasons", "Return", "Timing"],
+    meaning: (name) => `This has happened before, and that is not failure — it is a season, not a verdict. ${name} notes you are at the same point of the wheel, but not the same person arriving.`,
+    guidance: "Look at what you did the last time this came around, and change exactly one thing." },
+  { core: "Choice", keywords: ["Decision", "Agency", "Crossroads"],
+    meaning: (name) => `There is no perfect option here — there is a chosen one, which becomes right through commitment. ${name} warns that not choosing is the most expensive choice of all.`,
+    guidance: "Give yourself a 24-hour deadline, choose, and do not reopen the case for a week." },
+  { core: "Surrender", keywords: ["Yielding", "Flow", "Open hands"],
+    meaning: (name) => `You have been steering something that does not answer to steering. ${name} marks the limit of control — what remains is navigation.`,
+    guidance: "Pick the one thing you cannot control in this situation, and deliberately drop the rope." }
+];
 
+const THEME_LEXICON = {
+  "dark-goddess": {
+    adjectives: ["Veiled","Lunar","Crimson","Silent","Undying","Night-Born","Sacred","Obsidian","Moonlit","Ashen","Iron","Hungry"],
+    nouns: ["Goddess","Moon","Shrine","Serpent","Veil","Altar","Priestess","Mirror","Throne","Pomegranate","Chalice","Raven","Key","Underworld"]
+  },
+  "crystal-witch": {
+    adjectives: ["Crystal","Candlelit","Moss-Covered","Charged","Wildcrafted","Earthen","Lunar","Smoky","Honeyed","Herbal","Glimmering","Rooted"],
+    nouns: ["Amethyst","Cauldron","Cottage","Candle","Spell Jar","Quartz","Grimoire","Hearth","Moonwater","Familiar","Sigil","Garden","Kettle","Herb Bundle"]
+  },
+  "gothic-shadow": {
+    adjectives: ["Mourning","Wrought-Iron","Velvet","Haunted","Baroque","Ashen","Midnight","Gaslit","Ivory","Thorned","Silent","Weeping"],
+    nouns: ["Rose","Veil","Manor","Raven","Candelabra","Portrait","Crypt","Locket","Thorn","Mirror","Chapel","Hourglass","Mask","Staircase"]
+  },
+  "botanical-grimoire": {
+    adjectives: ["Pressed","Verdant","Wild","Flowering","Rooted","Sun-Dried","Twining","Seed-Bearing","Dew-Lit","Untamed","Golden","Evergreen"],
+    nouns: ["Fern","Bloom","Root","Seed","Petal","Herbarium","Vine","Nectar","Thicket","Meadow","Orchard","Moss","Branch","Pollen"]
+  },
+  "universal": {
+    adjectives: ["Silent","Luminous","Veiled","Eternal","Forgotten","Sacred","Shifting","Boundless","Woven","Gilded","Hollow","Waking"],
+    nouns: ["Threshold","Lantern","Mirror","Garden","Chalice","Labyrinth","Bridge","Compass","Hearth","Key","Vessel","Gate","Star","River"]
+  }
+};
 
+const ORACLE_TEXT_ENGINE = {
+  usedNames: new Set(),
+  usedCores: [],
+
+  reset(){
+    this.usedNames.clear();
+    this.usedCores = [];
+  },
+
+  pickCore(){
+    if(this.usedCores.length >= MEANING_CORES.length) this.usedCores = [];
+    let core = randomOf(MEANING_CORES);
+    let guard = 0;
+    while(this.usedCores.includes(core.core) && guard < 60){
+      core = randomOf(MEANING_CORES);
+      guard++;
+    }
+    this.usedCores.push(core.core);
+    return core;
+  },
+
+  generateName(core){
+    const lex = THEME_LEXICON[state.theme] || THEME_LEXICON.universal;
+    const patterns = [
+      () => `The ${randomOf(lex.adjectives)} ${randomOf(lex.nouns)}`,
+      () => `${randomOf(lex.nouns)} of ${core.core}`,
+      () => `The ${randomOf(lex.nouns)} of ${core.core}`,
+      () => `The ${randomOf(lex.adjectives)} ${randomOf(lex.nouns)} of ${core.core}`,
+      () => `${randomOf(["Song","Hymn","Path","Gift","Key","Call","Vow","Hour","Language","Geometry"])} of the ${randomOf(lex.adjectives)} ${randomOf(lex.nouns)}`,
+      () => `The ${randomOf(lex.adjectives)} ${randomOf(lex.nouns)}`
+    ];
+    let name = randomOf(patterns)();
+    let guard = 0;
+    while(this.usedNames.has(name) && guard < 40){
+      name = randomOf(patterns)();
+      guard++;
+    }
+    this.usedNames.add(name);
+    return name;
+  },
+
+  generateCard(){
+    const core = this.pickCore();
+    const name = this.generateName(core);
+    return {
+      name: name,
+      keyword: core.keywords.join(" · "),
+      meaning: core.meaning(name),
+      guidance: core.guidance
+    };
+  }
+};
 
 /* ============ SUBTITLE GENERATOR FOR TAROT ============ */
 const SUBTITLE_GENERATOR = {
-  prefixes: ["Where", "When", "As", "Before", "After", "Because", "Though", "While", "If", "Until"],
-  verbs: ["begins", "falls", "rises", "turns", "burns", "calls", "breaks", "holds", "opens", "closes", "waits", "speaks", "fades", "blooms", "shatters"],
-  nouns: ["the path", "the veil", "the light", "the shadow", "silence", "the storm", "the dawn", "the abyss", "truth", "the dream", "the mirror", "the threshold", "the flame", "the tide", "the wound", "the gift", "the key", "the door", "the star", "the root"],
-  concepts: ["everything", "nothing", "becoming", "undoing", "remembering", "forgetting", "arriving", "leaving", "transforming", "awakening", "surrendering", "receiving", "releasing", "knowing", "unknowing"],
-
-
-
+  nouns: ["path","veil","light","shadow","silence","storm","dawn","abyss","mirror","threshold","flame","tide","wound","gift","key","door","star","root","dream","river"],
+  verbs: ["begins","falls","rises","turns","burns","calls","breaks","opens","waits","speaks","fades","blooms","shatters","remembers","awakens","returns"],
+  verbsIng: ["turning","burning","falling","rising","opening","waking","breaking","blooming","fading","returning"],
+  concepts: ["becoming","undoing","remembering","forgetting","arriving","leaving","awakening","surrender","release","knowing","return","unknowing"],
 
   generate() {
+    const n = randomOf(this.nouns);
+    const v = randomOf(this.verbs);
+    const c = randomOf(this.concepts);
+    const vi = randomOf(this.verbsIng);
     const patterns = [
-      () => `${randomOf(this.prefixes)} ${randomOf(this.nouns)} ${randomOf(this.verbs)}`,
-      () => `${randomOf(this.verbs).charAt(0).toUpperCase() + randomOf(this.verbs).slice(1)} ${randomOf(this.nouns)}`,
-      () => `The ${randomOf(this.concepts)} of ${randomOf(this.nouns)}`,
-      () => `${randomOf(this.prefixes)} ${randomOf(this.concepts)} ${randomOf(this.verbs)}`,
-      () => `A ${randomOf(this.nouns)} ${randomOf(this.verbs)}`,
-      () => `${randomOf(this.verbs).charAt(0).toUpperCase() + randomOf(this.verbs).slice(1)} toward ${randomOf(this.concepts)}`,
-      () => `In the ${randomOf(this.nouns)}, ${randomOf(this.concepts)}`
+      `Where the ${n} ${v}`,
+      `When the ${n} ${v}`,
+      `Before the ${n} ${v}`,
+      `While the ${n} ${v}`,
+      `The ${n} of ${c}`,
+      `A ${n} ${v}`,
+      `${vi.charAt(0).toUpperCase() + vi.slice(1)} toward ${c}`,
+      `In the ${n}, ${c}`
     ];
-    return randomOf(patterns)();
+    return randomOf(patterns);
   }
 };
-
-
-
-
-/* ============ INFINITE CARD NAME GENERATOR ENGINE ============ */
-const CARD_NAME_GENERATOR = {
-  prefixes: [
-    "The", "A", "Echo of", "Song of", "Dance of", "Whisper of", "Shadow of", "Light of", "Keeper of", "Gift of",
-    "Return of", "Path of", "Key of", "Veil of", "Throne of", "Crown of", "Flame of", "River of", "Star of", "Root of",
-    "Breath of", "Seed of", "Call of", "Hymn of", "Dream of"
-  ],
-  nouns: [
-    "Threshold", "Awakening", "Vessel", "Oracle", "Sanctuary", "Ember", "Tide", "Bough", "Lantern", "Compass",
-    "Mirror", "Garden", "Chalice", "Forge", "Labyrinth", "Tower", "Bridge", "Anchor", "Prism", "Hearth",
-    "Crossroads", "Tapestry", "Phantom", "Vigil", "Nexus", "Aegis", "Reverie", "Solstice", "Covenant", "Omen",
-    "Resonance", "Mantle", "Cradle", "Spindle", "Harbinger", "Vanguard", "Monolith", "Scepter", "Reliquary", "Edict",
-    "Sundial", "Tempest", "Loom", "Vortex", "Warden", "Cipher", "Bloom", "Ruins", "Haven", "Hollow",
-    "Pilgrim", "Scribe", "Watcher", "Alchemist", "Cartographer", "Weaver", "Sentinel", "Herald"
-  ],
-  adjectives: [
-    "Silent", "Fractured", "Luminous", "Veiled", "Eternal", "Forgotten", "Sacred", "Shifting", "Unseen", "Boundless",
-    "Woven", "Shattered", "Resonant", "Twilight", "Emerald", "Astral", "Verdant", "Crystalline", "Obsidian", "Gilded",
-    "Hollow", "Restless", "Waking", "Slumbering", "Abyssal", "Celestial", "Ember-lit", "Frost-bound", "Shadow-clad", "Star-wrought",
-    "Thorn-crowned", "Moon-drunk", "Storm-eyed", "Bone-white", "Ink-dark", "Fever-dreamt"
-  ],
-  concepts: [
-    "Beginnings", "Closure", "Transformation", "Memory", "Intuition", "Sacrifice", "Rebirth", "Stillness",
-    "Surrender", "Illumination", "Descent", "Ascent", "Union", "Solitude", "Protection", "Release",
-    "Devotion", "Catalyst", "Reckoning", "Grace", "Longing", "Revelation", "Ancestry", "Becoming",
-    "Exile", "Return", "Threshold", "Liminality", "Decay", "Bloom"
-  ],
-
-
-
-
-  generateName() {
-    const patterns = [
-      () => `The ${randomOf(this.adjectives)} ${randomOf(this.nouns)}`,
-      () => `${randomOf(this.nouns)} of ${randomOf(this.concepts)}`,
-      () => `The ${randomOf(this.nouns)}`,
-      () => `${randomOf(this.adjectives)} ${randomOf(this.nouns)}`,
-      () => `${randomOf(this.prefixes)} the ${randomOf(this.adjectives)} ${randomOf(this.nouns)}`,
-      () => `${randomOf(["Embracing", "Releasing", "Guarding", "Seeking", "Weaving", "Unfolding", "Bearing", "Calling", "Burning", "Drowning in"])} ${randomOf(this.nouns)}`,
-      () => `The ${randomOf(this.nouns)}'s ${randomOf(this.concepts)}`,
-      () => `${randomOf(this.adjectives)} ${randomOf(this.concepts)}`
-    ];
-    return randomOf(patterns)();
-  },
-
-
-
-
-  generateKeyword() {
-    const keywords = [
-      "a threshold moment — step through or turn back",
-      "quiet knowing that cannot be spoken aloud",
-      "the path forward reveals itself only to those who walk it",
-      "what lies beneath the surface of things",
-      "the call you've been trying to ignore",
-      "a gift wrapped in shadow and silence",
-      "the answer was always within you",
-      "patience unfolding like a slow-blooming flower",
-      "the weight of a choice that changes everything",
-      "a door opening inward, toward the self",
-      "the fire that transforms but does not consume",
-      "stillness before the dawn breaks",
-      "the echo of what was — and what might yet be",
-      "a promise kept across lifetimes",
-      "the mirror shows only what you're ready to see",
-      "what the dark holds is not always to be feared",
-      "the thread you've been following all along",
-      "a seed planted in the coldest winter",
-      "the tide is turning — can you feel it?",
-      "wisdom that comes only through silence",
-      "the courage to stay when everything says leave",
-      "letting the old self burn away to ash",
-      "the light you carry was never yours alone",
-      "a boundary held sacred, a line not to be crossed",
-      "the dance of opposites — and the space between"
-    ];
-    return randomOf(keywords);
-  }
-};
-
-
-
 
 /* ============ PALETTE GENERATOR ENGINE ============ */
 const PALETTE_GENERATOR = {
@@ -620,9 +646,6 @@ const PALETTE_GENERATOR = {
     { name: "Verdigris & Rust", colors: ["#0F1210", "#1E2B1E", "#3A5C3A", "#7A8B5C", "#C9A85C"] }
   ],
 
-
-
-
   generatePalette() {
     const base = randomOf(this.colorFamilies);
     if(Math.random() > 0.3) {
@@ -631,9 +654,6 @@ const PALETTE_GENERATOR = {
     }
     return { name: base.name, colors: [...base.colors] };
   },
-
-
-
 
   mutateHex(hex) {
     const r = parseInt(hex.slice(1,3), 16);
@@ -647,9 +667,6 @@ const PALETTE_GENERATOR = {
     return `#${nr}${ng}${nb}`;
   }
 };
-
-
-
 
 /* ============ COMPOSITION SEED GENERATOR ============ */
 const COMPOSITION_SEEDS = {
@@ -706,9 +723,6 @@ const COMPOSITION_SEEDS = {
   ]
 };
 
-
-
-
 function pickCompositionSeed(){
   return {
     cameraAngle: randomOf(COMPOSITION_SEEDS.cameraAngles),
@@ -717,9 +731,6 @@ function pickCompositionSeed(){
     colorAccent: randomOf(COMPOSITION_SEEDS.colorAccents)
   };
 }
-
-
-
 
 /* ============ VARIANT BANKS ============ */
 const VARIANTS = {
@@ -771,9 +782,6 @@ const VARIANTS = {
   ]
 };
 
-
-
-
 function pickVariantSet(){
   return {
     lighting: randomOf(VARIANTS.lighting),
@@ -782,9 +790,6 @@ function pickVariantSet(){
     mood: randomOf(VARIANTS.mood)
   };
 }
-
-
-
 
 /* ============ SUBJECT POOLS & TYPES ============ */
 const SUBJECT_POOLS = {
@@ -819,9 +824,6 @@ const SUBJECT_POOLS = {
     "a field of wildflowers under a low moon", "a bridge disappearing into mist"
   ]
 };
-
-
-
 
 const SUBJECT_TYPES = {
   "human-figure": {
@@ -859,9 +861,6 @@ const SUBJECT_TYPES = {
     }
   }
 };
-
-
-
 
 /* ============ TAROT DATA ============ */
 const MAJOR_ARCANA = [
@@ -903,9 +902,6 @@ function majorArcana(){
   return list;
 }
 
-
-
-
 /* ============ THEMES ============ */
 const THEMES = {
   "dark-goddess":{label:"Dark Goddess Oracle", descriptor:"chthonic dark-goddess mythology, lunar shrines, veiled feminine power, underworld gardens", palette:"#1B1030, #4A1E33, #C9A961, #E8DCC8", frame:"ornate-gilded"},
@@ -913,9 +909,6 @@ const THEMES = {
   "gothic-shadow":{label:"Gothic Shadow Tarot", descriptor:"Victorian gothic romance, wrought iron and candlelight, mourning veils, dark rose motifs", palette:"#0D0B12, #2B1220, #8B2A3A, #C9A961", frame:"thorned-vine"},
   "botanical-grimoire":{label:"Botanical Grimoire Oracle", descriptor:"an old apothecary's herbal grimoire, pressed flowers between glass, hand-labeled specimen jars, ink-stained botanical diagrams", palette:"#2A2E1F, #5C6B3D, #C9A961, #EDE4D3", frame:"pressed-botanical"}
 };
-
-
-
 
 /* ============ STYLES ============ */
 const STYLES = {
@@ -977,9 +970,6 @@ const STYLES = {
   }
 };
 
-
-
-
 /* ============ TYPOGRAPHY ============ */
 const TYPOGRAPHY = {
   "ornate-serif": "elegant serif typography with decorative swash capitals, title rendered in gold or metallic, keyword in smaller italic beneath",
@@ -989,9 +979,6 @@ const TYPOGRAPHY = {
   "victorian-ornate": "ornate Victorian typography with decorative borders around the text block, title in bold serif with shadow, keyword in copperplate script",
   "minimalist-modern": "clean modern sans-serif, generous letter-spacing, title aligned left, thin rule separating title from keyword, all in one color from the palette"
 };
-
-
-
 
 /* ============ FRAMES ============ */
 const FRAMES = {
@@ -1017,18 +1004,12 @@ const FRAMES = {
   }
 };
 
-
-
-
 /* ============ ENGINE NOTES ============ */
 const ENGINE_NOTES = {
   "gpt-image":"Rendering target: GPT Image (ChatGPT). Write as a single flowing natural-language paragraph with rich descriptive detail.",
   "nano-pro":"Rendering target: Nano Banana Pro. Natural-language paragraph, high fidelity detail supported. Include specific artistic references.",
   "nano-2":"Rendering target: Nano Banana 2. Natural-language paragraph. Keep style-lock phrasing identical across every card to preserve consistency. Be very specific about text placement and typography."
 };
-
-
-
 
 /* ============ PRINT FORMATS ============ */
 const FORMATS = {
@@ -1040,9 +1021,6 @@ const FORMATS = {
     spec:()=> `Trim size 2.75 × 4.75 inches (70 × 120mm) at 300dpi, art extended 3mm beyond trim on all sides for bleed.` }
 };
 
-
-
-
 /* ============ STATE ============ */
 const state = {
   deckType:null,
@@ -1051,7 +1029,7 @@ const state = {
   palette:"",
   paletteName:"",
   frame:null,
-  subjectType: "mixed-auto", // Default to mixed-auto
+  subjectType: "mixed-auto",
   typography:null,
   format:null,
   engine:null,
@@ -1060,9 +1038,6 @@ const state = {
   numbering: "modern",
   currentStep: 1
 };
-
-
-
 
 /* ============ RENDER STATIC CHOICE GRIDS ============ */
 function renderThemeChoices(){
@@ -1077,9 +1052,6 @@ function renderThemeChoices(){
     });
   });
 }
-
-
-
 
 function renderStyleChoices(){
   document.getElementById('styleChoices').innerHTML = Object.entries(STYLES).map(([key,obj])=>
@@ -1096,9 +1068,6 @@ function renderStyleChoices(){
   });
 }
 
-
-
-
 function renderFrameChoices(){
   document.getElementById('frameChoices').innerHTML = Object.entries(FRAMES).map(([key,obj])=>
     `<div class="choice-card ${state.frame===key?'selected':''}" data-frame="${key}">
@@ -1114,10 +1083,6 @@ function renderFrameChoices(){
   });
 }
 
-
-
-
-/* ============ RENDER SUBJECT CHOICES ============ */
 function renderSubjectChoices(){
   document.getElementById('subjectChoices').innerHTML = Object.entries(SUBJECT_TYPES).map(([key,s])=>
     `<div class="choice-card ${state.subjectType===key?'selected':''}" data-subject="${key}"><div class="choice-name">${s.label}</div><div class="choice-meta">${s.meta}</div></div>`
@@ -1129,9 +1094,6 @@ function renderSubjectChoices(){
     });
   });
 }
-
-
-
 
 function renderTypoChoices(){
   document.getElementById('typoChoices').innerHTML = Object.entries(TYPOGRAPHY).map(([key,desc])=>
@@ -1145,9 +1107,6 @@ function renderTypoChoices(){
   });
 }
 
-
-
-
 function renderFormatChoices(){
   document.getElementById('formatChoices').innerHTML = Object.entries(FORMATS).map(([key,f])=>
     `<div class="choice-card ${state.format===key?'selected':''}" data-format="${key}"><div class="choice-name">${f.label}</div><div class="choice-meta">${f.meta}</div></div>`
@@ -1160,19 +1119,13 @@ function renderFormatChoices(){
   });
 }
 
-
-
-
 // Initial render
 renderThemeChoices();
 renderStyleChoices();
 renderFrameChoices();
-renderSubjectChoices(); // Render subjects on load
+renderSubjectChoices();
 renderTypoChoices();
 renderFormatChoices();
-
-
-
 
 /* ============ RAIL (clickable) ============ */
 function renderRail(activeStep){
@@ -1184,9 +1137,6 @@ function renderRail(activeStep){
     {n:4, title:"Cards", key:()=> state.deckType==='oracle' ? (state.oracleCards.length? state.oracleCards.length+" cards" : "—") : "auto-mapped", clickable: !!(state.style && state.palette && state.frame && state.typography && state.format && state.engine)}
   ];
 
-
-
-
   document.getElementById('rail').innerHTML = steps.map(s=>{
     const cls = s.n===activeStep ? 'active' : s.n<activeStep ? 'done' : '';
     const clickCls = (s.clickable && s.n !== activeStep) ? 'clickable' : '';
@@ -1196,10 +1146,6 @@ function renderRail(activeStep){
     </div>`;
   }).join('');
 
-
-
-
-  // Add click handlers to clickable rail steps
   document.querySelectorAll('.rail-step.clickable').forEach(step => {
     step.addEventListener('click', () => {
       const targetStep = parseInt(step.dataset.step);
@@ -1212,14 +1158,7 @@ function renderRail(activeStep){
   });
 }
 
-
-
-
-// FIX: render the rail immediately on page load so it is always visible on the first screen
 renderRail(1);
-
-
-
 
 /* ============ NAVIGATION ============ */
 function goToStep(n){
@@ -1229,10 +1168,6 @@ function goToStep(n){
   document.getElementById('step-'+n).classList.remove('hidden');
   renderRail(n);
 
-
-
-
-  // Re-render choices to reflect current state
   if(n === 1) {
     document.querySelectorAll('#deckTypeChoices .choice-card').forEach(c=>{
       c.classList.toggle('selected', c.dataset.type === state.deckType);
@@ -1246,7 +1181,7 @@ function goToStep(n){
   if(n === 3) {
     renderStyleChoices();
     renderFrameChoices();
-    renderSubjectChoices(); // Render subjects when navigating to step 3
+    renderSubjectChoices();
     renderTypoChoices();
     renderFormatChoices();
     if(state.palette){
@@ -1262,14 +1197,8 @@ function goToStep(n){
     checkStep3Ready();
   }
 
-
-
-
   window.scrollTo({top:0, behavior:'smooth'});
 }
-
-
-
 
 function goToStep4(){
   state.currentStep = 4;
@@ -1278,15 +1207,9 @@ function goToStep4(){
   document.getElementById('step-4').classList.remove('hidden');
   renderRail(4);
 
-
-
-
   const t4 = document.getElementById('step4Title');
   const d4 = document.getElementById('step4Desc');
   const subToggle = document.getElementById('tarotSubtitleToggle');
-
-
-
 
   if(state.deckType==='oracle'){
     document.getElementById('oracleFields').classList.remove('hidden');
@@ -1306,19 +1229,10 @@ function goToStep4(){
     d4.textContent = "All 22 cards are mapped with traditional symbolism. Toggle subtitles for unique poetic variations.";
   }
 
-
-
-
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-
-
-
 document.querySelectorAll('[data-back]').forEach(b=> b.addEventListener('click', ()=> goToStep(parseInt(b.dataset.back))));
-
-
-
 
 /* ============ STEP 1 ============ */
 document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
@@ -1326,7 +1240,6 @@ document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
     document.querySelectorAll('#deckTypeChoices .choice-card').forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
     state.deckType = card.dataset.type;
-    // Reset oracle cards when switching deck type
     if(state.deckType !== state._prevDeckType){
       state.oracleCards = [];
       state._prevDeckType = state.deckType;
@@ -1336,9 +1249,6 @@ document.querySelectorAll('#deckTypeChoices .choice-card').forEach(card=>{
 });
 document.getElementById('toStep2').addEventListener('click', ()=> goToStep(2));
 
-
-
-
 /* ============ STEP 2 -> 3 ============ */
 document.getElementById('toStep3').addEventListener('click', ()=>{
   if(!state.palette) generateAndSetPalette();
@@ -1347,9 +1257,6 @@ document.getElementById('toStep3').addEventListener('click', ()=>{
   checkStep3Ready();
   goToStep(3);
 });
-
-
-
 
 /* ============ PALETTE FUNCTIONS ============ */
 function generateAndSetPalette(){
@@ -1361,9 +1268,6 @@ function generateAndSetPalette(){
   renderPalettePreview(generated);
 }
 
-
-
-
 function renderPalettePreview(paletteObj){
   const preview = document.getElementById('palettePreview');
   if(!preview) return;
@@ -1374,16 +1278,10 @@ function renderPalettePreview(paletteObj){
   if(nameLabel) nameLabel.textContent = `"${paletteObj.name}"`;
 }
 
-
-
-
 document.getElementById('regeneratePaletteBtn').addEventListener('click', () => {
   generateAndSetPalette();
   checkStep3Ready();
 });
-
-
-
 
 document.getElementById('paletteInput').addEventListener('input', (e) => {
   state.palette = e.target.value.trim();
@@ -1395,9 +1293,6 @@ document.getElementById('paletteInput').addEventListener('input', (e) => {
   checkStep3Ready();
 });
 
-
-
-
 /* ============ STEP 3 ============ */
 document.querySelectorAll('#engineChoices .pill').forEach(p=>{
   p.addEventListener('click', ()=>{
@@ -1406,27 +1301,13 @@ document.querySelectorAll('#engineChoices .pill').forEach(p=>{
   });
 });
 
-
-
-
-/* 
-   FIX: checkStep3Ready now checks for subjectType 
-   ONLY if deckType is oracle. 
-   Since subjectType defaults to 'mixed-auto', the user never gets stuck.
-*/
 function checkStep3Ready(){
   const baseReady = state.style && state.palette && state.palette.length>3 && state.frame && state.typography && state.format && state.engine;
   const subjectReady = state.deckType === 'oracle' ? !!state.subjectType : true;
   document.getElementById('toStep4').disabled = !(baseReady && subjectReady);
 }
 
-
-
-
 document.getElementById('toStep4').addEventListener('click', goToStep4);
-
-
-
 
 /* ============ SUBTITLE TOGGLE ============ */
 document.getElementById('useSubtitles').addEventListener('change', (e) => {
@@ -1436,23 +1317,15 @@ document.getElementById('numberingSel').addEventListener('change', (e) => {
   state.numbering = e.target.value;
 });
 
-
-
-
 /* ============ STEP 4 — ORACLE CARD MANAGEMENT ============ */
 function initializeOracleCards(){
+  ORACLE_TEXT_ENGINE.reset();
   state.oracleCards = [];
   for(let i = 0; i < 5; i++){
-    state.oracleCards.push({
-      name: CARD_NAME_GENERATOR.generateName(),
-      keyword: CARD_NAME_GENERATOR.generateKeyword()
-    });
+    state.oracleCards.push(ORACLE_TEXT_ENGINE.generateCard());
   }
   renderOracleCards();
 }
-
-
-
 
 function renderOracleCards(){
   const container = document.getElementById('oracleCardList');
@@ -1461,25 +1334,19 @@ function renderOracleCards(){
       <div class="card-gen-header">
         <span class="card-gen-number">${index + 1}.</span>
         <input type="text" class="card-name-input" value="${escapeHtml(card.name)}" data-field="name" data-index="${index}" placeholder="Card name...">
-        <input type="text" class="card-keyword-input" value="${escapeHtml(card.keyword)}" data-field="keyword" data-index="${index}" placeholder="Keyword or meaning...">
+        <input type="text" class="card-keyword-input" value="${escapeHtml(card.keyword)}" data-field="keyword" data-index="${index}" placeholder="Keywords...">
         <button class="btn-regen-card" data-action="regen" data-index="${index}">🎲</button>
         <button class="btn-remove-card" data-action="remove" data-index="${index}">×</button>
       </div>
+      ${card.meaning ? `<div class="card-meaning-line"><b>Meaning</b> ${escapeHtml(card.meaning)}<br><b>Guidance</b> ${escapeHtml(card.guidance)}</div>` : ''}
     </div>
   `).join('');
-
-
-
 
   document.getElementById('oracleCardCount').textContent = `${state.oracleCards.length} / 20 cards`;
   setupOracleListeners();
 }
 
-
-
-
 function setupOracleListeners(){
-  // Input change handlers
   document.querySelectorAll('#oracleCardList input').forEach(input => {
     input.addEventListener('input', (e) => {
       const index = parseInt(e.target.dataset.index);
@@ -1489,21 +1356,13 @@ function setupOracleListeners(){
     });
   });
 
-
-
-
-  // Button handlers
   document.querySelectorAll('#oracleCardList button').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const index = parseInt(e.target.dataset.index);
       const action = e.target.dataset.action;
 
-
-
-
       if(action === 'regen'){
-        state.oracleCards[index].name = CARD_NAME_GENERATOR.generateName();
-        state.oracleCards[index].keyword = CARD_NAME_GENERATOR.generateKeyword();
+        state.oracleCards[index] = ORACLE_TEXT_ENGINE.generateCard();
         renderOracleCards();
       }
       if(action === 'remove'){
@@ -1515,35 +1374,19 @@ function setupOracleListeners(){
     });
   });
 
-
-
-
-  // Add card button
   document.getElementById('addOracleCard').onclick = () => {
     if(state.oracleCards.length < 20){
-      state.oracleCards.push({
-        name: CARD_NAME_GENERATOR.generateName(),
-        keyword: CARD_NAME_GENERATOR.generateKeyword()
-      });
+      state.oracleCards.push(ORACLE_TEXT_ENGINE.generateCard());
       renderOracleCards();
     }
   };
 
-
-
-
-  // Regenerate all button
   document.getElementById('regenAllOracleCards').onclick = () => {
-    state.oracleCards = state.oracleCards.map(() => ({
-      name: CARD_NAME_GENERATOR.generateName(),
-      keyword: CARD_NAME_GENERATOR.generateKeyword()
-    }));
+    ORACLE_TEXT_ENGINE.reset();
+    state.oracleCards = state.oracleCards.map(() => ORACLE_TEXT_ENGINE.generateCard());
     renderOracleCards();
   };
 }
-
-
-
 
 /* ============ GENERATE DECK ============ */
 document.getElementById('generateBtn').addEventListener('click', ()=>{
@@ -1556,9 +1399,6 @@ document.getElementById('generateBtn').addEventListener('click', ()=>{
   generateDeck();
 });
 
-
-
-
 /* ============ PROMPT ENGINE ============ */
 function themeDescriptor(){ return THEMES[state.theme].descriptor; }
 function themeLabelText(){ return THEMES[state.theme].label; }
@@ -1566,9 +1406,6 @@ function styleDescriptor(){ return STYLES[state.style].descriptor; }
 function frameDescriptor(){ return FRAMES[state.frame].descriptor; }
 function typoDescriptor(){ return TYPOGRAPHY[state.typography]; }
 function formatSpec(){ return FORMATS[state.format].spec(); }
-
-
-
 
 function buildFrontPrompt(cardName, symbolicContent, extraMeaning, variantSet, compSeed, subtitle){
   const displayName = subtitle ? `${cardName} — ${subtitle}` : cardName;
@@ -1582,14 +1419,8 @@ function buildFrontPrompt(cardName, symbolicContent, extraMeaning, variantSet, c
   const negative = `Avoid: photo-realism, modern-day technology or clothing, extra or malformed limbs, blurred or low-detail rendering, cropped elements at edges, placeholder or generic compositions. The image must look like a finished, print-ready card that could be sold as part of a premium deck.`;
   const engineNote = ENGINE_NOTES[state.engine];
 
-
-
-
   return `[STYLE LOCK]\n${styleLock}\n\n[ATMOSPHERE & LIGHTING]\n${atmosphere}\n\n[COMPOSITION SEED]\n${composition}\n\n[SYMBOLIC CONTENT]\n${symbolic}\n\n[FRAME & PRINT SPEC]\n${frameAndFormat}\n\n[TYPOGRAPHY — RENDER ON CARD]\n${typography}\n\n[PALETTE LOCK]\n${paletteLock}\n\n[NEGATIVE CONSTRAINTS]\n${negative}\n\n[ENGINE NOTE]\n${engineNote}`;
 }
-
-
-
 
 function buildBackPrompt(variantSet, compSeed){
   const styleLock = `${styleDescriptor()}, ${themeDescriptor()}, the uniform card-back design for the entire deck — identical pattern on every card, no unique imagery`;
@@ -1601,29 +1432,16 @@ function buildBackPrompt(variantSet, compSeed){
   const negative = `Avoid: any text or lettering, asymmetry, off-center placement, photographic realism, low detail, any element that would reveal card orientation.`;
   const engineNote = ENGINE_NOTES[state.engine];
 
-
-
-
   return `[STYLE LOCK — CARD BACK]\n${styleLock}\n\n[ATMOSPHERE]\n${atmosphere}\n\n[SYMBOLIC CONTENT]\n${symbolic}\n\n[COMPOSITION]\n${composition}\n\n[FRAME & PRINT SPEC]\n${frameAndFormat}\n\n[PALETTE LOCK]\n${paletteLock}\n\n[NEGATIVE CONSTRAINTS]\n${negative}\n\n[ENGINE NOTE]\n${engineNote}`;
 }
 
-
-
-
 let generatedDeck = [];
 let currentSubtitles = [];
-
-
-
 
 function generateDeck(){
   generatedDeck = [];
   currentSubtitles = [];
 
-
-
-
-  // Card back
   const backVariant = pickVariantSet();
   const backComp = pickCompositionSeed();
   generatedDeck.push({
@@ -1635,9 +1453,6 @@ function generateDeck(){
     subtitle:null,
     prompt: buildBackPrompt(backVariant, backComp)
   });
-
-
-
 
   if(state.deckType==='tarot-major'){
     majorArcana().forEach(([num, name, symbol, meaning])=>{
@@ -1658,44 +1473,32 @@ function generateDeck(){
     state.oracleCards.forEach((cardData, i)=>{
       const variantSet = pickVariantSet();
       const compSeed = pickCompositionSeed();
-      
-      // Compute subject instruction for this specific card
       const subjectInstruction = state.subjectType ? SUBJECT_TYPES[state.subjectType].build() : SUBJECT_TYPES['human-figure'].build();
-
-
-
 
       generatedDeck.push({
         badge: (i+1),
         name: cardData.name,
         arcana: "Oracle Card",
         subtitle: null,
+        meaning: cardData.meaning || null,
+        guidance: cardData.guidance || null,
         textInfo: {title: cardData.name, numeral: String(i+1), keyword: cardData.keyword || ""},
-        prompt: buildFrontPrompt(cardData.name, `an original oracle card illustration embodying the concept "${cardData.name}" — ${subjectInstruction}`, cardData.keyword || '', variantSet, compSeed, null)
+        prompt: buildFrontPrompt(cardData.name, `an original oracle card illustration embodying the concept "${cardData.name}" — ${subjectInstruction}. Visual theme to express through the imagery: ${cardData.keyword}`, cardData.keyword || '', variantSet, compSeed, null)
       });
     });
   }
   renderResults();
 }
 
-
-
-
 function renderResults(){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.add('hidden'));
   document.getElementById('results').classList.remove('hidden');
-  renderRail(5); // Special rail state for results
+  renderRail(5);
   window.scrollTo({top:0, behavior:'smooth'});
-
-
-
 
   const engineLabel = document.querySelector('#engineChoices .selected')?.textContent.trim() || 'GPT Image';
   document.getElementById('deckMetaLine').innerHTML =
     `<b>${generatedDeck.length}</b> items · <b>${themeLabelText()}</b> · format: <b>${FORMATS[state.format].label}</b> · engine: <b>${engineLabel}</b><span class="fe-tag">UNLIMITED</span><br>commercial license included · card back included · typography rendered on card · each regeneration is completely unique`;
-
-
-
 
   const list = document.getElementById('cardList');
   list.innerHTML = generatedDeck.map((cardData, i)=>{
@@ -1705,6 +1508,12 @@ function renderResults(){
         <div class="lbl">Typography on card</div>
         Title: <b>${escapeHtml(displayTitle)}</b>${cardData.textInfo.numeral? ' &nbsp;·&nbsp; Numeral: <b>'+escapeHtml(cardData.textInfo.numeral)+'</b>':''}${cardData.textInfo.keyword ? ' <br>Keyword: <i>'+escapeHtml(cardData.textInfo.keyword)+'</i>' : ''}
         <br><span style="font-size:11px; color:var(--amethyst-soft);">→ Rendered directly on the card art</span>
+      </div>` : '';
+    const guidebook = (!cardData.isBack && cardData.meaning) ? `
+      <div class="text-overlay-box" style="border-left-color:var(--amethyst-soft); background:rgba(122,92,158,0.07);">
+        <div class="lbl">Guidebook text</div>
+        <b>Meaning:</b> ${escapeHtml(cardData.meaning)}<br>
+        <b>Guidance:</b> <i>${escapeHtml(cardData.guidance)}</i>
       </div>` : '';
     return `
     <div class="card-item ${cardData.isBack?'back-card':''}" id="card-${i}">
@@ -1721,6 +1530,7 @@ function renderResults(){
       </div>
       <div class="card-item-body">
         ${overlay}
+        ${guidebook}
         <div class="prompt-box">${escapeHtml(cardData.prompt)}</div>
         <div class="card-actions">
           <button class="copy-btn" onclick="copyPrompt(${i}, this)">Copy prompt</button>
@@ -1730,25 +1540,15 @@ function renderResults(){
     </div>`;
   }).join('');
 
-
-
-
-  // Mark all rail steps as done
   document.querySelectorAll('.rail-step').forEach(s => {
     s.classList.add('done');
     s.classList.remove('active', 'clickable');
   });
 }
 
-
-
-
 function toggleCard(i){
   document.getElementById('card-'+i).classList.toggle('open');
 }
-
-
-
 
 function copyPrompt(i, btn){
   navigator.clipboard.writeText(generatedDeck[i].prompt).then(()=>{
@@ -1761,18 +1561,11 @@ function copyPrompt(i, btn){
   });
 }
 
-
-
-
 function regenCard(i){
   const variantSet = pickVariantSet();
   const compSeed = pickCompositionSeed();
 
-
-
-
   if(i === 0){
-    // Card back
     generatedDeck[i].prompt = buildBackPrompt(variantSet, compSeed);
   } else if(state.deckType === 'tarot-major'){
     const [num, name, symbol, meaning] = majorArcana()[i-1];
@@ -1781,48 +1574,27 @@ function regenCard(i){
     generatedDeck[i].prompt = buildFrontPrompt(name, symbol, meaning, variantSet, compSeed, subtitle);
   } else {
     const cardData = state.oracleCards[i-1];
-    // Compute new random subject instruction for regeneration
     const subjectInstruction = state.subjectType ? SUBJECT_TYPES[state.subjectType].build() : SUBJECT_TYPES['human-figure'].build();
-    generatedDeck[i].prompt = buildFrontPrompt(cardData.name, `an original oracle card illustration embodying the concept "${cardData.name}" — ${subjectInstruction}`, cardData.keyword || '', variantSet, compSeed, null);
+    generatedDeck[i].prompt = buildFrontPrompt(cardData.name, `an original oracle card illustration embodying the concept "${cardData.name}" — ${subjectInstruction}. Visual theme to express through the imagery: ${cardData.keyword}`, cardData.keyword || '', variantSet, compSeed, null);
   }
-
-
-
 
   const wasOpen = document.getElementById('card-'+i).classList.contains('open');
   renderResults();
   if(wasOpen) document.getElementById('card-'+i).classList.add('open');
 }
 
-
-
-
 /* ============ REGENERATE ALL ============ */
 document.getElementById('regenAllBtn').addEventListener('click', ()=>{
-  // 1. New palette
   generateAndSetPalette();
 
-
-
-
-  // 2. New oracle names if applicable
   if(state.deckType === 'oracle'){
-    state.oracleCards = state.oracleCards.map(() => ({
-      name: CARD_NAME_GENERATOR.generateName(),
-      keyword: CARD_NAME_GENERATOR.generateKeyword()
-    }));
+    ORACLE_TEXT_ENGINE.reset();
+    state.oracleCards = state.oracleCards.map(() => ORACLE_TEXT_ENGINE.generateCard());
   }
 
-
-
-
-  // 3. Regenerate all prompts with completely new seeds
   generateDeck();
   showToast("All cards regenerated with new palette, names & compositions!");
 });
-
-
-
 
 /* ============ BACK TO EDIT ============ */
 document.getElementById('backToEditBtn').addEventListener('click', ()=>{
@@ -1830,12 +1602,8 @@ document.getElementById('backToEditBtn').addEventListener('click', ()=>{
   showToast("Returned to card editor — modify and regenerate anytime");
 });
 
-
-
-
 /* ============ NEW DECK ============ */
 document.getElementById('newDeckBtn').addEventListener('click', ()=>{
-  // Reset state but keep engine preference
   const savedEngine = state.engine;
   state.deckType = null;
   state.theme = null;
@@ -1843,7 +1611,7 @@ document.getElementById('newDeckBtn').addEventListener('click', ()=>{
   state.palette = "";
   state.paletteName = "";
   state.frame = null;
-  state.subjectType = "mixed-auto"; // Reset subject type to default
+  state.subjectType = "mixed-auto";
   state.typography = null;
   state.format = null;
   state.engine = savedEngine;
@@ -1853,9 +1621,6 @@ document.getElementById('newDeckBtn').addEventListener('click', ()=>{
   generatedDeck = [];
   currentSubtitles = [];
 
-
-
-
   goToStep(1);
   document.getElementById('toStep2').disabled = true;
   document.getElementById('toStep3').disabled = true;
@@ -1863,42 +1628,34 @@ document.getElementById('newDeckBtn').addEventListener('click', ()=>{
   showToast("New deck started — configure your fresh creation");
 });
 
-
-
+/* ============ EXPORT FUNCTIONS ============ */
+function cardExportText(cardData){
+  let out = `${cardData.badge} — ${cardData.name}`;
+  if(cardData.subtitle) out += ` — ${cardData.subtitle}`;
+  out += `\n${cardData.arcana}`;
+  if(cardData.textInfo && cardData.textInfo.keyword) out += `\nKeywords: ${cardData.textInfo.keyword}`;
+  if(cardData.meaning) out += `\nMeaning: ${cardData.meaning}`;
+  if(cardData.guidance) out += `\nGuidance: ${cardData.guidance}`;
+  out += `\n\nPROMPT:\n${cardData.prompt}`;
+  return out;
+}
 
 /* ============ COPY ALL ============ */
 document.getElementById('copyAllBtn').addEventListener('click', ()=>{
-  const all = generatedDeck.map(c=>`=== ${c.name}${c.subtitle ? ' — '+c.subtitle : ''} ===\n${c.prompt}`).join('\n\n---\n\n');
-  navigator.clipboard.writeText(all).then(()=>{
-    const btn = document.getElementById('copyAllBtn');
-    btn.textContent = "Copied ✓";
-    setTimeout(()=>btn.textContent="Copy all", 1600);
-  });
+  const text = generatedDeck.map(cardExportText).join('\n\n' + '—'.repeat(40) + '\n\n');
+  navigator.clipboard.writeText(text).then(()=> showToast('All cards copied — text + prompts'));
 });
 
-
-
-
 /* ============ EXPORT ============ */
-function download(filename, content, type){
-  const blob = new Blob([content], {type});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-
-
-
 document.getElementById('exportTxtBtn').addEventListener('click', ()=>{
-  const all = generatedDeck.map(c=>{
-    const overlayTxt = !c.isBack ? `\nTitle: ${c.textInfo.title}${c.textInfo.numeral?' | Numeral: '+c.textInfo.numeral:''}${c.textInfo.keyword?' | Keyword: '+c.textInfo.keyword:''}${c.subtitle?' | Subtitle: '+c.subtitle:''}\n` : '';
-    return `=== ${c.name}${c.subtitle ? ' — '+c.subtitle : ''} (${c.arcana}) ===${overlayTxt}\n${c.prompt}`;
-  }).join('\n\n---\n\n');
-  download('arcana-deck-ai-prompts.txt', all, 'text/plain');
+  const text = generatedDeck.map(cardExportText).join('\n\n' + '—'.repeat(40) + '\n\n');
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${themeLabelText().replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-deck.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Deck exported');
 });
 
 /* ============ SIDE MENU LOGIC ============ */
